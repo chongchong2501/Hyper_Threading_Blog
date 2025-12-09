@@ -25,11 +25,17 @@ function switchWallpaperMode(newMode: WALLPAPER_MODE) {
 	mode = newMode;
 	setWallpaperMode(newMode);
 }
+function cycleWallpaperMode() {
+	const order: WALLPAPER_MODE[] = [WALLPAPER_BANNER, WALLPAPER_OVERLAY, WALLPAPER_NONE];
+	const idx = order.indexOf(mode);
+	const next = order[(idx + 1) % order.length];
+	switchWallpaperMode(next as WALLPAPER_MODE);
+}
 </script>
 
 <!-- z-50 make the panel higher than other float panels -->
 <div class="relative z-50" role="menu" tabindex="-1">
-	<button aria-label="Wallpaper Mode" role="menuitem" class="relative btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" id="wallpaper-mode-switch">
+	<button aria-label="Wallpaper Mode" role="menuitem" class="relative btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" id="wallpaper-mode-switch" on:click={cycleWallpaperMode}>
 		<div class="absolute" class:opacity-0={mode !== WALLPAPER_BANNER}>
 			<Icon icon="material-symbols:image-outline" class="text-[1.25rem]"></Icon>
 		</div>

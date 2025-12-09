@@ -6,11 +6,11 @@ import { fontConfig } from "./fontConfig";
 const SITE_LANG = "zh_CN";
 
 export const siteConfig: SiteConfig = {
-	title: "Firefly",
-	subtitle: "Demo site",
-	site_url: "https://firefly.cuteleaf.cn",
+	title: "Hyper Threading",
+	subtitle: "Blog",
+	site_url: "https://bento.me/chongchong",
 	description:
-		"Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。",
+		"超线程的个人博客网站",
 	keywords: [
 		"Firefly",
 		"Fuwari",
@@ -32,7 +32,7 @@ export const siteConfig: SiteConfig = {
 	favicon: [
 		// 留空以使用默认 favicon
 		{
-			src: "/assets/images/favicon.ico", // 图标文件路径
+			src: "/assets/images/logo.jpg", // 图标文件路径
 			theme: "light", // 可选，指定主题 'light' | 'dark'
 			sizes: "32x32", // 可选，图标大小
 		},
@@ -45,14 +45,13 @@ export const siteConfig: SiteConfig = {
 	// { type: "image", value: "https://example.com/logo.png", alt: "Firefly Logo" }
 	navbarLogo: {
 		type: "image",
-		value: "/assets/images/LiuYingPure3.svg",
-		alt: "🍀",
+		value: "/assets/images/logo.jpg",
 	},
-	navbarTitle: "Firefly", // 导航栏标题，可以设置为与 title 不同的值，如果不设置则使用 title
+	navbarTitle: "超线程的博客", // 导航栏标题，可以设置为与 title 不同的值，如果不设置则使用 title
 	navbarWidthFull: false, // 全宽导航栏，导航栏是否占满屏幕宽度，true：占满，false：不占满
 
 	// 站点开始日期，用于统计运行天数
-	siteStartDate: "2025-01-01", // 请修改为你的站点实际开始日期，格式：YYYY-MM-DD
+	siteStartDate: "2025-12-01", // 请修改为你的站点实际开始日期，格式：YYYY-MM-DD
 
 	// bangumi配置
 	bangumi: {
@@ -70,7 +69,7 @@ export const siteConfig: SiteConfig = {
 	pages: {
 		sponsor: true, // 赞助页面开关
 		guestbook: true, // 留言板页面开关，需要配置评论系统
-		bangumi: true, // 番组计划页面开关，含追番和游戏，dev调试时只获取一页数据，build才会获取全部数据
+		bangumi: false, // 番组计划页面开关，含追番和游戏，dev调试时只获取一页数据，build才会获取全部数据
 	},
 
 	// 文章列表布局配置
@@ -113,23 +112,30 @@ export const siteConfig: SiteConfig = {
 				// 主页显示自定义文本（全局开关）
 				enable: true,
 				// 主页横幅主标题
-				title: "Lovely firefly!",
+				title: "Hyper Threading",
 				// 主页横幅副标题
 				subtitle: [
-					"In Reddened Chrysalis, I Once Rest",
-					"From Shattered Sky, I Free Fall",
-					"Amidst Silenced Stars, I Deep Sleep",
-					"Upon Lighted Fyrefly, I Soon Gaze",
-					"From Undreamt Night, I Thence Shine",
-					"In Finalized Morrow, I Full Bloom",
+					"莫愁千里路，自有到来风。",
+					"初见少年拉满弓，不惧岁月不惧风。",
+					"苦难夺凌云志，不死终有出头日。",
+					"花有重开日，人无再少年。",
+					"春风得意马蹄疾，不信人间有离别。",
+					"欲买桂花同载酒，终不似，少年游。",
+					"莫道桑榆晚，为霞尚满天。",
+					"花开花落花无悔，缘来缘去缘如水。",
+					"且停且忘且随风，且行且看且从容。",
+					"缘起缘灭缘终尽，花开花落花归尘。",
+					"一朝悟道见真我，何惧昔日旧枷锁。",
+					"解开昔日旧枷锁，今日方知我是我。",
+					"世间枷锁本是梦，无形无相亦无我。",
 				],
 				typewriter: {
 					//打字机开启 → 循环显示所有副标题
 					//打字机关闭 → 每次刷新随机显示一条副标题
-					enable: false, // 启用副标题打字机效果
-					speed: 100, // 打字速度（毫秒）
+					enable: true, // 启用副标题打字机效果
+					speed: 200, // 打字速度（毫秒）
 					deleteSpeed: 50, // 删除速度（毫秒）
-					pauseTime: 2000, // 完全显示后的暂停时间（毫秒）
+					pauseTime: 5000, // 完全显示后的暂停时间（毫秒）
 				},
 			},
 			credit: {
