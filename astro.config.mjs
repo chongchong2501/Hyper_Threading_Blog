@@ -33,7 +33,7 @@ import rehypeFigure from "./src/plugins/rehype-figure.mjs";
 // https://astro.build/config
 export default defineConfig({
 
-	site: hyperthreading.cn,
+	site: 'https://hyperthreading.cn',
 
 	//base: "/Hyper_Threading_Blog",
 	trailingSlash: "always",
