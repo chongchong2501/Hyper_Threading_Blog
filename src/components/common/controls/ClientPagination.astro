@@ -142,6 +142,23 @@ const pageNumbers = generatePageNumbers(currentPage, totalPages);
       >
         <Icon name="material-symbols:chevron-right-rounded" class="text-[1.75rem]" />
       </button>
+
+      <!-- 页码跳转输入 -->
+      <div class="ml-3 flex items-center gap-2">
+        <input
+          type="number"
+          min="1"
+          max={totalPages}
+          placeholder="页码"
+          class="h-11 w-20 rounded-lg px-2 bg-[var(--card-bg)] text-neutral-700 dark:text-neutral-300 outline-none border border-[var(--line-divider)]"
+          data-page-input={sectionId}
+        />
+        <button
+          type="button"
+          class="btn-card overflow-hidden rounded-lg text-[var(--primary)] h-11 px-3"
+          data-page-go={sectionId}
+        >跳转</button>
+      </div>
     </div>
   </div>
 )}
@@ -188,6 +205,31 @@ const pageNumbers = generatePageNumbers(currentPage, totalPages);
         currentPage = 1;
         updatePage();
         updateMobileDisplay();
+      });
+    }
+
+    // 页码输入跳转
+    const pageInput = pagination.querySelector(`[data-page-input="${sectionId}"]`);
+    const pageGoBtn = pagination.querySelector(`[data-page-go="${sectionId}"]`);
+    function jumpToInputPage() {
+      if (!pageInput) return;
+      const items = document.querySelectorAll(`[data-item-section="${sectionId}"]:not(.hidden)`);
+      const totalPages = Math.ceil(items.length / itemsPerPage);
+      let target = parseInt(pageInput.value);
+      if (isNaN(target)) return;
+      target = Math.max(1, Math.min(totalPages, target));
+      currentPage = target;
+      updatePage();
+      updateMobileDisplay();
+    }
+    if (pageGoBtn) {
+      pageGoBtn.addEventListener('click', jumpToInputPage);
+    }
+    if (pageInput) {
+      pageInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          jumpToInputPage();
+        }
       });
     }
 

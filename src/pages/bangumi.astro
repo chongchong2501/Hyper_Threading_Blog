@@ -11,7 +11,10 @@ import type {
 	UserSubjectCollection,
 	UserSubjectCollectionResponse,
 } from "@/types/bangumi";
-import type { BiliSeasonItem, BilibiliFollowListResponse } from "@/types/bilibili";
+import type {
+	BiliSeasonItem,
+	BilibiliFollowListResponse,
+} from "@/types/bilibili";
 
 //参考：霞葉 https://kasuha.com/posts/fuwari-enhance-ep2/
 
@@ -151,7 +154,9 @@ async function fetchBilibiliData(mid: string, type: number) {
 		let hasMore = true;
 		const isDev = import.meta.env.DEV;
 		const maxPages = isDev ? 1 : 0; // 开发模式仅拉取一页
-		const envCookie = (import.meta.env as any)?.BILI_COOKIE as string | undefined;
+		const envCookie = (import.meta.env as any)?.BILI_COOKIE as
+			| string
+			| undefined;
 
 		console.log(
 			`[Bilibili] ${isDev ? "🔧 开发模式" : "🌐 生产模式"} - 开始获取用户 ${mid} 的 type ${type} 数据...`,
@@ -169,7 +174,9 @@ async function fetchBilibiliData(mid: string, type: number) {
 			}
 
 			const url = `https://api.bilibili.com/x/space/bangumi/follow/list?vmid=${mid}&type=${type}&pn=${pn}&ps=${ps}&follow_status=0`;
-			console.log(`[Bilibili] 正在获取数据: ${url} (已获取: ${allData.length})`);
+			console.log(
+				`[Bilibili] 正在获取数据: ${url} (已获取: ${allData.length})`,
+			);
 
 			const headers: Record<string, string> = {
 				"User-Agent":
@@ -193,7 +200,10 @@ async function fetchBilibiliData(mid: string, type: number) {
 			});
 
 			if (!response.ok) {
-				console.warn(`[Bilibili] 无法获取数据 (状态码: ${response.status}):`, url);
+				console.warn(
+					`[Bilibili] 无法获取数据 (状态码: ${response.status}):`,
+					url,
+				);
 				break;
 			}
 
@@ -214,7 +224,10 @@ async function fetchBilibiliData(mid: string, type: number) {
 			);
 
 			// 首页为空时尝试旧接口作为回退
-			if (pn === 1 && (!Array.isArray(currentBatch) || currentBatch.length === 0)) {
+			if (
+				pn === 1 &&
+				(!Array.isArray(currentBatch) || currentBatch.length === 0)
+			) {
 				try {
 					const fallbackUrl = `https://space.bilibili.com/ajax/Bangumi/getList?mid=${mid}`;
 					console.log(`[Bilibili] 尝试回退接口: ${fallbackUrl}`);
@@ -224,9 +237,7 @@ async function fetchBilibiliData(mid: string, type: number) {
 					if (fbResp.ok) {
 						const fbJson = (await fbResp.json()) as any;
 						const fbList =
-							(fbJson?.data && fbJson?.data?.result) ||
-							fbJson?.result ||
-							[];
+							(fbJson?.data && fbJson?.data?.result) || fbJson?.result || [];
 						if (Array.isArray(fbList) && fbList.length > 0) {
 							const mapped: BiliSeasonItem[] = fbList.map((it: any) => ({
 								season_id: Number(it?.season_id ?? it?.seasonId ?? 0),
@@ -234,7 +245,9 @@ async function fetchBilibiliData(mid: string, type: number) {
 								cover: String(it?.cover ?? it?.square_cover ?? ""),
 								total_count: Number(it?.total_count ?? it?.total ?? 0),
 								is_finish: Number(it?.is_finish ?? it?.is_finish ?? 0),
-								season_type_name: String(it?.season_type_name ?? it?.type_name ?? ""),
+								season_type_name: String(
+									it?.season_type_name ?? it?.type_name ?? "",
+								),
 								stat: {
 									follow: Number(it?.stat?.follow ?? it?.favorites ?? 0),
 								},
@@ -291,9 +304,7 @@ const isBangumiUserIdConfigured =
 	bangumiConfig.username.trim() !== "";
 const biliUserId = siteConfig.bilibili?.userId;
 const isBiliUserIdConfigured =
-	biliUserId &&
-	biliUserId !== "your-bilibili-mid" &&
-	biliUserId.trim() !== "";
+	biliUserId && biliUserId !== "your-bilibili-mid" && biliUserId.trim() !== "";
 
 if (dataSource === "bangumi") {
 	if (!isBangumiUserIdConfigured) {
@@ -310,7 +321,9 @@ if (dataSource === "bangumi") {
 }
 
 if (dataSource === "bangumi") {
-	for (const [categoryKey, enabled] of Object.entries(bangumiConfig.categories)) {
+	for (const [categoryKey, enabled] of Object.entries(
+		bangumiConfig.categories,
+	)) {
 		// 如果未配置用户ID，跳过数据获取
 		if (!isBangumiUserIdConfigured) {
 			break;
@@ -415,14 +428,14 @@ const buildTime = new Date().toLocaleString();
                   sectionId={tab.id}
                   items={bangumiData[tab.id] || []}
                   isActive={tab.id === activeTab}
-                  itemsPerPage={6}
+                  itemsPerPage={16}
                 />
               ) : (
                 <BilibiliSection
                   sectionId={tab.id}
                   items={biliData[tab.id] || []}
                   isActive={tab.id === activeTab}
-                  itemsPerPage={6}
+                  itemsPerPage={16}
                 />
               )}
             </>

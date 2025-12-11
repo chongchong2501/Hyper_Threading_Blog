@@ -9,36 +9,36 @@ import BilibiliCard from "./BilibiliCard.astro";
  * 描述：Bilibili 数据源的分区渲染组件，支持筛选与分页
  */
 interface Props {
-    sectionId: string;
-    items: BiliSeasonItem[];
-    isActive: boolean;
-    itemsPerPage?: number;
+	sectionId: string;
+	items: BiliSeasonItem[];
+	isActive: boolean;
+	itemsPerPage?: number;
 }
 
-const { sectionId, items, isActive, itemsPerPage = 12 } = Astro.props;
+const { sectionId, items, isActive, itemsPerPage = 16 } = Astro.props;
 
 /** 状态映射：根据 is_finish 推导展示状态 */
 const statusMap = {
-    collect: "collect", // 已完结 → 视为“看过”
-    doing: "doing", // 未完结 → 视为“在看”
+	collect: "collect", // 已完结 → 视为“看过”
+	doing: "doing", // 未完结 → 视为“在看”
 };
 
 /** 统计用于筛选的状态数量 */
 const statusCounts = items.reduce(
-    (acc, item) => {
-        const key = (
-            item.is_finish === 1 ? "collect" : "doing"
-        ) as keyof typeof statusMap;
-        acc[key] = (acc[key] || 0) + 1;
-        return acc;
-    },
-    {} as Record<string, number>,
+	(acc, item) => {
+		const key = (
+			item.is_finish === 1 ? "collect" : "doing"
+		) as keyof typeof statusMap;
+		acc[key] = (acc[key] || 0) + 1;
+		return acc;
+	},
+	{} as Record<string, number>,
 );
 
 const filters = [
-    { value: "all", label: "全部", count: items.length },
-    { value: "doing", label: "在看", count: statusCounts.doing || 0 },
-    { value: "collect", label: "看过", count: statusCounts.collect || 0 },
+	{ value: "all", label: "全部", count: items.length },
+	{ value: "doing", label: "在看", count: statusCounts.doing || 0 },
+	{ value: "collect", label: "看过", count: statusCounts.collect || 0 },
 ].filter((filter) => filter.value === "all" || filter.count > 0);
 
 const defaultFilter = "all";
@@ -57,7 +57,7 @@ const defaultFilter = "all";
                     sectionId={sectionId}
                 />
 
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
                     {items.map((item) => (
                         <div
                             class="bangumi-item"

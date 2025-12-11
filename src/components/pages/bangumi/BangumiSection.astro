@@ -13,7 +13,7 @@ interface Props {
 	itemsPerPage?: number;
 }
 
-const { sectionId, items, isActive, itemsPerPage = 12 } = Astro.props;
+const { sectionId, items, isActive, itemsPerPage = 16 } = Astro.props;
 
 // 状态映射
 const statusMap = {
@@ -75,7 +75,7 @@ const defaultFilter = "all"; // 默认显示全部，用户可以通过筛选器
         sectionId={sectionId}
       />
 
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
         {items.map((item) => (
           <div
             class="bangumi-item"

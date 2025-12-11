@@ -267,12 +267,12 @@ export type FontItem = {
 	display?: "auto" | "block" | "swap" | "fallback" | "optional"; // font-display 属性
 	unicodeRange?: string; // Unicode 范围，用于字体子集化
 	format?:
-	| "woff"
-	| "woff2"
-	| "truetype"
-	| "opentype"
-	| "embedded-opentype"
-	| "svg"; // 字体格式，仅当 src 为本地文件时需要
+		| "woff"
+		| "woff2"
+		| "truetype"
+		| "opentype"
+		| "embedded-opentype"
+		| "svg"; // 字体格式，仅当 src 为本地文件时需要
 };
 
 // 字体配置
@@ -304,11 +304,11 @@ export type CoverImageConfig = {
 		enable: boolean; // 是否显示水印
 		text?: string; // 水印文本，默认为"随机图"
 		position?:
-		| "top-left"
-		| "top-right"
-		| "bottom-left"
-		| "bottom-right"
-		| "center"; // 水印位置
+			| "top-left"
+			| "top-right"
+			| "bottom-left"
+			| "bottom-right"
+			| "center"; // 水印位置
 		opacity?: number; // 水印透明度 0-1，默认0.6
 		fontSize?: string; // 字体大小，默认"0.75rem"
 		color?: string; // 文字颜色，默认为白色
@@ -456,35 +456,35 @@ export type BackgroundWallpaperConfig = {
 	mode: "banner" | "overlay" | "none"; // 壁纸模式：banner横幅模式、overlay全屏透明覆盖模式或none纯色背景
 	switchable?: boolean; // 是否允许用户通过导航栏切换壁纸模式，默认true
 	src:
-	| string
-	| string[]
-	| {
-		desktop?: string | string[];
-		mobile?: string | string[];
-	}; // 支持单个图片、图片数组或分别设置桌面端和移动端图片
+		| string
+		| string[]
+		| {
+				desktop?: string | string[];
+				mobile?: string | string[];
+		  }; // 支持单个图片、图片数组或分别设置桌面端和移动端图片
 
 	// Banner模式特有配置
 	banner?: {
 		position?:
-		| "top"
-		| "center"
-		| "bottom"
-		| "top left"
-		| "top center"
-		| "top right"
-		| "center left"
-		| "center center"
-		| "center right"
-		| "bottom left"
-		| "bottom center"
-		| "bottom right"
-		| "left top"
-		| "left center"
-		| "left bottom"
-		| "right top"
-		| "right center"
-		| "right bottom"
-		| string; // 壁纸位置，支持CSS object-position的所有值，包括百分比和像素值
+			| "top"
+			| "center"
+			| "bottom"
+			| "top left"
+			| "top center"
+			| "top right"
+			| "center left"
+			| "center center"
+			| "center right"
+			| "bottom left"
+			| "bottom center"
+			| "bottom right"
+			| "left top"
+			| "left center"
+			| "left bottom"
+			| "right top"
+			| "right center"
+			| "right bottom"
+			| string; // 壁纸位置，支持CSS object-position的所有值，包括百分比和像素值
 		homeText?: {
 			enable: boolean; // 是否在首页显示自定义文字（全局开关）
 			title?: string; // 主标题
@@ -498,34 +498,34 @@ export type BackgroundWallpaperConfig = {
 		};
 		credit?: {
 			enable:
-			| boolean
-			| {
-				desktop: boolean; // 桌面端是否显示横幅图片来源文本
-				mobile: boolean; // 移动端是否显示横幅图片来源文本
-			}; // 是否显示横幅图片来源文本，支持布尔值或分别设置桌面端和移动端
+				| boolean
+				| {
+						desktop: boolean; // 桌面端是否显示横幅图片来源文本
+						mobile: boolean; // 移动端是否显示横幅图片来源文本
+				  }; // 是否显示横幅图片来源文本，支持布尔值或分别设置桌面端和移动端
 			text:
-			| string
-			| {
-				desktop: string; // 桌面端显示的来源文本
-				mobile: string; // 移动端显示的来源文本
-			}; // 横幅图片来源文本，支持字符串或分别设置桌面端和移动端
+				| string
+				| {
+						desktop: string; // 桌面端显示的来源文本
+						mobile: string; // 移动端显示的来源文本
+				  }; // 横幅图片来源文本，支持字符串或分别设置桌面端和移动端
 			url?:
-			| string
-			| {
-				desktop: string; // 桌面端原始艺术品或艺术家页面的 URL 链接
-				mobile: string; // 移动端原始艺术品或艺术家页面的 URL 链接
-			}; // 原始艺术品或艺术家页面的 URL 链接，支持字符串或分别设置桌面端和移动端
+				| string
+				| {
+						desktop: string; // 桌面端原始艺术品或艺术家页面的 URL 链接
+						mobile: string; // 移动端原始艺术品或艺术家页面的 URL 链接
+				  }; // 原始艺术品或艺术家页面的 URL 链接，支持字符串或分别设置桌面端和移动端
 		};
 		navbar?: {
 			transparentMode?: "semi" | "full" | "semifull"; // 导航栏透明模式
 		};
 		waves?: {
 			enable:
-			| boolean
-			| {
-				desktop: boolean; // 桌面端是否启用波浪动画效果
-				mobile: boolean; // 移动端是否启用波浪动画效果
-			}; // 是否启用波浪动画效果，支持布尔值或分别设置桌面端和移动端
+				| boolean
+				| {
+						desktop: boolean; // 桌面端是否启用波浪动画效果
+						mobile: boolean; // 移动端是否启用波浪动画效果
+				  }; // 是否启用波浪动画效果，支持布尔值或分别设置桌面端和移动端
 			performance?: {
 				quality: "high" | "medium" | "low"; // 渲染质量：high=高质量，medium=中等质量，low=低质量
 				hardwareAcceleration: boolean; // 是否启用硬件加速

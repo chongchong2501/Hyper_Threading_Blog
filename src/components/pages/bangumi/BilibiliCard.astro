@@ -6,33 +6,33 @@ import type { BiliSeasonItem } from "@/types/bilibili";
  * 描述：用于渲染 Bilibili 追番/追剧条目的卡片组件
  */
 interface Props {
-    item: BiliSeasonItem;
+	item: BiliSeasonItem;
 }
 
 const { item } = Astro.props;
 
 /** 根据 season_id 生成番剧播放页链接 */
 function buildSeasonUrl(seasonId: number): string {
-    return `https://www.bilibili.com/bangumi/play/ss${seasonId}`;
+	return `https://www.bilibili.com/bangumi/play/ss${seasonId}`;
 }
 
 /** 规范化封面地址并提供多字段回退 */
 function resolveCoverUrl(it: BiliSeasonItem): string | null {
-    const candidates = [
-        it.cover,
-        it.square_cover,
-        it.horizontal_cover_16_10,
-        it.horizontal_cover,
-    ].filter(Boolean) as string[];
-    if (candidates.length === 0) return null;
-    let url = candidates[0];
-    if (url.startsWith("//")) {
-        url = `https:${url}`;
-    }
-    if (url.startsWith("http://")) {
-        url = url.replace("http://", "https://");
-    }
-    return url;
+	const candidates = [
+		it.cover,
+		it.square_cover,
+		it.horizontal_cover_16_10,
+		it.horizontal_cover,
+	].filter(Boolean) as string[];
+	if (candidates.length === 0) return null;
+	let url = candidates[0];
+	if (url.startsWith("//")) {
+		url = `https:${url}`;
+	}
+	if (url.startsWith("http://")) {
+		url = url.replace("http://", "https://");
+	}
+	return url;
 }
 ---
 
