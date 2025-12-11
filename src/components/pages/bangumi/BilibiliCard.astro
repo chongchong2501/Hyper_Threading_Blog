@@ -1,0 +1,89 @@
+---
+import type { BiliSeasonItem } from "@/types/bilibili";
+
+/**
+ * 文件：components/pages/bangumi/BilibiliCard.astro
+ * 描述：用于渲染 Bilibili 追番/追剧条目的卡片组件
+ */
+interface Props {
+    item: BiliSeasonItem;
+}
+
+const { item } = Astro.props;
+
+/** 根据 season_id 生成番剧播放页链接 */
+function buildSeasonUrl(seasonId: number): string {
+    return `https://www.bilibili.com/bangumi/play/ss${seasonId}`;
+}
+
+/** 规范化封面地址并提供多字段回退 */
+function resolveCoverUrl(it: BiliSeasonItem): string | null {
+    const candidates = [
+        it.cover,
+        it.square_cover,
+        it.horizontal_cover_16_10,
+        it.horizontal_cover,
+    ].filter(Boolean) as string[];
+    if (candidates.length === 0) return null;
+    let url = candidates[0];
+    if (url.startsWith("//")) {
+        url = `https:${url}`;
+    }
+    if (url.startsWith("http://")) {
+        url = url.replace("http://", "https://");
+    }
+    return url;
+}
+---
+
+<a
+    href={buildSeasonUrl(item.season_id)}
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    class="group relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-105 block"
+>
+    <div class="aspect-[2/3] relative overflow-hidden">
+        {
+            resolveCoverUrl(item) ? (
+                <img
+                    src={resolveCoverUrl(item)!}
+                    alt={item.title}
+                    class="w-full h-full object-cover pointer-events-none"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                />
+            ) : (
+                <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                    <div class="text-gray-400 text-4xl">🎬</div>
+                </div>
+            )
+        }
+
+        <!-- 类型徽标 -->
+        {
+            item.season_type_name && (
+                <div class="absolute top-2 left-2 px-2 py-1 rounded-full text-xs text-white font-medium bg-[var(--primary)]">
+                    {item.season_type_name}
+                </div>
+            )
+        }
+    </div>
+
+    <!-- 悬浮信息层 -->
+    <div
+        class="absolute inset-x-0 bottom-0 bg-black/80 text-white p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-200"
+    >
+        <h3 class="font-bold text-sm mb-1 line-clamp-2">
+            {item.title}
+        </h3>
+
+        {
+            item.stat?.follow && (
+                <div class="flex items-center gap-2 text-xs text-white/80">
+                    <span>追番数</span>
+                    <span>{item.stat.follow}</span>
+                </div>
+            )
+        }
+    </div>
+</a>

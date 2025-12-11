@@ -1,0 +1,92 @@
+---
+import ClientPagination from "@/components/common/controls/ClientPagination.astro";
+import FilterControls from "./FilterControls.astro";
+import type { BiliSeasonItem } from "@/types/bilibili";
+import BilibiliCard from "./BilibiliCard.astro";
+
+/**
+ * 文件：components/pages/bangumi/BilibiliSection.astro
+ * 描述：Bilibili 数据源的分区渲染组件，支持筛选与分页
+ */
+interface Props {
+    sectionId: string;
+    items: BiliSeasonItem[];
+    isActive: boolean;
+    itemsPerPage?: number;
+}
+
+const { sectionId, items, isActive, itemsPerPage = 12 } = Astro.props;
+
+/** 状态映射：根据 is_finish 推导展示状态 */
+const statusMap = {
+    collect: "collect", // 已完结 → 视为“看过”
+    doing: "doing", // 未完结 → 视为“在看”
+};
+
+/** 统计用于筛选的状态数量 */
+const statusCounts = items.reduce(
+    (acc, item) => {
+        const key = (
+            item.is_finish === 1 ? "collect" : "doing"
+        ) as keyof typeof statusMap;
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+    },
+    {} as Record<string, number>,
+);
+
+const filters = [
+    { value: "all", label: "全部", count: items.length },
+    { value: "doing", label: "在看", count: statusCounts.doing || 0 },
+    { value: "collect", label: "看过", count: statusCounts.collect || 0 },
+].filter((filter) => filter.value === "all" || filter.count > 0);
+
+const defaultFilter = "all";
+---
+
+<div
+    class:list={["bangumi-section", { hidden: !isActive }]}
+    data-section={sectionId}
+>
+    {
+        items.length > 0 ? (
+            <>
+                <FilterControls
+                    filters={filters}
+                    activeFilter={defaultFilter}
+                    sectionId={sectionId}
+                />
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                    {items.map((item) => (
+                        <div
+                            class="bangumi-item"
+                            data-item-section={sectionId}
+                            data-item-status={
+                                item.is_finish === 1 ? "collect" : "doing"
+                            }
+                        >
+                            <BilibiliCard item={item} />
+                        </div>
+                    ))}
+                </div>
+
+                <ClientPagination
+                    totalItems={items.length}
+                    itemsPerPage={itemsPerPage}
+                    currentPage={1}
+                    sectionId={sectionId}
+                />
+            </>
+        ) : (
+            <div class="text-center py-12">
+                <h3 class="text-xl font-medium text-gray-600 dark:text-gray-400 mb-2">
+                    暂无数据
+                </h3>
+                <p class="text-gray-500 dark:text-gray-500">
+                    未获取到任何追番/追剧条目
+                </p>
+            </div>
+        )
+    }
+</div>

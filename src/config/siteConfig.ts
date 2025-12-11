@@ -56,6 +56,12 @@ export const siteConfig: SiteConfig = {
 	bangumi: {
 		userId: "1163581", // 在此处设置你的Bangumi用户ID
 	},
+	// 追番数据源："bangumi" 或 "bilibili"
+	bangumiSource: "bilibili",
+	// Bilibili配置
+	bilibili: {
+		userId: "432215947", // 在此处设置你的Bilibili用户MID
+	},
 
 	// 文章页底部的"上次编辑时间"卡片开关
 	showLastModified: true,
