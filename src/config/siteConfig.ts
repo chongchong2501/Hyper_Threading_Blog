@@ -101,9 +101,9 @@ export const siteConfig: SiteConfig = {
 		// 背景图片配置
 		src: {
 			// 桌面背景图片
-			desktop: "/assets/images/【哲风壁纸】动漫-富冈义勇.png",
+			desktop: "/assets/images/【哲风壁纸】动漫-富冈义勇.webp",
 			// 移动背景图片
-			mobile: "/assets/images/【哲风壁纸】宇宙-引力-星云.png",
+			mobile: "/assets/images/【哲风壁纸】动漫-富冈义勇.webp",
 		},
 
 		// Banner模式特有配置

@@ -47,6 +47,9 @@ const blur = config.blur || 0;
 				alt="Desktop wallpaper"
 				class="absolute inset-0 w-full h-full object-cover"
 				style={`object-position: ${position};${blur > 0 ? ` filter: blur(${blur}px);` : ''}`}
+				loading="lazy"
+				decoding="async"
+				fetchpriority="low"
 			/>
 		</div>
 	)}
@@ -59,6 +62,9 @@ const blur = config.blur || 0;
 				alt="Mobile wallpaper"
 				class="absolute inset-0 w-full h-full object-cover"
 				style={`object-position: ${position};${blur > 0 ? ` filter: blur(${blur}px);` : ''}`}
+				loading="lazy"
+				decoding="async"
+				fetchpriority="low"
 			/>
 		</div>
 	)}

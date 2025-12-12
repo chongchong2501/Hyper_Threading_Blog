@@ -205,6 +205,9 @@ const navbarWidthFull = siteConfig.navbarWidthFull ?? false;
             class:list={["block lg:hidden object-cover h-full w-full transition duration-700 opacity-100"]}
             src={typeof backgroundImages.mobile === 'string' ? backgroundImages.mobile : (typeof backgroundImages.desktop === 'string' ? backgroundImages.desktop : '')} 
             position={siteConfig.backgroundWallpaper.banner?.position}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
         />
         <!-- Desktop: use desktop-specific image -->
         <ImageWrapper 
@@ -213,6 +216,9 @@ const navbarWidthFull = siteConfig.navbarWidthFull ?? false;
             class:list={["hidden lg:block object-cover h-full transition duration-700 opacity-100"]}
             src={typeof backgroundImages.desktop === 'string' ? backgroundImages.desktop : (typeof backgroundImages.mobile === 'string' ? backgroundImages.mobile : '')} 
             position={siteConfig.backgroundWallpaper.banner?.position}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
         />
     </div>
     

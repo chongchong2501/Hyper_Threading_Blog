@@ -6,7 +6,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	enable: true, // 启用音乐播放器功能
 
 	// 使用方式：'meting' 或 'local'
-	mode: "local", // "meting" 使用 Meting API，"local" 使用本地音乐列表
+	mode: "meting", // "meting" 使用 Meting API，"local" 使用本地音乐列表
 
 	// Meting API 配置
 	meting: {
@@ -21,7 +21,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 		type: "playlist",
 
 		// 歌单/专辑/单曲 ID 或搜索关键词
-		id: "2578783407", // 网易云音乐歌单ID示例
+		id: "17543650660", // 网易云音乐歌单ID示例
 
 		// 认证 token（可选）
 		auth: "",
