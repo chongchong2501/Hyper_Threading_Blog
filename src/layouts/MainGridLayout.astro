@@ -200,6 +200,7 @@ const navbarWidthFull = siteConfig.navbarWidthFull ?? false;
     <!-- 背景图片显示 -->
     <div class="relative h-full w-full">
         <!-- Mobile: use mobile-specific image -->
+        <!-- 函数级注释：移动端横幅为首屏关键图，设置高优先级与异步解码 -->
         <ImageWrapper 
             alt="Mobile background image of the blog" 
             class:list={["block lg:hidden object-cover h-full w-full transition duration-700 opacity-100"]}
@@ -210,6 +211,7 @@ const navbarWidthFull = siteConfig.navbarWidthFull ?? false;
             decoding="async"
         />
         <!-- Desktop: use desktop-specific image -->
+        <!-- 函数级注释：桌面端横幅为首屏关键图，设置高优先级与异步解码 -->
         <ImageWrapper 
             id="banner" 
             alt="Desktop background image of the blog" 

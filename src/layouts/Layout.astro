@@ -90,6 +90,7 @@ const bannerOffset = `${BANNER_HEIGHT_EXTEND / 2}vh`;
 <!doctype html>
 <html lang={siteLang} class="bg-[var(--page-bg)] text-[14px] md:text-[16px]">
   <head>
+    <!-- 文件级注释：将第三方分析脚本推迟到 window.load，避免首屏期间占用网络与主线程 -->
     <!-- Google Tag Manager -->
     <script is:inline data-swup-ignore-script>
       window.addEventListener('load', function() {

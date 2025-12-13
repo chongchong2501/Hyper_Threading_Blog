@@ -1,4 +1,8 @@
+<!-- 文件级注释：FullscreenWallpaper 组件；透明叠加壁纸，默认使用懒加载与低优先级避免与首屏竞争 -->
 ---
+/** 类级注释：FullscreenWallpaper Props
+ * src: 分设备图片地址；position/zIndex/opacity/blur：渲染参数
+ */
 interface Props {
 	config: {
 		src: {
@@ -47,6 +51,7 @@ const blur = config.blur || 0;
 				alt="Desktop wallpaper"
 				class="absolute inset-0 w-full h-full object-cover"
 				style={`object-position: ${position};${blur > 0 ? ` filter: blur(${blur}px);` : ''}`}
+				<!-- 函数级注释：叠加壁纸设为懒加载 + 低优先级，避免占用首屏网络与主线程 -->
 				loading="lazy"
 				decoding="async"
 				fetchpriority="low"
@@ -62,6 +67,7 @@ const blur = config.blur || 0;
 				alt="Mobile wallpaper"
 				class="absolute inset-0 w-full h-full object-cover"
 				style={`object-position: ${position};${blur > 0 ? ` filter: blur(${blur}px);` : ''}`}
+				<!-- 函数级注释：叠加壁纸设为懒加载 + 低优先级，避免占用首屏网络与主线程 -->
 				loading="lazy"
 				decoding="async"
 				fetchpriority="low"
