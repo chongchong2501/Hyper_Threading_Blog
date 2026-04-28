@@ -416,4 +416,494 @@ for epoch in range(10):
 &lt;li&gt;深度堆叠 → 实现从像素到语义的抽象&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;彻底改变了计算机视觉，并辐射到NLP、语音、生物、物理等众多领域。&lt;/p&gt;
+</content:encoded></item><item><title>PyTorch 学习笔记</title><link>https://hyperthreading.cn/posts/pytorch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link><guid isPermaLink="true">https://hyperthreading.cn/posts/pytorch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid><pubDate>Mon, 01 Dec 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;PyTorch 核心知识点整理&lt;/h2&gt;
+&lt;h2&gt;一、基础概念&lt;/h2&gt;
+&lt;h3&gt;1.1 Tensor（张量）&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;核心数据结构：类似于 NumPy 的 ndarray，但支持 GPU 加速和自动求导。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;创建方式：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+
+# 从 Python 列表或 NumPy 数组创建
+x = torch.tensor([1, 2, 3])
+
+# 创建特定值的张量
+a = torch.zeros((2, 3))
+b = torch.ones((2, 3))
+c = torch.rand((2, 3))
+d = torch.randn((2, 3))
+
+# 创建序列
+r1 = torch.arange(0, 10, 2)
+r2 = torch.linspace(0, 1, 5)
+
+# 创建单位矩阵
+i = torch.eye(3)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;属性：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;x.dtype
+x.shape
+x.size()
+x.device
+x.requires_grad
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;操作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;索引与切片：与 NumPy 类似。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;视图 (View) 与 复制 (Copy)：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;y = x.view(-1)          # 返回一个新视图，共享底层数据（要求内存连续）
+z = x.reshape(-1)       # 更灵活的形状变换，可能返回视图或副本
+x_copy = x.clone()      # 返回数据的副本
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;数学运算：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;s = torch.sum(x)
+m = torch.mean(x.float())
+mx = torch.max(x)
+e = torch.exp(x.float())
+lg = torch.log(x.float())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;广播 (Broadcasting)：自动扩展张量以进行运算。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;类型转换：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;xf = x.float()
+xl = x.long()
+x2 = x.to(dtype=torch.float32)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设备转移：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;device = torch.device(&quot;cuda:0&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
+x_gpu = x.to(device)
+x_cpu = x_gpu.cpu()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;1.2 自动求导（Autograd）&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;核心机制：PyTorch 能自动计算张量的梯度。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;关键属性：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+
+# requires_grad: 设置张量需要计算梯度（通常对模型参数设置）
+w = torch.randn(10, requires_grad=True)
+
+# grad: 存储计算得到的梯度
+w.grad
+
+# grad_fn: 指向创建该张量的 Function 对象，用于构建计算图
+y = w * 2
+y.grad_fn
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;基本流程：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+
+x = torch.randn(10)
+w = torch.randn(10, requires_grad=True)
+b = torch.randn(1, requires_grad=True)
+
+y = (x * w).sum() + b
+loss = y
+
+loss.backward()
+
+with torch.no_grad():
+    w -= 0.01 * w.grad
+    b -= 0.01 * b.grad
+
+w.grad.zero_()
+b.grad.zero_()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;停止梯度：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+
+x = torch.randn(3, requires_grad=True)
+
+with torch.no_grad():
+    y = x * 2
+
+z = x.detach()
+x.requires_grad_(False)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;二、神经网络模块&lt;/h2&gt;
+&lt;h3&gt;2.1 定义网络&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;常见写法：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+import torch.nn as nn
+
+class MyModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(10, 32),
+            nn.ReLU(),
+            nn.Linear(32, 10),
+        )
+
+    def forward(self, x):
+        return self.net(x)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;常用层：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch.nn as nn
+
+nn.Linear
+nn.Conv2d
+nn.MaxPool2d
+nn.AvgPool2d
+nn.BatchNorm1d
+nn.BatchNorm2d
+nn.BatchNorm3d
+nn.Dropout
+nn.Embedding
+nn.LSTM
+nn.GRU
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;激活函数：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch.nn as nn
+
+nn.ReLU
+nn.Sigmoid
+nn.Tanh
+nn.Softmax
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;容器：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch.nn as nn
+
+nn.Sequential
+nn.ModuleList
+nn.ModuleDict
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;2.2 损失函数（Loss Functions）&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;常用损失：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch.nn as nn
+
+nn.MSELoss                 # 回归
+nn.CrossEntropyLoss        # 分类（输入 logits，内部会做 Softmax）
+nn.BCELoss                 # 二元交叉熵（输入概率）
+nn.BCEWithLogitsLoss       # Sigmoid + BCELoss，数值更稳定
+nn.NLLLoss                 # 负对数似然（常与 LogSoftmax 配合）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;loss = criterion(predicted_output, true_target)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;2.3 优化器（Optimizers）&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;作用：根据计算出的梯度更新模型参数。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;常用优化器：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+
+torch.optim.SGD
+torch.optim.Adam
+torch.optim.RMSprop
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;基本使用流程：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+loss = criterion(outputs, labels)
+
+optimizer.zero_grad()
+loss.backward()
+optimizer.step()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;三、数据处理&lt;/h2&gt;
+&lt;h3&gt;3.1 Dataset&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;抽象基类：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from torch.utils.data import Dataset
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;自定义数据集：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from torch.utils.data import Dataset
+
+class MyCustomDataset(Dataset):
+    def __len__(self):
+        return 0
+
+    def __getitem__(self, idx):
+        return None
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;内置数据集：torchvision.datasets.MNIST/CIFAR10/ImageFolder 等。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torchvision
+
+torchvision.datasets.MNIST
+torchvision.datasets.CIFAR10
+torchvision.datasets.ImageFolder
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;3.2 DataLoader&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;作用：将数据集封装成可迭代对象，支持批量加载、打乱、多进程加载。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from torch.utils.data import DataLoader
+
+DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用：&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;dataset = MyCustomDataset(...)
+dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
+
+for batch_data, batch_labels in dataloader:
+    # 训练/验证逻辑
+    pass
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;四、训练与验证流程&lt;/h2&gt;
+&lt;h3&gt;4.1 基本训练循环&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;model.train()  # 设置为训练模式（影响 Dropout, BatchNorm 等层）
+for epoch in range(num_epochs):
+    for inputs, labels in train_loader:
+        inputs, labels = inputs.to(device), labels.to(device)
+
+        optimizer.zero_grad()  # 1. 清空梯度
+        outputs = model(inputs)  # 2. 前向传播
+        loss = criterion(outputs, labels)  # 3. 计算损失
+        loss.backward()  # 4. 反向传播
+        optimizer.step()  # 5. 更新参数
+
+        # 可选：记录损失、准确率等
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;4.2 验证/测试循环&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;model.eval()  # 设置为评估模式（关闭 Dropout, 固定 BatchNorm 统计量）
+with torch.no_grad():  # 关闭梯度计算，节省内存和计算
+    for inputs, labels in val_loader:
+        inputs, labels = inputs.to(device), labels.to(device)
+        outputs = model(inputs)
+        loss = criterion(outputs, labels)
+        # 计算准确率或其他指标
+        # 记录验证损失和指标
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;五、模型保存与加载&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;保存模型参数：&lt;pre&gt;&lt;code&gt;torch.save(model.state_dict(), &quot;model_weights.pth&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;加载模型参数：&lt;pre&gt;&lt;code&gt;model = MyModel()  # 先实例化模型结构
+model.load_state_dict(torch.load(&quot;model_weights.pth&quot;))
+model.eval()  # 通常加载后用于推理，设为评估模式
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;保存整个模型（不推荐，依赖具体类定义）：&lt;pre&gt;&lt;code&gt;torch.save(model, &quot;entire_model.pth&quot;)
+model = torch.load(&quot;entire_model.pth&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;六、GPU 加速&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;检查 GPU 可用性：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+
+torch.cuda.is_available()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;指定设备：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+
+device = torch.device(&quot;cuda:0&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;转移张量和模型：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tensor = tensor.to(device)
+model = model.to(device)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;七、其他重要特性&lt;/h2&gt;
+&lt;h3&gt;7.1 TorchScript（模型部署）&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;将 PyTorch 模型转换为可序列化的、独立于 Python 的中间表示，便于在 C++ 环境或生产环境中部署。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;常用方式：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+
+torch.jit.trace(model, example_input)
+torch.jit.script(model)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;7.2 分布式训练&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;常用方式：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+
+torch.nn.DataParallel
+torch.nn.parallel.DistributedDataParallel
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;7.3 混合精度训练（AMP）&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;常用工具：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+
+torch.cuda.amp.autocast
+torch.cuda.amp.GradScaler
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;7.4 可视化与调试&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;TensorBoard：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from torch.utils.tensorboard import SummaryWriter
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;打印模型结构：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;print(model)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;结构摘要（需安装第三方包）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;summary(model, input_size)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;八、常用工具库&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;TorchVision：提供图像数据集、模型架构、图像变换工具。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torchvision
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;TorchText：提供文本数据集和预处理工具（NLP）。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torchtext
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;TorchAudio：提供音频数据集和处理工具。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torchaudio
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;九、最佳实践&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;总是清空梯度：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;optimizer.zero_grad()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;区分训练和评估模式：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;model.train()
+model.eval()
+
+with torch.no_grad():
+    pass
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用数据加载器：进行批量、打乱和并行数据加载。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from torch.utils.data import DataLoader
+
+dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设备管理：显式地将模型和数据移动到目标设备。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;inputs = inputs.to(device)
+labels = labels.to(device)
+model = model.to(device)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;保存和加载模型参数：优先保存/加载参数字典，而不是整个模型对象。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;torch.save(model.state_dict(), &quot;model_weights.pth&quot;)
+model.load_state_dict(torch.load(&quot;model_weights.pth&quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置随机种子：保证实验的可复现性。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import torch
+import numpy as np
+
+torch.manual_seed(42)
+np.random.seed(42)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;利用自动混合精度：在支持的 GPU 上加速训练。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from torch.cuda.amp import autocast, GradScaler
+
+scaler = GradScaler()
+with autocast():
+    loss = criterion(outputs, labels)
+scaler.scale(loss).backward()
+scaler.step(optimizer)
+scaler.update()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;监控训练过程：记录损失、准确率、学习率等。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from torch.utils.tensorboard import SummaryWriter
+
+writer = SummaryWriter()
+writer.add_scalar(&quot;loss/train&quot;, loss.item(), global_step)
+writer.flush()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
 </content:encoded></item></channel></rss>
