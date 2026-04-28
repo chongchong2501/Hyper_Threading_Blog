@@ -1,128 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Hyper Threading - Blog</title><description>超线程的个人博客网站</description><link>https://hyperthreading.cn/</link><language>zh_CN</language><item><title>Firefly 简单使用指南</title><link>https://hyperthreading.cn/posts/guide/</link><guid isPermaLink="true">https://hyperthreading.cn/posts/guide/</guid><description>如何使用 Firefly 博客模板。</description><pubDate>Fri, 02 Jan 1970 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;这个博客模板是基于 &lt;a href=&quot;https://astro.build/&quot;&gt;Astro&lt;/a&gt; 构建的。对于本指南中未提及的内容，您可以在 &lt;a href=&quot;https://docs.astro.build/&quot;&gt;Astro 文档&lt;/a&gt; 中找到答案。&lt;/p&gt;
-&lt;h2&gt;文章的 Front-matter&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;---
-title: 我的第一篇博客文章
-published: 2023-09-09
-description: 这是我新 Astro 博客的第一篇文章。
-image: ./cover.jpg
-tags: [前端, 开发]
-category: 前端开发
-draft: false
----
-&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;属性&lt;/th&gt;
-&lt;th&gt;描述&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;title&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;文章标题。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;published&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;文章发布日期。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;pinned&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;是否将此文章置顶在文章列表顶部。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;description&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;文章的简短描述。显示在首页上。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;image&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;文章封面图片路径。&amp;lt;br/&amp;gt;1. 以 &lt;code&gt;http://&lt;/code&gt; 或 &lt;code&gt;https://&lt;/code&gt; 开头：使用网络图片&amp;lt;br/&amp;gt;2. 以 &lt;code&gt;/&lt;/code&gt; 开头：&lt;code&gt;public&lt;/code&gt; 目录中的图片&amp;lt;br/&amp;gt;3. 不带任何前缀：相对于 markdown 文件的路径&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;tags&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;文章标签。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;category&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;文章分类。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;licenseName&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;文章内容的许可证名称。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;author&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;文章作者。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;sourceLink&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;文章内容的来源链接或参考。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;draft&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;如果这篇文章仍是草稿，则不会显示。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;slug&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;自定义文章 URL 路径。如果不设置，将使用文件名作为 URL。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2&gt;文章文件的放置位置&lt;/h2&gt;
-&lt;p&gt;您的文章文件应放置在 &lt;code&gt;src/content/posts/&lt;/code&gt; 目录中。您也可以创建子目录来更好地组织您的文章和资源。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;src/content/posts/
-├── post-1.md
-└── post-2/
-    ├── cover.png
-    └── index.md
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;自定义文章 URL (Slug)&lt;/h2&gt;
-&lt;h3&gt;什么是 Slug？&lt;/h3&gt;
-&lt;p&gt;Slug 是文章 URL 路径的自定义部分。如果不设置 slug，系统将使用文件名作为 URL。&lt;/p&gt;
-&lt;h3&gt;Slug 使用示例&lt;/h3&gt;
-&lt;h4&gt;示例 1：使用文件名作为 URL&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;---
-title: 我的第一篇博客文章
-published: 2023-09-09
----
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;文件：&lt;code&gt;src/content/posts/my-first-blog-post.md&lt;/code&gt;
-URL：&lt;code&gt;/posts/my-first-blog-post&lt;/code&gt;&lt;/p&gt;
-&lt;h4&gt;示例 2：自定义 Slug&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;---
-title: 我的第一篇博客文章
-published: 2023-09-09
-slug: hello-world
----
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;文件：&lt;code&gt;src/content/posts/my-first-blog-post.md&lt;/code&gt;
-URL：&lt;code&gt;/posts/hello-world&lt;/code&gt;&lt;/p&gt;
-&lt;h4&gt;示例 3：中文标题使用英文 Slug&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;---
-title: 如何使用 Firefly 博客主题
-published: 2023-09-09
-slug: how-to-use-firefly-blog-theme
----
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;文件：&lt;code&gt;src/content/posts/firefly-guide.md&lt;/code&gt;
-URL：&lt;code&gt;/posts/how-to-use-firefly-blog-theme&lt;/code&gt;&lt;/p&gt;
-&lt;h3&gt;Slug 使用建议&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;使用英文和连字符&lt;/strong&gt;：&lt;code&gt;my-awesome-post&lt;/code&gt; 而不是 &lt;code&gt;my awesome post&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;保持简洁&lt;/strong&gt;：避免过长的 slug&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;具有描述性&lt;/strong&gt;：让 URL 能够反映文章内容&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;避免特殊字符&lt;/strong&gt;：只使用字母、数字和连字符&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;保持一致性&lt;/strong&gt;：在整个博客中使用相似的命名模式&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3&gt;注意事项&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Slug 一旦设置并发布，建议不要随意更改，以免影响 SEO 和已存在的链接&lt;/li&gt;
-&lt;li&gt;如果多个文章使用相同的 slug，后面的文章会覆盖前面的&lt;/li&gt;
-&lt;li&gt;Slug 会自动转换为小写&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded></item><item><title>卷积神经网络（CNN）</title><link>https://hyperthreading.cn/posts/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Ccnn/</link><guid isPermaLink="true">https://hyperthreading.cn/posts/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Ccnn/</guid><pubDate>Mon, 01 Dec 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;🌟 卷积神经网络（CNN）终极详解&lt;/p&gt;
-&lt;p&gt;一、CNN 的生物学灵感与哲学思想&lt;/p&gt;
-&lt;p&gt;1.1 生物视觉皮层启发&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Hyper Threading - Blog</title><description>超线程的个人博客网站</description><link>https://hyperthreading.cn/</link><language>zh_CN</language><item><title>卷积神经网络（CNN）</title><link>https://hyperthreading.cn/posts/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Ccnn/</link><guid isPermaLink="true">https://hyperthreading.cn/posts/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Ccnn/</guid><pubDate>Mon, 01 Dec 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;🌟 卷积神经网络（CNN）终极详解&lt;/h2&gt;
+&lt;h2&gt;一、CNN 的生物学灵感与哲学思想&lt;/h2&gt;
+&lt;h3&gt;1.1 生物视觉皮层启发&lt;/h3&gt;
 &lt;p&gt;CNN 的设计灵感来源于 1960 年代神经科学家 Hubel 和 Wiesel 对猫视觉皮层的研究：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;简单细胞（Simple Cells）：只对特定位置、方向的边缘/条状刺激有反应 → 对应 CNN 的“卷积核”&lt;/li&gt;
@@ -130,34 +8,49 @@ URL：&lt;code&gt;/posts/how-to-use-firefly-blog-theme&lt;/code&gt;&lt;/p&gt;
 &lt;li&gt;层级结构：低级特征（边缘）→ 中级特征（形状）→ 高级特征（物体）→ 对应 CNN 的“层叠结构”&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;🧬 CNN 是对生物视觉系统的“工程化模拟”，不是完全复制，而是提取其核心思想：局部感受、层次抽象、权值共享 。&lt;/p&gt;
-&lt;p&gt;1.2 哲学思想：让机器“学会看”&lt;/p&gt;
+&lt;h3&gt;1.2 哲学思想：让机器“学会看”&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;传统方法：人工设计特征（如SIFT、HOG）→ 费时费力，泛化差&lt;/li&gt;
 &lt;li&gt;CNN 方法：端到端学习 ，从原始像素自动学习最优特征表示&lt;/li&gt;
 &lt;li&gt;核心哲学：Representation Learning（表示学习）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
-&lt;p&gt;二、卷积操作的数学本质（超详细）&lt;/p&gt;
-&lt;p&gt;2.1 离散卷积公式（2D）&lt;/p&gt;
+&lt;h2&gt;二、卷积操作的数学本质（超详细）&lt;/h2&gt;
+&lt;h3&gt;2.1 离散卷积公式（2D）&lt;/h3&gt;
 &lt;p&gt;对输入图像 $$ I \in \mathbb{R}^{H \times W} $$ 和卷积核 $$K \in \mathbb{R}^{k \times k} $$ ，输出特征图 $$ O $$ 在位置 $$ (i,j) $$ 的值为：&lt;/p&gt;
 &lt;p&gt;$$O(i,j) = (I * K)(i,j) = \sum_{m=0}^{k-1} \sum_{n=0}^{k-1} I(i+m, j+n) \cdot K(m,n)$$&lt;/p&gt;
 &lt;p&gt;注意：实际深度学习框架中多为“互相关（cross-correlation）”，即不翻转核，但习惯仍称“卷积”。&lt;/p&gt;
-&lt;p&gt;2.2 多通道输入/输出&lt;/p&gt;
+&lt;h3&gt;2.2 多通道输入/输出&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;输入通道数：$$C_{in} $$（如RGB=3）&lt;/li&gt;
-&lt;li&gt;输出通道数：$$ C_{out}$$（即卷积核个数）&lt;/li&gt;
-&lt;li&gt;每个卷积核尺寸：$$ k \times k \times C_{in} $$&lt;/li&gt;
-&lt;li&gt;总参数量：$$C_{out} \times (k \times k \times C_{in} + 1)$$（+1 是偏置项）&lt;/li&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;li&gt;
+&lt;p&gt;输入通道数：$$C_{in} $$（如RGB=3）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;输出通道数：$$ C_{out}$$（即卷积核个数）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;每个卷积核尺寸：$$ k \times k \times C_{in} $$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;总参数量：$$C_{out} \times (k \times k \times C_{in} + 1)$$（+1 是偏置项）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
 &lt;p&gt;✅ 举例：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;输入：224×224×3&lt;/li&gt;
-&lt;li&gt;卷积层：64个 3×3 卷积核&lt;/li&gt;
-&lt;li&gt;参数量 = $$ 64 \times (3 \times 3 \times 3 + 1) = 64 \times 28 = 1,792 $$&lt;/li&gt;
-&lt;li&gt;对比全连接：$$224 \times 224 \times 3 \times 1000 = 150M$$→ CNN 参数效率极高！&lt;/li&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;输入：224×224×3&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;卷积层：64个 3×3 卷积核&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;参数量 = $$ 64 \times (3 \times 3 \times 3 + 1) = 64 \times 28 = 1,792 $$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对比全连接：$$224 \times 224 \times 3 \times 1000 = 150M$$→ CNN 参数效率极高！&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;2.3 输出尺寸计算公式&lt;/p&gt;
+&lt;h3&gt;2.3 输出尺寸计算公式&lt;/h3&gt;
 &lt;p&gt;给定：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;输入尺寸：$$ W_{in} \times H_{in} $$&lt;/li&gt;
@@ -169,9 +62,9 @@ URL：&lt;code&gt;/posts/how-to-use-firefly-blog-theme&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;$$W_{out} = \left\lfloor \frac{W_{in} + 2P - K}{S} \right\rfloor + 1$$&lt;/p&gt;
 &lt;p&gt;📌 常用设置：K=3, S=1, P=1 → 尺寸不变；K=3, S=2, P=1 → 尺寸减半&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;三、CNN 各层组件深度剖析&lt;/p&gt;
-&lt;p&gt;3.1 卷积层（Conv Layer）——不止是“滑动窗口”&lt;/p&gt;
-&lt;p&gt;类型扩展：&lt;/p&gt;
+&lt;h2&gt;三、CNN 各层组件深度剖析&lt;/h2&gt;
+&lt;h3&gt;3.1 卷积层（Conv Layer）——不止是“滑动窗口”&lt;/h3&gt;
+&lt;h4&gt;类型扩展&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;标准卷积（Standard Conv）：上述基本形式&lt;/li&gt;
 &lt;li&gt;空洞卷积（Dilated Conv）：在核元素间插入“空洞”，扩大感受野而不增加参数。用于语义分割（如DeepLab）&lt;/li&gt;
@@ -184,7 +77,7 @@ URL：&lt;code&gt;/posts/how-to-use-firefly-blog-theme&lt;/code&gt;&lt;/p&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;感受野（Receptive Field）&lt;/p&gt;
+&lt;h4&gt;感受野（Receptive Field）&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;定义：输出特征图上某一点，对应输入图像的区域大小&lt;/li&gt;
 &lt;li&gt;随着网络加深，感受野增大 → 高层神经元“看到”更大范围&lt;/li&gt;
@@ -192,55 +85,73 @@ URL：&lt;code&gt;/posts/how-to-use-firefly-blog-theme&lt;/code&gt;&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;🎯 目标检测中，大感受野对检测大物体至关重要。&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;3.2 激活函数 —— 为什么ReLU是王者？&lt;/p&gt;
-&lt;p&gt;常见激活函数对比：&lt;/p&gt;
-&lt;p&gt;函数
-公式
-优点
-缺点
-Sigmoid
-$$ \frac{1}{1+e^{-x}} $$
-输出0~1，可解释概率
-梯度消失、非零中心
-Tanh
-$$ \frac{e^x - e^{-x}}{e^x + e^{-x}} $$
-零中心
-梯度消失
-ReLU
-$$ \max(0,x) $$
-计算快、缓解梯度消失
-“死神经元”问题
-Leaky ReLU
-$$ \max(0.01x, x) $$
-解决死神经元
-需调参
-ELU
-$$ x&amp;gt;0: x; x≤0: \alpha(e^x-1) $$
-负值有梯度，均值≈0
-计算稍慢&lt;/p&gt;
+&lt;h3&gt;3.2 激活函数 —— 为什么ReLU是王者？&lt;/h3&gt;
+&lt;h4&gt;常见激活函数对比&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;函数&lt;/th&gt;
+&lt;th&gt;公式&lt;/th&gt;
+&lt;th&gt;优点&lt;/th&gt;
+&lt;th&gt;缺点&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Sigmoid&lt;/td&gt;
+&lt;td&gt;$$ \frac{1}{1+e^{-x}} $$&lt;/td&gt;
+&lt;td&gt;输出0~1，可解释概率&lt;/td&gt;
+&lt;td&gt;梯度消失、非零中心&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tanh&lt;/td&gt;
+&lt;td&gt;$$ \frac{e^x - e^{-x}}{e^x + e^{-x}} $$&lt;/td&gt;
+&lt;td&gt;零中心&lt;/td&gt;
+&lt;td&gt;梯度消失&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ReLU&lt;/td&gt;
+&lt;td&gt;$$ \max(0,x) $$&lt;/td&gt;
+&lt;td&gt;计算快、缓解梯度消失&lt;/td&gt;
+&lt;td&gt;“死神经元”问题&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Leaky ReLU&lt;/td&gt;
+&lt;td&gt;$$ \max(0.01x, x) $$&lt;/td&gt;
+&lt;td&gt;解决死神经元&lt;/td&gt;
+&lt;td&gt;需调参&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ELU&lt;/td&gt;
+&lt;td&gt;$$ x&amp;gt;0: x; x≤0: \alpha(e^x-1) $$&lt;/td&gt;
+&lt;td&gt;负值有梯度，均值≈0&lt;/td&gt;
+&lt;td&gt;计算稍慢&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 &lt;p&gt;✅ 实践建议：默认用ReLU，如遇神经元“死亡”，换Leaky ReLU或ELU。&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;3.3 池化层 —— 为什么Max Pooling最常用？&lt;/p&gt;
-&lt;p&gt;Max Pooling vs Average Pooling&lt;/p&gt;
+&lt;h3&gt;3.3 池化层 —— 为什么Max Pooling最常用？&lt;/h3&gt;
+&lt;h4&gt;Max Pooling vs Average Pooling&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Max Pooling：保留最显著特征，增强纹理/边缘响应 → 更适合分类&lt;/li&gt;
 &lt;li&gt;Average Pooling：平滑特征，保留背景信息 → 有时用于最后全局池化&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;全局平均池化（Global Average Pooling, GAP）&lt;/p&gt;
+&lt;h4&gt;全局平均池化（Global Average Pooling, GAP）&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;对每个特征图求平均，得到一个值 → 替代全连接层&lt;/li&gt;
 &lt;li&gt;优点：无参数、防过拟合、可解释性强（CAM可视化）&lt;/li&gt;
 &lt;li&gt;应用：GoogLeNet、ResNet等现代架构&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
-&lt;p&gt;3.4 批归一化（Batch Normalization, BN）——训练加速神器&lt;/p&gt;
-&lt;p&gt;为什么需要BN？&lt;/p&gt;
+&lt;h3&gt;3.4 批归一化（Batch Normalization, BN）——训练加速神器&lt;/h3&gt;
+&lt;h4&gt;为什么需要 BN？&lt;/h4&gt;
 &lt;p&gt;深度网络中，层间输入分布会不断变化（Internal Covariate Shift）→ 训练不稳定、需小学习率。&lt;/p&gt;
-&lt;p&gt;BN公式（训练时）：&lt;/p&gt;
+&lt;h4&gt;BN公式（训练时）&lt;/h4&gt;
 &lt;p&gt;对一个batch的某通道数据 $$x$$：&lt;/p&gt;
 &lt;p&gt;$$\hat{x} = \frac{x - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}}, \quad y = \gamma \hat{x} + \beta$$&lt;/p&gt;
 &lt;p&gt;其中 $$ \mu_B, \sigma_B^2 $$ 是batch均值和方差，$$\gamma, \beta$$ 是可学习参数。&lt;/p&gt;
-&lt;p&gt;作用：&lt;/p&gt;
+&lt;h4&gt;作用&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;加速收敛（可用大学习率）&lt;/li&gt;
 &lt;li&gt;一定程度替代Dropout（正则化效果）&lt;/li&gt;
@@ -248,17 +159,17 @@ $$ x&amp;gt;0: x; x≤0: \alpha(e^x-1) $$
 &lt;/ul&gt;
 &lt;p&gt;📌 实践：通常在卷积后、激活前 插入BN层（Conv → BN → ReLU）&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;3.5 全连接层与Softmax —— 最后的决策者&lt;/p&gt;
-&lt;p&gt;Softmax函数：&lt;/p&gt;
+&lt;h3&gt;3.5 全连接层与Softmax —— 最后的决策者&lt;/h3&gt;
+&lt;h4&gt;Softmax函数&lt;/h4&gt;
 &lt;p&gt;将网络输出 $$ z = [z_1, z_2, ..., z_K] $$ 转为概率分布：&lt;/p&gt;
 &lt;p&gt;$$p_i = \frac{e^{z_i}}{\sum_{j=1}^K e^{z_j}}$$&lt;/p&gt;
-&lt;p&gt;损失函数：交叉熵（Cross-Entropy）&lt;/p&gt;
+&lt;h4&gt;损失函数：交叉熵（Cross-Entropy）&lt;/h4&gt;
 &lt;p&gt;$$\mathcal{L} = -\sum_{i=1}^K y_i \log(p_i)$$&lt;/p&gt;
 &lt;p&gt;其中 $$ y_i $$ 是真实标签的one-hot编码。&lt;/p&gt;
 &lt;p&gt;✅ 交叉熵 + Softmax 是分类任务的黄金搭档。&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;四、CNN 训练全流程详解&lt;/p&gt;
-&lt;p&gt;4.1 数据预处理&lt;/p&gt;
+&lt;h2&gt;四、CNN 训练全流程详解&lt;/h2&gt;
+&lt;h3&gt;4.1 数据预处理&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;归一化：像素值 /255.0 → [0,1] 或 标准化 $$ (x - mean)/std $$&lt;/li&gt;
 &lt;li&gt;数据增强（Data Augmentation）：
@@ -268,24 +179,40 @@ $$ x&amp;gt;0: x; x≤0: \alpha(e^x-1) $$
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;4.2 优化器选择&lt;/p&gt;
-&lt;p&gt;优化器
-特点
-适用场景
-SGD
-基础，需手动调学习率
-理论研究、简单任务
-SGD + Momentum
-加速收敛，减少震荡
-通用
-Adam
-自适应学习率，收敛快
-默认首选，尤其小数据
-RMSProp
-适合非平稳目标
-RNN/CNN均可&lt;/p&gt;
+&lt;h3&gt;4.2 优化器选择&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;优化器&lt;/th&gt;
+&lt;th&gt;特点&lt;/th&gt;
+&lt;th&gt;适用场景&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;SGD&lt;/td&gt;
+&lt;td&gt;基础，需手动调学习率&lt;/td&gt;
+&lt;td&gt;理论研究、简单任务&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SGD + Momentum&lt;/td&gt;
+&lt;td&gt;加速收敛，减少震荡&lt;/td&gt;
+&lt;td&gt;通用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Adam&lt;/td&gt;
+&lt;td&gt;自适应学习率，收敛快&lt;/td&gt;
+&lt;td&gt;默认首选，尤其小数据&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RMSProp&lt;/td&gt;
+&lt;td&gt;适合非平稳目标&lt;/td&gt;
+&lt;td&gt;RNN/CNN均可&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 &lt;p&gt;🚀 实践建议：新手用 Adam (lr=0.001) ，高手可尝试 SGD + Momentum + 学习率衰减&lt;/p&gt;
-&lt;p&gt;4.3 正则化技术&lt;/p&gt;
+&lt;h3&gt;4.3 正则化技术&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;L2权重衰减（Weight Decay）：损失函数加 $$ \lambda |\theta|^2 $$&lt;/li&gt;
 &lt;li&gt;Dropout：训练时随机丢弃神经元（通常FC层用，rate=0.5）&lt;/li&gt;
@@ -293,34 +220,34 @@ RNN/CNN均可&lt;/p&gt;
 &lt;li&gt;Label Smoothing：软化one-hot标签，防过自信&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
-&lt;p&gt;五、经典CNN架构深度解析&lt;/p&gt;
-&lt;p&gt;5.1 LeNet-5 (1998) —— 开山鼻祖&lt;/p&gt;
+&lt;h2&gt;五、经典CNN架构深度解析&lt;/h2&gt;
+&lt;h3&gt;5.1 LeNet-5 (1998) —— 开山鼻祖&lt;/h3&gt;
 &lt;p&gt;INPUT → Conv1 → Pool1 → Conv2 → Pool2 → FC1 → FC2 → OUTPUT&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;用于手写数字识别（MNIST）&lt;/li&gt;
 &lt;li&gt;首次证明CNN可行性&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;5.2 AlexNet (2012) —— 深度学习革命&lt;/p&gt;
+&lt;h3&gt;5.2 AlexNet (2012) —— 深度学习革命&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;8层（5Conv + 3FC）&lt;/li&gt;
 &lt;li&gt;首次使用ReLU、Dropout&lt;/li&gt;
 &lt;li&gt;数据增强 + GPU训练&lt;/li&gt;
 &lt;li&gt;ImageNet Top-5错误率从26%→15.3%&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;5.3 VGGNet (2014) —— 简洁之美&lt;/p&gt;
+&lt;h3&gt;5.3 VGGNet (2014) —— 简洁之美&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;核心：统一使用3×3小卷积核堆叠&lt;/li&gt;
 &lt;li&gt;感受野等价于一个大核，但参数更少&lt;/li&gt;
 &lt;li&gt;VGG16：13Conv + 3FC = 16层&lt;/li&gt;
 &lt;li&gt;至今仍被用作特征提取器（如风格迁移）&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;5.4 GoogLeNet / Inception (2014) —— 多尺度融合&lt;/p&gt;
+&lt;h3&gt;5.4 GoogLeNet / Inception (2014) —— 多尺度融合&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Inception模块：并行使用1×1, 3×3, 5×5卷积 + Pooling → 捕捉多尺度特征&lt;/li&gt;
 &lt;li&gt;1×1卷积：降维/升维，减少计算量（“瓶颈层”）&lt;/li&gt;
 &lt;li&gt;22层，参数比AlexNet少12倍&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;5.5 ResNet (2015) —— 突破深度极限&lt;/p&gt;
+&lt;h3&gt;5.5 ResNet (2015) —— 突破深度极限&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;残差块（Residual Block）：
 $$y = F(x) + x$$&lt;/li&gt;
@@ -329,145 +256,157 @@ $$y = F(x) + x$$&lt;/li&gt;
 &lt;li&gt;核心思想：让网络学习残差（变化量），而非直接映射&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;🏆 ResNet是现代CNN的基石，几乎所有新模型都受其影响。&lt;/p&gt;
-&lt;p&gt;5.6 EfficientNet (2019) —— 平衡的艺术&lt;/p&gt;
+&lt;h3&gt;5.6 EfficientNet (2019) —— 平衡的艺术&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;提出复合缩放（Compound Scaling） ：同时缩放网络深度（d）、宽度（w）、分辨率（r）&lt;/li&gt;
 &lt;li&gt;公式：$$d = \alpha^\phi, w = \beta^\phi, r = \gamma^\phi$$，约束 $$ \alpha \cdot \beta^2 \cdot \gamma^2 \approx 2 $$&lt;/li&gt;
 &lt;li&gt;在相同计算量下达到SOTA精度&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
-&lt;p&gt;六、CNN 在各领域的应用详解（附模型）&lt;/p&gt;
-&lt;p&gt;6.1 图像分类 → ResNet, EfficientNet, Vision Transformer&lt;/p&gt;
-&lt;p&gt;6.2 目标检测&lt;/p&gt;
-&lt;p&gt;两阶段检测器（精度高）：&lt;/p&gt;
+&lt;h2&gt;六、CNN 在各领域的应用详解（附模型）&lt;/h2&gt;
+&lt;h3&gt;6.1 图像分类 → ResNet, EfficientNet, Vision Transformer&lt;/h3&gt;
+&lt;h3&gt;6.2 目标检测&lt;/h3&gt;
+&lt;h4&gt;两阶段检测器（精度高）&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Faster R-CNN：RPN生成候选框 + CNN分类&lt;/li&gt;
 &lt;li&gt;Mask R-CNN：Faster R-CNN + 分割分支&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;单阶段检测器（速度快）：&lt;/p&gt;
+&lt;h4&gt;单阶段检测器（速度快）&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;YOLO系列（You Only Look Once）：将检测视为回归问题&lt;/li&gt;
 &lt;li&gt;SSD（Single Shot MultiBox Detector）：多尺度特征图预测&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;6.3 语义分割&lt;/p&gt;
+&lt;h3&gt;6.3 语义分割&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;FCN（全卷积网络）：将FC层替换为卷积，输出像素级预测&lt;/li&gt;
 &lt;li&gt;U-Net：编码器-解码器结构 + 跳跃连接（医学图像标配）&lt;/li&gt;
 &lt;li&gt;DeepLab系列：空洞卷积 + ASPP（多尺度上下文）&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;6.4 姿态估计&lt;/p&gt;
+&lt;h3&gt;6.4 姿态估计&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;OpenPose：多阶段CNN，同时预测关键点和连接&lt;/li&gt;
 &lt;li&gt;HRNet：保持高分辨率特征，精度更高&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;6.5 医学影像&lt;/p&gt;
+&lt;h3&gt;6.5 医学影像&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;nnU-Net：自动适配任何医学分割任务的框架&lt;/li&gt;
 &lt;li&gt;CheXNet：121层DenseNet，用于胸部X光肺炎检测&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;6.6 视频理解&lt;/p&gt;
+&lt;h3&gt;6.6 视频理解&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;3D CNN（如C3D）：卷积核扩展到时间维&lt;/li&gt;
 &lt;li&gt;Two-Stream Network：RGB流 + 光流流&lt;/li&gt;
 &lt;li&gt;I3D（Inflated 3D ConvNet）：将2D卷积核“膨胀”为3D&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
-&lt;p&gt;七、CNN 的前沿发展与未来&lt;/p&gt;
-&lt;p&gt;7.1 CNN vs Transformer&lt;/p&gt;
+&lt;h2&gt;七、CNN 的前沿发展与未来&lt;/h2&gt;
+&lt;h3&gt;7.1 CNN vs Transformer&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Vision Transformer (ViT)：将图像分块，用Transformer编码 → 在大数据下超越CNN&lt;/li&gt;
 &lt;li&gt;混合模型：CNN提取局部特征 + Transformer建模长程依赖（如Swin Transformer）&lt;/li&gt;
 &lt;li&gt;趋势：CNN不会消失，但与Attention机制深度融合&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;7.2 轻量化CNN&lt;/p&gt;
+&lt;h3&gt;7.2 轻量化CNN&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;MobileNet系列：深度可分离卷积&lt;/li&gt;
 &lt;li&gt;ShuffleNet：通道混洗减少计算&lt;/li&gt;
 &lt;li&gt;GhostNet：用廉价操作生成“幻影”特征图&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;7.3 自监督学习&lt;/p&gt;
+&lt;h3&gt;7.3 自监督学习&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;MoCo, SimCLR：无标签数据预训练CNN，再微调&lt;/li&gt;
 &lt;li&gt;减少对标注数据的依赖&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;7.4 可解释性与可视化&lt;/p&gt;
+&lt;h3&gt;7.4 可解释性与可视化&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;CAM / Grad-CAM：可视化CNN关注区域&lt;/li&gt;
 &lt;li&gt;特征反演：从特征图重建输入图像&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
-&lt;p&gt;八、学习路径与资源推荐&lt;/p&gt;
-&lt;p&gt;8.1 学习路线图&lt;/p&gt;
+&lt;h2&gt;八、学习路径与资源推荐&lt;/h2&gt;
+&lt;h3&gt;8.1 学习路线图&lt;/h3&gt;
 &lt;p&gt;数学基础 → Python/PyTorch → CNN理论 → 经典论文 → 复现项目 → 参加比赛（Kaggle）→ 研究前沿&lt;/p&gt;
-&lt;p&gt;8.2 书籍推荐&lt;/p&gt;
+&lt;h3&gt;8.2 书籍推荐&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;《深度学习》（花书）Ian Goodfellow — 理论基石&lt;/li&gt;
 &lt;li&gt;《动手学深度学习》（李沐）— 代码实践神器（有PyTorch版）&lt;/li&gt;
 &lt;li&gt;《神经网络与深度学习》（邱锡鹏）— 中文精品&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;8.3 视频课程&lt;/p&gt;
+&lt;h3&gt;8.3 视频课程&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;吴恩达《Deep Learning Specialization》（Coursera）&lt;/li&gt;
 &lt;li&gt;李沐《动手学深度学习》B站课程&lt;/li&gt;
 &lt;li&gt;斯坦福CS231n（YouTube）— CNN圣经级课程&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;8.4 实战平台&lt;/p&gt;
+&lt;h3&gt;8.4 实战平台&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Kaggle：大量图像比赛（入门推荐：Digit Recognizer, Dogs vs Cats）&lt;/li&gt;
 &lt;li&gt;Google Colab：免费GPU，开箱即用&lt;/li&gt;
 &lt;li&gt;Hugging Face：预训练模型库（含CNN）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
-&lt;p&gt;九、一个完整CNN项目实战框架（PyTorch）&lt;/p&gt;
-&lt;p&gt;import torch
+&lt;h2&gt;九、一个完整CNN项目实战框架（PyTorch）&lt;/h2&gt;
+&lt;h3&gt;9.1 数据加载与增强&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;import torch
 import torch.nn as nn
 import torch.optim as optim
-from torchvision import datasets, transforms&lt;/p&gt;
-&lt;h3&gt;1. 数据加载与增强&lt;/h3&gt;
-&lt;p&gt;transform = transforms.Compose([
-transforms.Resize((32, 32)),
-transforms.ToTensor(),
-transforms.Normalize((0.5,), (0.5,))
-])&lt;/p&gt;
-&lt;p&gt;trainset = datasets.CIFAR10(root=&apos;./data&apos;, train=True, download=True, transform=transform)
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)&lt;/p&gt;
-&lt;h3&gt;2. 定义带BN和Dropout的CNN&lt;/h3&gt;
-&lt;p&gt;class CNN(nn.Module):
-def &lt;strong&gt;init&lt;/strong&gt;(self):
-super(CNN, self).&lt;strong&gt;init&lt;/strong&gt;()
-self.features = nn.Sequential(
-nn.Conv2d(3, 32, 3, padding=1), nn.BatchNorm2d(32), nn.ReLU(),
-nn.MaxPool2d(2),
-nn.Conv2d(32, 64, 3, padding=1), nn.BatchNorm2d(64), nn.ReLU(),
-nn.MaxPool2d(2),
-nn.Conv2d(64, 128, 3, padding=1), nn.BatchNorm2d(128), nn.ReLU(),
-nn.AdaptiveAvgPool2d((1, 1))  # GAP
-)
-self.classifier = nn.Sequential(
-nn.Dropout(0.5),
-nn.Linear(128, 10)
-)&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;def forward(self, x):
-    x = self.features(x)
-    x = torch.flatten(x, 1)
-    x = self.classifier(x)
-    return x
+from torchvision import datasets, transforms
+
+transform = transforms.Compose([
+    transforms.Resize((32, 32)),
+    transforms.ToTensor(),
+    transforms.Normalize((0.5,), (0.5,))
+])
+
+trainset = datasets.CIFAR10(root=&quot;./data&quot;, train=True, download=True, transform=transform)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;3. 训练循环&lt;/h3&gt;
-&lt;p&gt;model = CNN().cuda()
+&lt;h3&gt;9.2 定义带BN和Dropout的CNN&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;class CNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.features = nn.Sequential(
+            nn.Conv2d(3, 32, 3, padding=1),
+            nn.BatchNorm2d(32),
+            nn.ReLU(),
+            nn.MaxPool2d(2),
+            nn.Conv2d(32, 64, 3, padding=1),
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+            nn.MaxPool2d(2),
+            nn.Conv2d(64, 128, 3, padding=1),
+            nn.BatchNorm2d(128),
+            nn.ReLU(),
+            nn.AdaptiveAvgPool2d((1, 1)),
+        )
+        self.classifier = nn.Sequential(
+            nn.Dropout(0.5),
+            nn.Linear(128, 10),
+        )
+
+    def forward(self, x):
+        x = self.features(x)
+        x = torch.flatten(x, 1)
+        x = self.classifier(x)
+        return x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;9.3 训练循环&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;model = CNN().cuda()
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)&lt;/p&gt;
-&lt;p&gt;for epoch in range(10):
-for inputs, labels in trainloader:
-inputs, labels = inputs.cuda(), labels.cuda()
-optimizer.zero_grad()
-outputs = model(inputs)
-loss = criterion(outputs, labels)
-loss.backward()
-optimizer.step()
-print(f&apos;Epoch {epoch+1}, Loss: {loss.item():.4f}&apos;)&lt;/p&gt;
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+for epoch in range(10):
+    for inputs, labels in trainloader:
+        inputs, labels = inputs.cuda(), labels.cuda()
+        optimizer.zero_grad()
+        outputs = model(inputs)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+    print(f&quot;Epoch {epoch + 1}, Loss: {loss.item():.4f}&quot;)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;hr /&gt;
-&lt;p&gt;十、总结：CNN 的核心价值&lt;/p&gt;
+&lt;h2&gt;十、总结：CNN 的核心价值&lt;/h2&gt;
 &lt;p&gt;🧠 CNN 的本质是“空间特征的层次化自动提取器” 。&lt;/p&gt;
 &lt;p&gt;它通过：&lt;/p&gt;
 &lt;ul&gt;
@@ -477,1161 +416,4 @@ print(f&apos;Epoch {epoch+1}, Loss: {loss.item():.4f}&apos;)&lt;/p&gt;
 &lt;li&gt;深度堆叠 → 实现从像素到语义的抽象&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;彻底改变了计算机视觉，并辐射到NLP、语音、生物、物理等众多领域。&lt;/p&gt;
-</content:encoded></item><item><title>Firefly 代码块示例</title><link>https://hyperthreading.cn/posts/code-examples/</link><guid isPermaLink="true">https://hyperthreading.cn/posts/code-examples/</guid><description>在Firefly中使用表达性代码的代码块在 Markdown 中的外观。</description><pubDate>Fri, 02 Jan 1970 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在这里，我们将探索如何使用 &lt;a href=&quot;https://expressive-code.com/&quot;&gt;Expressive Code&lt;/a&gt; 展示代码块。提供的示例基于官方文档，您可以参考以获取更多详细信息。&lt;/p&gt;
-&lt;h2&gt;表达性代码&lt;/h2&gt;
-&lt;h3&gt;语法高亮&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://expressive-code.com/key-features/syntax-highlighting/&quot;&gt;语法高亮&lt;/a&gt;&lt;/p&gt;
-&lt;h4&gt;常规语法高亮&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;console.log(&apos;此代码有语法高亮!&apos;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;渲染 ANSI 转义序列&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;ANSI colors:
-- Regular: [31mRed[0m [32mGreen[0m [33mYellow[0m [34mBlue[0m [35mMagenta[0m [36mCyan[0m
-- Bold:    [1;31mRed[0m [1;32mGreen[0m [1;33mYellow[0m [1;34mBlue[0m [1;35mMagenta[0m [1;36mCyan[0m
-- Dimmed:  [2;31mRed[0m [2;32mGreen[0m [2;33mYellow[0m [2;34mBlue[0m [2;35mMagenta[0m [2;36mCyan[0m
-
-256 colors (showing colors 160-177):
-[38;5;160m160 [38;5;161m161 [38;5;162m162 [38;5;163m163 [38;5;164m164 [38;5;165m165[0m
-[38;5;166m166 [38;5;167m167 [38;5;168m168 [38;5;169m169 [38;5;170m170 [38;5;171m171[0m
-[38;5;172m172 [38;5;173m173 [38;5;174m174 [38;5;175m175 [38;5;176m176 [38;5;177m177[0m
-
-Full RGB colors:
-[38;2;34;139;34mForestGreen - RGB(34, 139, 34)[0m
-
-Text formatting: [1mBold[0m [2mDimmed[0m [3mItalic[0m [4mUnderline[0m
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;编辑器和终端框架&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://expressive-code.com/key-features/frames/&quot;&gt;编辑器和终端框架&lt;/a&gt;&lt;/p&gt;
-&lt;h4&gt;代码编辑器框架&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;console.log(&apos;标题属性示例&apos;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;!-- src/content/index.html --&amp;gt;
-&amp;lt;div&amp;gt;文件名注释示例&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;终端框架&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;echo &quot;此终端框架没有标题&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code&gt;Write-Output &quot;这个有标题!&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;覆盖框架类型&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;echo &quot;看，没有框架!&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code&gt;# 如果不覆盖，这将是一个终端框架
-function Watch-Tail { Get-Content -Tail 20 -Wait $args }
-New-Alias tail Watch-Tail
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;文本和行标记&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://expressive-code.com/key-features/text-markers/&quot;&gt;文本和行标记&lt;/a&gt;&lt;/p&gt;
-&lt;h4&gt;标记整行和行范围&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;// 第1行 - 通过行号定位
-// 第2行
-// 第3行
-// 第4行 - 通过行号定位
-// 第5行
-// 第6行
-// 第7行 - 通过范围 &quot;7-8&quot; 定位
-// 第8行 - 通过范围 &quot;7-8&quot; 定位
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;选择行标记类型 (mark, ins, del)&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;function demo() {
-  console.log(&apos;此行标记为已删除&apos;)
-  // 此行和下一行标记为已插入
-  console.log(&apos;这是第二个插入行&apos;)
-
-  return &apos;此行使用中性默认标记类型&apos;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;为行标记添加标签&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;// labeled-line-markers.jsx
-&amp;lt;button
-  role=&quot;button&quot;
-  {...props}
-  value={value}
-  className={buttonClassName}
-  disabled={disabled}
-  active={active}
-&amp;gt;
-  {children &amp;amp;&amp;amp;
-    !active &amp;amp;&amp;amp;
-    (typeof children === &apos;string&apos; ? &amp;lt;span&amp;gt;{children}&amp;lt;/span&amp;gt; : children)}
-&amp;lt;/button&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;在单独行上添加长标签&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;// labeled-line-markers.jsx
-&amp;lt;button
-  role=&quot;button&quot;
-  {...props}
-
-  value={value}
-  className={buttonClassName}
-
-  disabled={disabled}
-  active={active}
-&amp;gt;
-
-  {children &amp;amp;&amp;amp;
-    !active &amp;amp;&amp;amp;
-    (typeof children === &apos;string&apos; ? &amp;lt;span&amp;gt;{children}&amp;lt;/span&amp;gt; : children)}
-&amp;lt;/button&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;使用类似 diff 的语法&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;+此行将标记为已插入
--此行将标记为已删除
-这是常规行
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code&gt;--- a/README.md
-+++ b/README.md
-@@ -1,3 +1,4 @@
-+this is an actual diff file
--all contents will remain unmodified
- no whitespace will be removed either
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;结合语法高亮和类似 diff 的语法&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;  function thisIsJavaScript() {
-    // 整个块都会以 JavaScript 高亮显示，
-    // 并且我们仍然可以为其添加 diff 标记！
--   console.log(&apos;要删除的旧代码&apos;)
-+   console.log(&apos;新的闪亮代码！&apos;)
-  }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;标记行内的单独文本&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;function demo() {
-  // 标记行内的任何给定文本
-  return &apos;支持给定文本的多个匹配项&apos;;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;正则表达式&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;console.log(&apos;单词 yes 和 yep 将被标记。&apos;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;转义正斜杠&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;echo &quot;Test&quot; &amp;gt; /home/test.txt
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;选择内联标记类型 (mark, ins, del)&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;function demo() {
-  console.log(&apos;这些是插入和删除的标记类型&apos;);
-  // return 语句使用默认标记类型
-  return true;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;自动换行&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://expressive-code.com/key-features/word-wrap/&quot;&gt;自动换行&lt;/a&gt;&lt;/p&gt;
-&lt;h4&gt;为每个块配置自动换行&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;// 启用换行的示例
-function getLongString() {
-  return &apos;这是一个非常长的字符串，除非容器极宽，否则很可能无法适应可用空间&apos;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code&gt;// wrap=false 的示例
-function getLongString() {
-  return &apos;这是一个非常长的字符串，除非容器极宽，否则很可能无法适应可用空间&apos;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;配置换行的缩进&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;// preserveIndent 示例（默认启用）
-function getLongString() {
-  return &apos;这是一个非常长的字符串，除非容器极宽，否则很可能无法适应可用空间&apos;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code&gt;// preserveIndent=false 的示例
-function getLongString() {
-  return &apos;这是一个非常长的字符串，除非容器极宽，否则很可能无法适应可用空间&apos;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;可折叠部分&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://expressive-code.com/plugins/collapsible-sections/&quot;&gt;可折叠部分&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;// 所有这些样板设置代码将被折叠
-import { someBoilerplateEngine } from &apos;@example/some-boilerplate&apos;
-import { evenMoreBoilerplate } from &apos;@example/even-more-boilerplate&apos;
-
-const engine = someBoilerplateEngine(evenMoreBoilerplate())
-
-// 这部分代码默认可见
-engine.doSomething(1, 2, 3, calcFn)
-
-function calcFn() {
-  // 您可以有多个折叠部分
-  const a = 1
-  const b = 2
-  const c = a + b
-
-  // 这将保持可见
-  console.log(`计算结果: ${a} + ${b} = ${c}`)
-  return c
-}
-
-// 直到块末尾的所有代码将再次被折叠
-engine.closeConnection()
-engine.freeMemory()
-engine.shutdown({ reason: &apos;示例样板代码结束&apos; })
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;行号&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://expressive-code.com/plugins/line-numbers/&quot;&gt;行号&lt;/a&gt;&lt;/p&gt;
-&lt;h3&gt;为每个块显示行号&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;// 此代码块将显示行号
-console.log(&apos;来自第2行的问候!&apos;)
-console.log(&apos;我在第3行&apos;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code&gt;// 此块禁用行号
-console.log(&apos;你好?&apos;)
-console.log(&apos;抱歉，你知道我在第几行吗?&apos;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;更改起始行号&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;console.log(&apos;来自第5行的问候!&apos;)
-console.log(&apos;我在第6行&apos;)
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Markdown Mermaid 图表</title><link>https://hyperthreading.cn/posts/markdown-mermaid/</link><guid isPermaLink="true">https://hyperthreading.cn/posts/markdown-mermaid/</guid><description>一个包含 Mermaid 的 Markdown 博客文章简单示例。</description><pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Markdown 中 Mermaid 图表完整指南&lt;/h1&gt;
-&lt;p&gt;本文演示如何在 Markdown 文档中使用 Mermaid 创建各种复杂图表，包括流程图、时序图、甘特图、类图和状态图。&lt;/p&gt;
-&lt;h2&gt;流程图示例&lt;/h2&gt;
-&lt;p&gt;流程图非常适合表示流程或算法步骤。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;graph TD
-    A[开始] --&amp;gt; B{条件检查}
-    B --&amp;gt;|是| C[处理步骤 1]
-    B --&amp;gt;|否| D[处理步骤 2]
-    C --&amp;gt; E[子过程]
-    D --&amp;gt; E
-    subgraph E [子过程详情]
-        E1[子步骤 1] --&amp;gt; E2[子步骤 2]
-        E2 --&amp;gt; E3[子步骤 3]
-    end
-    E --&amp;gt; F{另一个决策}
-    F --&amp;gt;|选项 1| G[结果 1]
-    F --&amp;gt;|选项 2| H[结果 2]
-    F --&amp;gt;|选项 3| I[结果 3]
-    G --&amp;gt; J[结束]
-    H --&amp;gt; J
-    I --&amp;gt; J
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;时序图示例&lt;/h2&gt;
-&lt;p&gt;时序图显示对象之间随时间的交互。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sequenceDiagram
-    participant User as 用户
-    participant WebApp as 网页应用
-    participant Server as 服务器
-    participant Database as 数据库
-
-    User-&amp;gt;&amp;gt;WebApp: 提交登录请求
-    WebApp-&amp;gt;&amp;gt;Server: 发送认证请求
-    Server-&amp;gt;&amp;gt;Database: 查询用户凭据
-    Database--&amp;gt;&amp;gt;Server: 返回用户数据
-    Server--&amp;gt;&amp;gt;WebApp: 返回认证结果
-    
-    alt 认证成功
-        WebApp-&amp;gt;&amp;gt;User: 显示欢迎页面
-        WebApp-&amp;gt;&amp;gt;Server: 请求用户数据
-        Server-&amp;gt;&amp;gt;Database: 获取用户偏好
-        Database--&amp;gt;&amp;gt;Server: 返回偏好设置
-        Server--&amp;gt;&amp;gt;WebApp: 返回用户数据
-        WebApp-&amp;gt;&amp;gt;User: 加载个性化界面
-    else 认证失败
-        WebApp-&amp;gt;&amp;gt;User: 显示错误消息
-        WebApp-&amp;gt;&amp;gt;User: 提示重新输入
-    end
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;甘特图示例&lt;/h2&gt;
-&lt;p&gt;甘特图非常适合显示项目进度和时间线。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;gantt
-    title 网站开发项目时间线
-    dateFormat  YYYY-MM-DD
-    axisFormat  %m/%d
-    
-    section 设计阶段
-    需求分析      :a1, 2023-10-01, 7d
-    UI设计                 :a2, after a1, 10d
-    原型创建        :a3, after a2, 5d
-    
-    section 开发阶段
-    前端开发      :b1, 2023-10-20, 15d
-    后端开发       :b2, after a2, 18d
-    数据库设计           :b3, after a1, 12d
-    
-    section 测试阶段
-    单元测试              :c1, after b1, 8d
-    集成测试       :c2, after b2, 10d
-    用户验收测试   :c3, after c2, 7d
-    
-    section 部署
-    生产环境部署     :d1, after c3, 3d
-    发布                    :milestone, after d1, 0d
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;类图示例&lt;/h2&gt;
-&lt;p&gt;类图显示系统的静态结构，包括类、属性、方法及其关系。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;classDiagram
-    class User {
-        +String username
-        +String password
-        +String email
-        +Boolean active
-        +login()
-        +logout()
-        +updateProfile()
-    }
-    
-    class Article {
-        +String title
-        +String content
-        +Date publishDate
-        +Boolean published
-        +publish()
-        +edit()
-        +delete()
-    }
-    
-    class Comment {
-        +String content
-        +Date commentDate
-        +addComment()
-        +deleteComment()
-    }
-    
-    class Category {
-        +String name
-        +String description
-        +addArticle()
-        +removeArticle()
-    }
-    
-    User &quot;1&quot; -- &quot;*&quot; Article : 写作
-    User &quot;1&quot; -- &quot;*&quot; Comment : 发表
-    Article &quot;1&quot; -- &quot;*&quot; Comment : 拥有
-    Article &quot;1&quot; -- &quot;*&quot; Category : 属于
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;状态图示例&lt;/h2&gt;
-&lt;p&gt;状态图显示对象在其生命周期中经历的状态序列。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;stateDiagram-v2
-    [*] --&amp;gt; 草稿
-    
-    草稿 --&amp;gt; 审核中 : 提交
-    审核中 --&amp;gt; 草稿 : 拒绝
-    审核中 --&amp;gt; 已批准 : 批准
-    已批准 --&amp;gt; 已发布 : 发布
-    已发布 --&amp;gt; 已归档 : 归档
-    已发布 --&amp;gt; 草稿 : 撤回
-    
-    state 已发布 {
-        [*] --&amp;gt; 活跃
-        活跃 --&amp;gt; 隐藏 : 临时隐藏
-        隐藏 --&amp;gt; 活跃 : 恢复
-        活跃 --&amp;gt; [*]
-        隐藏 --&amp;gt; [*]
-    }
-    
-    已归档 --&amp;gt; [*]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;饼图示例&lt;/h2&gt;
-&lt;p&gt;饼图非常适合显示比例和百分比数据。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;pie title 网站流量来源分析
-    &quot;搜索引擎&quot; : 45.6
-    &quot;直接访问&quot; : 30.1
-    &quot;社交媒体&quot; : 15.3
-    &quot;推荐链接&quot; : 6.4
-    &quot;其他来源&quot; : 2.6
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;总结&lt;/h2&gt;
-&lt;p&gt;Mermaid 是在 Markdown 文档中创建各种类型图表的强大工具。本文演示了如何使用流程图、时序图、甘特图、类图、状态图和饼图。这些图表可以帮助您更清晰地表达复杂的概念、流程和数据结构。&lt;/p&gt;
-&lt;p&gt;要使用 Mermaid，只需在代码块中指定 mermaid 语言，并使用简洁的文本语法描述图表。Mermaid 会自动将这些描述转换为美观的可视化图表。&lt;/p&gt;
-&lt;p&gt;尝试在您的下一篇技术博客文章或项目文档中使用 Mermaid 图表 - 它们将使您的内容更加专业且更易理解！&lt;/p&gt;
-</content:encoded></item><item><title>在文章中嵌入视频</title><link>https://hyperthreading.cn/posts/video/</link><guid isPermaLink="true">https://hyperthreading.cn/posts/video/</guid><description>这篇文章演示如何在博客文章中嵌入视频。</description><pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;只需从 YouTube 或其他平台复制嵌入代码，然后将其粘贴到 markdown 文件中。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;---
-title: 在文章中嵌入视频
-published: 2023-10-19
-// ...
----
-
-&amp;lt;iframe width=&quot;100%&quot; height=&quot;468&quot; src=&quot;https://www.youtube.com/embed/5gIf0_xpFPI?si=N1WTorLKL0uwLsU_&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allowfullscreen&amp;gt;&amp;lt;/iframe&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;YouTube&lt;/h2&gt;
-&lt;p&gt;&amp;lt;iframe width=&quot;100%&quot; height=&quot;468&quot; src=&quot;https://www.youtube.com/embed/5gIf0_xpFPI?si=N1WTorLKL0uwLsU_&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&amp;gt;&amp;lt;/iframe&amp;gt;&lt;/p&gt;
-&lt;h2&gt;Bilibili&lt;/h2&gt;
-&lt;p&gt;&amp;lt;iframe width=&quot;100%&quot; height=&quot;468&quot; src=&quot;//player.bilibili.com/player.html?bvid=BV1fK4y1s7Qf&amp;amp;p=1&amp;amp;autoplay=0&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot; &amp;amp;autoplay=0&amp;gt; &amp;lt;/iframe&amp;gt;&lt;/p&gt;
-</content:encoded></item><item><title>Markdown 扩展功能</title><link>https://hyperthreading.cn/posts/markdown-extended/</link><guid isPermaLink="true">https://hyperthreading.cn/posts/markdown-extended/</guid><description>了解 Firefly 中的 Markdown 功能</description><pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;GitHub 仓库卡片&lt;/h2&gt;
-&lt;p&gt;您可以添加链接到 GitHub 仓库的动态卡片，在页面加载时，仓库信息会从 GitHub API 获取。&lt;/p&gt;
-&lt;p&gt;::github{repo=&quot;CuteLeaf/Firefly&quot;}&lt;/p&gt;
-&lt;p&gt;使用代码 &lt;code&gt;::github{repo=&quot;CuteLeaf/Firefly&quot;}&lt;/code&gt; 创建 GitHub 仓库卡片。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;::github{repo=&quot;CuteLeaf/Firefly&quot;}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;提醒框&lt;/h2&gt;
-&lt;p&gt;支持以下类型的提醒框：&lt;code&gt;note&lt;/code&gt; &lt;code&gt;tip&lt;/code&gt; &lt;code&gt;important&lt;/code&gt; &lt;code&gt;warning&lt;/code&gt; &lt;code&gt;caution&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;:::note
-突出显示用户应该考虑的信息，即使在快速浏览时也是如此。
-:::&lt;/p&gt;
-&lt;p&gt;:::tip
-可选信息，帮助用户更成功。
-:::&lt;/p&gt;
-&lt;p&gt;:::important
-用户成功所必需的关键信息。
-:::&lt;/p&gt;
-&lt;p&gt;:::warning
-由于潜在风险需要用户立即注意的关键内容。
-:::&lt;/p&gt;
-&lt;p&gt;:::caution
-行动的负面潜在后果。
-:::&lt;/p&gt;
-&lt;h3&gt;基本语法&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;:::note
-突出显示用户应该考虑的信息，即使在快速浏览时也是如此。
-:::
-
-:::tip
-可选信息，帮助用户更成功。
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;自定义标题&lt;/h3&gt;
-&lt;p&gt;可以自定义提醒框的标题。&lt;/p&gt;
-&lt;p&gt;:::note[我的自定义标题]
-这是一个带有自定义标题的注释。
-:::&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::note[我的自定义标题]
-这是一个带有自定义标题的注释。
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;GitHub 语法&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;[!TIP]
-也支持 &lt;a href=&quot;https://github.com/orgs/community/discussions/16925&quot;&gt;GitHub 语法&lt;/a&gt;。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; [!NOTE]
-&amp;gt; 也支持 GitHub 语法。
-
-&amp;gt; [!TIP]
-&amp;gt; 也支持 GitHub 语法。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;剧透&lt;/h3&gt;
-&lt;p&gt;您可以为文本添加剧透。文本也支持 &lt;strong&gt;Markdown&lt;/strong&gt; 语法。&lt;/p&gt;
-&lt;p&gt;内容 :spoiler[被隐藏了 &lt;strong&gt;哈哈&lt;/strong&gt;]！&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;内容 :spoiler[被隐藏了 **哈哈**]！&lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Markdown 教程</title><link>https://hyperthreading.cn/posts/markdown-tutorial/</link><guid isPermaLink="true">https://hyperthreading.cn/posts/markdown-tutorial/</guid><description>一个简明的 Markdown 博客示例。</description><pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Markdown 教程&lt;/h1&gt;
-&lt;p&gt;这是一个展示如何编写 Markdown 文件的示例。本文档汇总了核心语法与常见扩展（GFM）。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#block-elements&quot;&gt;块级元素&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#paragraphs-and-line-breaks&quot;&gt;段落与换行&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#headers&quot;&gt;标题&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#blockquotes&quot;&gt;引用&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#lists&quot;&gt;列表&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#code-blocks&quot;&gt;代码块&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#horizontal-rules&quot;&gt;分割线&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#table&quot;&gt;表格&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#span-elements&quot;&gt;内联元素&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#links&quot;&gt;链接&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#emphasis&quot;&gt;强调&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#code&quot;&gt;行内代码&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#images&quot;&gt;图片&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strikethrough&quot;&gt;删除线&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#miscellaneous&quot;&gt;杂项&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#automatic-links&quot;&gt;自动链接&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#backslash-escapes&quot;&gt;反斜杠转义&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#inline-html&quot;&gt;内联 HTML&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&amp;lt;a id=&quot;block-elements&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h2&gt;块级元素&lt;/h2&gt;
-&lt;p&gt;&amp;lt;a id=&quot;paragraphs-and-line-breaks&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;段落与换行&lt;/h3&gt;
-&lt;h4&gt;段落&lt;/h4&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;p&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;使用一个或多个空行分隔段落。（仅包含&lt;strong&gt;空格&lt;/strong&gt;或&lt;strong&gt;制表符&lt;/strong&gt;的行也视为空行。）&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;This will be
-inline.
-
-This is second paragraph.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;This will be
-inline.&lt;/p&gt;
-&lt;p&gt;This is second paragraph.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h4&gt;换行&lt;/h4&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;br /&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;在行末添加&lt;strong&gt;两个或更多空格&lt;/strong&gt;来产生换行。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;This will be not
-inline.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;This will be not&lt;br /&gt;
-inline.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;headers&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;标题&lt;/h3&gt;
-&lt;p&gt;Markdown 支持两种标题样式：Setext 与 atx。&lt;/p&gt;
-&lt;h4&gt;Setext&lt;/h4&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;h2&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;使用&lt;strong&gt;等号 (=)&lt;/strong&gt; 表示 &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;、使用&lt;strong&gt;短横线 (-)&lt;/strong&gt; 表示 &lt;code&gt;&amp;lt;h2&amp;gt;&lt;/code&gt;，数量不限，作为“下划线”。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;This is an H1
-=============
-This is an H2
--------------
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h1&gt;This is an H1&lt;/h1&gt;
-&lt;h2&gt;This is an H2&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;h4&gt;atx&lt;/h4&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;h2&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;h3&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;h4&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;h5&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;在行首使用 1-6 个&lt;strong&gt;井号 (#)&lt;/strong&gt;，对应 &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; 至 &lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# This is an H1
-## This is an H2
-###### This is an H6
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h1&gt;This is an H1&lt;/h1&gt;
-&lt;h2&gt;This is an H2&lt;/h2&gt;
-&lt;h6&gt;This is an H6&lt;/h6&gt;
-&lt;hr /&gt;
-&lt;p&gt;可选：你可以在行尾“闭合” atx 标题。末尾的井号数量&lt;strong&gt;不必与&lt;/strong&gt;开头一致。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# This is an H1 #
-## This is an H2 ##
-### This is an H3 ######
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h1&gt;This is an H1&lt;/h1&gt;
-&lt;h2&gt;This is an H2&lt;/h2&gt;
-&lt;h3&gt;This is an H3&lt;/h3&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;blockquotes&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;引用&lt;/h3&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;blockquote&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Markdown 使用邮件风格的 &lt;strong&gt;&amp;gt;&lt;/strong&gt; 作为引用符号。若手动换行并在每行前加 &amp;gt;，显示效果最佳。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-&amp;gt; consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-&amp;gt; Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
-&amp;gt;
-&amp;gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-&amp;gt; id sem consectetuer libero luctus adipiscing.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;blockquote&gt;
-&lt;p&gt;This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.&lt;/p&gt;
-&lt;p&gt;Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-id sem consectetuer libero luctus adipiscing.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr /&gt;
-&lt;p&gt;Markdown 允许“偷懒”：在一个硬换行段落中，只在第一行前加 &amp;gt; 即可。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
-
-&amp;gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-id sem consectetuer libero luctus adipiscing.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;blockquote&gt;
-&lt;p&gt;This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-id sem consectetuer libero luctus adipiscing.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr /&gt;
-&lt;p&gt;引用可以嵌套（引用中的引用），通过增加 &amp;gt; 层级实现。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; This is the first level of quoting.
-&amp;gt;
-&amp;gt; &amp;gt; This is nested blockquote.
-&amp;gt;
-&amp;gt; Back to the first level.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;blockquote&gt;
-&lt;p&gt;This is the first level of quoting.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;This is nested blockquote.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Back to the first level.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr /&gt;
-&lt;p&gt;引用内可包含其他 Markdown 元素，包括标题、列表与代码块。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; ## This is a header.
-&amp;gt;
-&amp;gt; 1.   This is the first list item.
-&amp;gt; 2.   This is the second list item.
-&amp;gt;
-&amp;gt; Here&apos;s some example code:
-&amp;gt;
-&amp;gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;blockquote&gt;
-&lt;h2&gt;This is a header.&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;This is the first list item.&lt;/li&gt;
-&lt;li&gt;This is the second list item.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Here&apos;s some example code:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;return shell_exec(&quot;echo $input | $markdown_script&quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;lists&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;列表&lt;/h3&gt;
-&lt;p&gt;Markdown 支持有序（数字）与无序（圆点）列表。&lt;/p&gt;
-&lt;h4&gt;无序列表&lt;/h4&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;ul&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;无序列表可使用 &lt;strong&gt;星号 (*)&lt;/strong&gt;、&lt;strong&gt;加号 (+)&lt;/strong&gt; 或 &lt;strong&gt;短横线 (-)&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;*   Red
-*   Green
-*   Blue
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;ul&gt;
-&lt;li&gt;Red&lt;/li&gt;
-&lt;li&gt;Green&lt;/li&gt;
-&lt;li&gt;Blue&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-&lt;p&gt;等价于：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;+   Red
-+   Green
-+   Blue
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;或者：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;-   Red
--   Green
--   Blue
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;有序列表&lt;/h4&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;ol&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;有序列表使用数字加英文句点：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;1.  Bird
-2.  McHale
-3.  Parish
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li&gt;Bird&lt;/li&gt;
-&lt;li&gt;McHale&lt;/li&gt;
-&lt;li&gt;Parish&lt;/li&gt;
-&lt;/ol&gt;
-&lt;hr /&gt;
-&lt;p&gt;注意：像下面这样可能会“意外触发”有序列表：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;1986. What a great season.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li&gt;What a great season.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;hr /&gt;
-&lt;p&gt;你可以用&lt;strong&gt;反斜杠转义 (\)&lt;/strong&gt; 句点：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;1986\. What a great season.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;1986. What a great season.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h4&gt;列表中的缩进内容&lt;/h4&gt;
-&lt;h5&gt;列表项里的引用&lt;/h5&gt;
-&lt;p&gt;在列表项内放置引用，需要将 &amp;gt; 符号整体缩进：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;*   A list item with a blockquote:
-
-    &amp;gt; This is a blockquote
-    &amp;gt; inside a list item.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;A list item with a blockquote:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;This is a blockquote
-inside a list item.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-&lt;h5&gt;列表项里的代码块&lt;/h5&gt;
-&lt;p&gt;在列表项内放置代码块，需要缩进两层——&lt;strong&gt;8 个空格&lt;/strong&gt;或&lt;strong&gt;两个 Tab&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;*   A list item with a code block:
-
-        &amp;lt;code goes here&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;A list item with a code block:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;code goes here&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-&lt;h5&gt;嵌套列表&lt;/h5&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;* A
-  * A1
-  * A2
-* B
-* C
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;ul&gt;
-&lt;li&gt;A
-&lt;ul&gt;
-&lt;li&gt;A1&lt;/li&gt;
-&lt;li&gt;A2&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;B&lt;/li&gt;
-&lt;li&gt;C&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;code-blocks&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;代码块&lt;/h3&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;pre&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;将代码块中的每行缩进至少&lt;strong&gt;4 个空格&lt;/strong&gt;或&lt;strong&gt;1 个制表符&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;This is a normal paragraph:
-
-    This is a code block.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;This is a normal paragraph:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;This is a code block.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;p&gt;代码块会一直持续，直到遇到未缩进的行（或文末）。&lt;/p&gt;
-&lt;p&gt;在代码块内，&lt;strong&gt;与号 (&amp;amp;)&lt;/strong&gt; 和尖括号 &lt;strong&gt;(&amp;lt; &amp;gt;)&lt;/strong&gt; 会自动转为 HTML 实体。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;    &amp;lt;div class=&quot;footer&quot;&amp;gt;
-        &amp;amp;copy; 2004 Foo Corporation
-    &amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&quot;footer&quot;&amp;gt;
-    &amp;amp;copy; 2004 Foo Corporation
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;p&gt;下文的“围栏代码块”和“语法高亮”属于扩展语法，你也可以用它们来书写代码块。&lt;/p&gt;
-&lt;h4&gt;围栏代码块&lt;/h4&gt;
-&lt;p&gt;使用成对的反引号围起来（如下所示），就不需要四空格缩进了。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Here&apos;s an example:
-
-```
-function test() {
-  console.log(&quot;notice the blank line before this function?&quot;);
-}
-```
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;Here&apos;s an example:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;function test() {
-  console.log(&quot;notice the blank line before this function?&quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;h4&gt;语法高亮&lt;/h4&gt;
-&lt;p&gt;在围栏代码块后添加可选的语言标识，即可启用语法高亮（参见支持语言列表）。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;```ruby
-require &apos;redcarpet&apos;
-markdown = Redcarpet.new(&quot;Hello World!&quot;)
-puts markdown.to_html
-```
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code&gt;require &apos;redcarpet&apos;
-markdown = Redcarpet.new(&quot;Hello World!&quot;)
-puts markdown.to_html
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;horizontal-rules&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;分割线（水平线）&lt;/h3&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;hr /&amp;gt;&lt;/code&gt;
-一行中放置&lt;strong&gt;三个或以上的短横线 (-)、星号 (*) 或下划线 (_)&lt;/strong&gt;。符号之间允许有空格。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;* * *
-***
-*****
-- - -
----------------------------------------
-___
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;hr /&gt;
-&lt;hr /&gt;
-&lt;hr /&gt;
-&lt;hr /&gt;
-&lt;hr /&gt;
-&lt;hr /&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;table&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;表格&lt;/h3&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;这是扩展语法。&lt;/p&gt;
-&lt;p&gt;用&lt;strong&gt;竖线 (|)&lt;/strong&gt; 分隔列，用&lt;strong&gt;短横线 (-)&lt;/strong&gt; 分隔表头，使用&lt;strong&gt;冒号 (:)&lt;/strong&gt; 指定对齐方式。&lt;/p&gt;
-&lt;p&gt;两侧的&lt;strong&gt;竖线 (|)&lt;/strong&gt; 与对齐可选。用于表头分隔时，每列至少需要 &lt;strong&gt;3 个短横线&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;| Left | Center | Right |
-|:-----|:------:|------:|
-|aaa   |bbb     |ccc    |
-|ddd   |eee     |fff    |
-
- A | B
----|---
-123|456
-
-
-A |B
---|--
-12|45
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Left&lt;/th&gt;
-&lt;th&gt;Center&lt;/th&gt;
-&lt;th&gt;Right&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;aaa&lt;/td&gt;
-&lt;td&gt;bbb&lt;/td&gt;
-&lt;td&gt;ccc&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;ddd&lt;/td&gt;
-&lt;td&gt;eee&lt;/td&gt;
-&lt;td&gt;fff&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;A&lt;/th&gt;
-&lt;th&gt;B&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;123&lt;/td&gt;
-&lt;td&gt;456&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;A&lt;/th&gt;
-&lt;th&gt;B&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;12&lt;/td&gt;
-&lt;td&gt;45&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;span-elements&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h2&gt;内联元素&lt;/h2&gt;
-&lt;p&gt;&amp;lt;a id=&quot;links&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;链接&lt;/h3&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;a&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Markdown 支持两种链接样式：行内链接与引用式链接。&lt;/p&gt;
-&lt;h4&gt;行内链接&lt;/h4&gt;
-&lt;p&gt;行内链接格式：&lt;code&gt;[文本](URL &quot;标题&quot;)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;标题可选。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;This is [an example](http://example.com/ &quot;Title&quot;) inline link.
-
-[This link](http://example.net/) has no title attribute.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;This is &lt;a href=&quot;http://example.com/&quot;&gt;an example&lt;/a&gt; inline link.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://example.net/&quot;&gt;This link&lt;/a&gt; has no title attribute.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;如果引用同一站点的本地资源，可以使用相对路径：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;See my [About](/about/) page for details.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;See my &lt;a href=&quot;/about/&quot;&gt;About&lt;/a&gt; page for details.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h4&gt;引用式链接&lt;/h4&gt;
-&lt;p&gt;可以预定义链接引用。定义格式：&lt;code&gt;[id]: URL &quot;标题&quot;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;标题同样可选。引用时使用：&lt;code&gt;[文本][id]&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[id]: http://example.com/  &quot;Optional Title Here&quot;
-This is [an example][id] reference-style link.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;This is &lt;a href=&quot;http://example.com/&quot;&gt;an example&lt;/a&gt; reference-style link.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;说明：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;方括号中包含链接标识（&lt;strong&gt;不区分大小写&lt;/strong&gt;，可在左侧缩进最多三格空格）；&lt;/li&gt;
-&lt;li&gt;随后是冒号；&lt;/li&gt;
-&lt;li&gt;再跟一个或多个空格（或 tab）；&lt;/li&gt;
-&lt;li&gt;然后是链接 URL；&lt;/li&gt;
-&lt;li&gt;URL 可选地用尖括号包裹；&lt;/li&gt;
-&lt;li&gt;可选地跟随标题属性，用引号或圆括号包裹。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;以下三种定义等价：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[foo]: http://example.com/  &quot;Optional Title Here&quot;
-[foo]: http://example.com/  &apos;Optional Title Here&apos;
-[foo]: http://example.com/  (Optional Title Here)
-[foo]: &amp;lt;http://example.com/&amp;gt;  &quot;Optional Title Here&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果使用空的方括号，则链接文本本身会作为名称。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[Google]: http://google.com/
-[Google][]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;a href=&quot;http://google.com/&quot;&gt;Google&lt;/a&gt;&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;emphasis&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;强调&lt;/h3&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;em&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;strong&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Markdown 使用 &lt;strong&gt;星号 (*)&lt;/strong&gt; 或 &lt;strong&gt;下划线 (_)&lt;/strong&gt; 表示强调。&lt;strong&gt;一个分隔符&lt;/strong&gt;对应 &lt;code&gt;&amp;lt;em&amp;gt;&lt;/code&gt;；&lt;strong&gt;两个分隔符&lt;/strong&gt;对应 &lt;code&gt;&amp;lt;strong&amp;gt;&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;*single asterisks*
-
-_single underscores_
-
-**double asterisks**
-
-__double underscores__
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;em&gt;single asterisks&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;single underscores&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;double asterisks&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;double underscores&lt;/strong&gt;&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;但如果两侧有空格，则会被视作普通字符而非强调语法。&lt;/p&gt;
-&lt;p&gt;你可以使用反斜杠进行转义：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;\*this text is surrounded by literal asterisks\*
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;*this text is surrounded by literal asterisks*&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;code&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;行内代码&lt;/h3&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;用&lt;strong&gt;反引号 (`)&lt;/strong&gt; 包裹。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Use the `printf()` function.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;Use the &lt;code&gt;printf()&lt;/code&gt; function.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;若行内代码中需要包含反引号字符，可使用&lt;strong&gt;多重反引号&lt;/strong&gt;作为定界符：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;``There is a literal backtick (`) here.``
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;code&gt;There is a literal backtick (`) here.&lt;/code&gt;&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;行内代码两侧的定界符允许包含空格（开头一个、结尾一个），方便在代码起始或结尾放置反引号字符：&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;A single backtick in a code span: `` ` ``
-
-A backtick-delimited string in a code span: `` `foo` ``
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;A single backtick in a code span: &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;A backtick-delimited string in a code span: &lt;code&gt;`foo`&lt;/code&gt;&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;images&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;图片&lt;/h3&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;img /&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Markdown 的图片语法与链接类似，支持行内与引用两种方式。&lt;/p&gt;
-&lt;h4&gt;行内图片&lt;/h4&gt;
-&lt;p&gt;行内图片语法：&lt;code&gt;![替代文本](URL &quot;标题&quot;)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;标题可选。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;![Alt text](/path/to/img.jpg)
-
-![Alt text](/path/to/img.jpg &quot;Optional title&quot;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;https://s2.loli.net/2024/08/20/5fszgXeOxmL3Wdv.webp&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://s2.loli.net/2024/08/20/5fszgXeOxmL3Wdv.webp&quot; alt=&quot;Alt text&quot; title=&quot;Optional title&quot; /&gt;&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;说明：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;一个感叹号 !；&lt;/li&gt;
-&lt;li&gt;后接方括号，放置图片的替代文本；&lt;/li&gt;
-&lt;li&gt;再接圆括号，内含图片 URL/路径，及可选的标题（引号包裹）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;引用式图片&lt;/h4&gt;
-&lt;p&gt;引用式图片语法：&lt;code&gt;![替代文本][id]&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[img id]: https://s2.loli.net/2024/08/20/5fszgXeOxmL3Wdv.webp  &quot;Optional title attribute&quot;
-![Alt text][img id]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;https://s2.loli.net/2024/08/20/5fszgXeOxmL3Wdv.webp&quot; alt=&quot;Alt text&quot; title=&quot;Optional title attribute&quot; /&gt;&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;strikethrough&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;删除线&lt;/h3&gt;
-&lt;p&gt;HTML 标签：&lt;code&gt;&amp;lt;del&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;这是扩展语法。&lt;/p&gt;
-&lt;p&gt;GFM 增加了删除线语法。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;~~Mistaken text.~~
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;s&gt;Mistaken text.&lt;/s&gt;&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;miscellaneous&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h2&gt;杂项&lt;/h2&gt;
-&lt;p&gt;&amp;lt;a id=&quot;automatic-links&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;自动链接&lt;/h3&gt;
-&lt;p&gt;Markdown 支持一种便捷写法来创建“自动链接”（URL 与邮箱地址）：只需用尖括号将其包住即可。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;http://example.com/&amp;gt;
-
-&amp;lt;address@example.com&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;a href=&quot;http://example.com/&quot;&gt;http://example.com/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;mailto:address@example.com&quot;&gt;address@example.com&lt;/a&gt;&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;GFM 会自动识别标准 URL 并转换为链接。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;https://github.com/emn178/markdown
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;https://github.com/emn178/markdown&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;a id=&quot;backslash-escapes&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h3&gt;反斜杠转义&lt;/h3&gt;
-&lt;p&gt;Markdown 允许使用反斜杠来转义那些本用于 Markdown 语法的特殊字符，使其按字面显示。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;\*literal asterisks\*
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;*literal asterisks*&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;以下字符可通过反斜杠转义以按字面量输出：&lt;/p&gt;
-&lt;p&gt;Code:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;\   backslash
-`   backtick
-*   asterisk
-_   underscore
-{}  curly braces
-[]  square brackets
-()  parentheses
-#   hash mark
-+   plus sign
--   minus sign (hyphen)
-.   dot
-!   exclamation mark
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&amp;lt;a id=&quot;inline-html&quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/p&gt;
-&lt;h2&gt;内联 HTML&lt;/h2&gt;
-&lt;p&gt;对于 Markdown 语法未覆盖的标记，直接使用原生 HTML 即可。无需特别声明从 Markdown 切换到 HTML，直接写标签就行。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;This is a regular paragraph.
-
-&amp;lt;table&amp;gt;
-    &amp;lt;tr&amp;gt;
-        &amp;lt;td&amp;gt;Foo&amp;lt;/td&amp;gt;
-    &amp;lt;/tr&amp;gt;
-&amp;lt;/table&amp;gt;
-
-This is another regular paragraph.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;This is a regular paragraph.&lt;/p&gt;
-&lt;p&gt;&amp;lt;table&amp;gt;
-&amp;lt;tr&amp;gt;
-&amp;lt;td&amp;gt;Foo&amp;lt;/td&amp;gt;
-&amp;lt;/tr&amp;gt;
-&amp;lt;/table&amp;gt;&lt;/p&gt;
-&lt;p&gt;This is another regular paragraph.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;请注意：在&lt;strong&gt;块级 HTML 标签&lt;/strong&gt;内不会处理 Markdown 语法。&lt;/p&gt;
-&lt;p&gt;与块级标签不同，在&lt;strong&gt;行内级标签&lt;/strong&gt;内会处理 Markdown 语法。&lt;/p&gt;
-&lt;p&gt;代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;span&amp;gt;**Work**&amp;lt;/span&amp;gt;
-
-&amp;lt;div&amp;gt;
-    **No Work**
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;预览：&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&amp;lt;span&amp;gt;&lt;strong&gt;Work&lt;/strong&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
-&lt;p&gt;&amp;lt;div&amp;gt;
-&lt;strong&gt;No Work&lt;/strong&gt;
-&amp;lt;/div&amp;gt;&lt;/p&gt;
-&lt;hr /&gt;
 </content:encoded></item></channel></rss>
