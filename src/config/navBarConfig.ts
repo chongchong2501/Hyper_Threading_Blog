@@ -32,12 +32,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 				external: true,
 				icon: "fa6-brands:bilibili",
 			},
-			{
-				name: "Bento",
-				url: "https://bento.me/chongchong",
-				external: true,
-				icon: "fa6-solid:link",
-			},
 		],
 	});
 
