@@ -6,7 +6,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	enable: true, // 启用音乐播放器功能
 
 	// 使用方式：'meting' 或 'local'
-	mode: "meting", // "meting" 使用 Meting API，"local" 使用本地音乐列表
+	mode: "local", // "meting" 使用 Meting API，"local" 使用本地音乐列表
 
 	// Meting API 配置
 	meting: {
@@ -52,9 +52,9 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 			{
 				name: "Five Hundred Miles",
 				artist: "Justin Timberlake / Carey Mulligan / Stark Sands",
-				url: "/assets/music/mp3/Justin Timberlake&Carey Mulligan&Stark Sands-Five Hundred Miles.mp3",
+				url: "/assets/music/mp3/Five Hundred Miles.mp3",
 				cover: "/assets/music/cover/Five Hundred Miles.jpeg",
-				lrc: "/assets/music/word/Justin Timberlake&Carey Mulligan&Stark Sands-Five Hundred Miles.lrc",
+				lrc: "/assets/music/word/Five Hundred Miles.lrc",
 			},
 			{
 				name: "出现又离开",
