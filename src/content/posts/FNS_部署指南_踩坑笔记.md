@@ -1,15 +1,12 @@
 ---
 title: FNS 部署指南与踩坑笔记
 published: 2026-04-28
-pinned: false
 description: 记录 Fast Note Sync Service 在 Ubuntu 服务器上的部署流程、Nginx Proxy Manager 反代配置，以及 Cloudflare、Obsidian 插件接入中的常见踩坑与解决方案。
-tags: [FNS, Obsidian, Nginx Proxy Manager, Cloudflare, 部署指南]
+tags: [Fast Note Sync, Obsidian, 部署指南]
 category: 部署运维
 draft: false
 image: server
 ---
-
-
 # Fast Note Sync Service (FNS) 部署指南 & 踩坑笔记
 
 > 基于 [haierkeys/fast-note-sync-service](https://github.com/haierkeys/fast-note-sync-service) 官方仓库 + 真实部署踩坑记录整理  
