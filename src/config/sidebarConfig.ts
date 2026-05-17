@@ -82,10 +82,10 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			},
 		},
 		{
-			// 组件类型：广告栏组件 1
-			type: "advertisement",
+			// 组件类型：推荐文章组件
+			type: "relatedPosts",
 			// 是否启用该组件
-			enable: false,
+			enable: true,
 			// 组件显示顺序
 			order: 5,
 			// 组件位置
@@ -94,6 +94,20 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			class: "onload-animation",
 			// 动画延迟时间
 			animationDelay: 300,
+		},
+		{
+			// 组件类型：广告栏组件 1
+			type: "advertisement",
+			// 是否启用该组件
+			enable: false,
+			// 组件显示顺序
+			order: 6,
+			// 组件位置
+			position: "sticky",
+			// CSS 类名
+			class: "onload-animation",
+			// 动画延迟时间
+			animationDelay: 350,
 			// 配置ID：使用第一个广告配置
 			configId: "ad1",
 		},

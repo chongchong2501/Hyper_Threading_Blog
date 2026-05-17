@@ -75,6 +75,8 @@ const jsonLd = {
   setOGTypeArticle={true}
   postSlug={entry.id}
   headings={headings}
+  currentPostTags={entry.data.tags ?? []}
+  currentPost={entry}
 >
   <script
     is:inline

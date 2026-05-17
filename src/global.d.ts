@@ -8,10 +8,6 @@ declare global {
 	interface Window {
 		// biome-ignore lint/suspicious/noExplicitAny: External library
 		swup: any;
-		live2dModelInitialized?: boolean;
-		spineModelInitialized?: boolean;
-		// biome-ignore lint/suspicious/noExplicitAny: External library
-		spinePlayerInstance?: any;
 		pagefind: {
 			search: (query: string) => Promise<{
 				results: Array<{

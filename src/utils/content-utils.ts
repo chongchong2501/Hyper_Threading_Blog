@@ -36,6 +36,88 @@ export async function getSortedPosts() {
 
 	return sorted;
 }
+
+type RelatedPostCandidate = {
+	post: CollectionEntry<"posts">;
+	sharedTagCount: number;
+	sameCategory: boolean;
+	publishedTime: number;
+};
+
+/**
+ * 函数级注释：统计两篇文章之间的共同标签数量，作为相关推荐的第一优先级信号。
+ */
+function getSharedTagCount(currentTags: string[], candidateTags: string[]): number {
+	if (currentTags.length === 0 || candidateTags.length === 0) {
+		return 0;
+	}
+
+	const currentTagSet = new Set(
+		currentTags.map((tag) => tag.trim()).filter(Boolean),
+	);
+	return candidateTags.reduce((count, tag) => {
+		return currentTagSet.has(tag.trim()) ? count + 1 : count;
+	}, 0);
+}
+
+/**
+ * 函数级注释：判断候选文章是否与当前文章属于同一分类，作为第二优先级排序信号。
+ */
+function isSameCategory(
+	currentCategory: string | null | undefined,
+	candidateCategory: string | null | undefined,
+): boolean {
+	if (!currentCategory || !candidateCategory) {
+		return false;
+	}
+
+	return currentCategory.trim() === candidateCategory.trim();
+}
+
+/**
+ * 函数级注释：为文章页生成推荐文章列表，按共同标签数、同分类、发布时间依次排序。
+ */
+export async function getRelatedPosts(
+	currentPost: CollectionEntry<"posts">,
+	limit = 5,
+): Promise<CollectionEntry<"posts">[]> {
+	const allPosts = await getCollection("posts");
+	const safeLimit = Math.max(0, limit);
+
+	const relatedCandidates: RelatedPostCandidate[] = allPosts
+		.filter((post) => post.id !== currentPost.id && post.data.draft !== true)
+		.map((post) => ({
+			post,
+			sharedTagCount: getSharedTagCount(
+				currentPost.data.tags ?? [],
+				post.data.tags ?? [],
+			),
+			sameCategory: isSameCategory(
+				currentPost.data.category,
+				post.data.category,
+			),
+			publishedTime: new Date(post.data.published).getTime(),
+		}));
+
+	relatedCandidates.sort((a, b) => {
+		if (b.sharedTagCount !== a.sharedTagCount) {
+			return b.sharedTagCount - a.sharedTagCount;
+		}
+
+		if (a.sameCategory !== b.sameCategory) {
+			return Number(b.sameCategory) - Number(a.sameCategory);
+		}
+
+		if (b.publishedTime !== a.publishedTime) {
+			return b.publishedTime - a.publishedTime;
+		}
+
+		return a.post.data.title.localeCompare(b.post.data.title);
+	});
+
+	return relatedCandidates.slice(0, safeLimit).map(({ post }) => post);
+}
+
 export type PostForList = {
 	id: string;
 	data: CollectionEntry<"posts">["data"];

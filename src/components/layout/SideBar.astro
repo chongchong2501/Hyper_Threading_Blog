@@ -1,10 +1,12 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import type { MarkdownHeading } from "astro";
 import Profile from "@/components/content/Profile.astro";
 import Advertisement from "@/components/widget/Advertisement.astro";
 import Announcement from "@/components/widget/Announcement.astro";
 import Calendar from "@/components/widget/Calendar.astro";
 import Categories from "@/components/widget/Categories.astro";
+import RelatedPosts from "@/components/widget/RelatedPosts.astro";
 import SidebarTOC from "@/components/widget/SidebarTOC.astro";
 import SiteStats from "@/components/widget/SiteStats.astro";
 import Tags from "@/components/widget/Tags.astro";
@@ -14,9 +16,16 @@ import { widgetManager } from "@/utils/widget-manager";
 interface Props {
 	class?: string;
 	headings?: MarkdownHeading[];
+	currentPostTags?: string[];
+	currentPost?: CollectionEntry<"posts">;
 }
 
-const { class: className, headings } = Astro.props;
+const {
+	class: className,
+	headings,
+	currentPostTags = [],
+	currentPost,
+} = Astro.props;
 
 // 获取配置的侧边栏位置
 const sidebarPosition = widgetManager.getConfig().position;
@@ -41,6 +50,7 @@ const componentTypeToId = {
 	announcement: "announcement",
 	categories: "categories",
 	tags: "tags",
+	relatedPosts: "related-posts",
 	advertisement: "advertisement",
 };
 
@@ -82,6 +92,7 @@ const componentMap = {
 	announcement: Announcement,
 	categories: Categories,
 	tags: Tags,
+	relatedPosts: RelatedPosts,
 	sidebarToc: SidebarTOC,
 	advertisement: Advertisement,
 	stats: SiteStats,
@@ -113,6 +124,9 @@ function renderComponent(
 			class: componentClass,
 			style: componentStyle,
 			headings: headings ?? [],
+			tags: component.type === "tags" ? currentPostTags : undefined,
+			currentPost:
+				component.type === "relatedPosts" ? currentPost : undefined,
 			configId: component.configId, // 传递configId给Advertisement组件
 			...component.customProps,
 		},

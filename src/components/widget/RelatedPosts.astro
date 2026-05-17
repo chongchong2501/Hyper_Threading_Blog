@@ -1,0 +1,59 @@
+---
+/**
+ * 文件级注释：文章页左侧推荐文章组件，根据当前文章的标签、分类与发布时间展示相关推荐。
+ */
+import type { CollectionEntry } from "astro:content";
+import { formatDateToYYYYMMDD } from "@/utils/date-utils";
+import { getRelatedPosts } from "@/utils/content-utils";
+import { getPostUrlBySlug } from "@/utils/url-utils";
+import WidgetLayout from "./WidgetLayout.astro";
+
+interface Props {
+	class?: string;
+	style?: string;
+	currentPost?: CollectionEntry<"posts">;
+}
+
+const { class: className, style, currentPost } = Astro.props;
+const relatedPosts = currentPost ? await getRelatedPosts(currentPost) : [];
+const shouldRender = Boolean(currentPost) && relatedPosts.length > 0;
+---
+
+{
+	shouldRender && (
+		<WidgetLayout
+			name="推荐阅读"
+			id="related-posts"
+			class={className}
+			style={style}
+		>
+			<div class="flex flex-col gap-3">
+				{relatedPosts.map((post) => (
+					<a
+						href={getPostUrlBySlug(post.id)}
+						class="group rounded-xl border border-[var(--line-divider)] bg-black/[0.02] px-3 py-3 transition hover:border-[var(--primary)]/35 hover:bg-[var(--enter-btn-bg)] dark:bg-white/[0.02] dark:hover:bg-white/[0.04]"
+					>
+						<div class="line-clamp-2 text-sm font-medium text-black/80 transition group-hover:text-[var(--primary)] dark:text-white/80 dark:group-hover:text-[var(--primary)]">
+							{post.data.title}
+						</div>
+						<div class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-black/45 dark:text-white/45">
+							<time
+								datetime={formatDateToYYYYMMDD(
+									post.data.published,
+								)}
+							>
+								{formatDateToYYYYMMDD(post.data.published)}
+							</time>
+							{post.data.category &&
+								post.data.category.trim() !== "" && (
+									<span class="rounded-md bg-black/[0.04] px-2 py-0.5 dark:bg-white/[0.06]">
+										{post.data.category.trim()}
+									</span>
+								)}
+						</div>
+					</a>
+				))}
+			</div>
+		</WidgetLayout>
+	)
+}

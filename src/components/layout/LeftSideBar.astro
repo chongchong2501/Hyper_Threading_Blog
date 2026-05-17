@@ -1,10 +1,12 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import type { MarkdownHeading } from "astro";
 import Profile from "@/components/content/Profile.astro";
 import Advertisement from "@/components/widget/Advertisement.astro";
 import Announcement from "@/components/widget/Announcement.astro";
 import Calendar from "@/components/widget/Calendar.astro";
 import Categories from "@/components/widget/Categories.astro";
+import RelatedPosts from "@/components/widget/RelatedPosts.astro";
 import SiteStats from "@/components/widget/SiteStats.astro";
 import Tags from "@/components/widget/Tags.astro";
 import type { WidgetComponentConfig } from "@/types/config";
@@ -13,9 +15,16 @@ import { widgetManager } from "@/utils/widget-manager";
 interface Props {
 	class?: string;
 	headings?: MarkdownHeading[];
+	currentPostTags?: string[];
+	currentPost?: CollectionEntry<"posts">;
 }
 
-const { class: className, headings: _headings } = Astro.props;
+const {
+	class: className,
+	headings: _headings,
+	currentPostTags = [],
+	currentPost,
+} = Astro.props;
 
 // 获取左侧边栏的组件列表
 const topComponents = widgetManager.getComponentsByPosition("top", "left");
@@ -39,6 +48,7 @@ const componentMap = {
 	announcement: Announcement,
 	categories: Categories,
 	tags: Tags,
+	relatedPosts: RelatedPosts,
 	advertisement: Advertisement,
 	stats: SiteStats,
 	calendar: Calendar,
@@ -67,6 +77,9 @@ function renderComponent(
 			class: componentClass,
 			style: componentStyle,
 			headings: undefined,
+			tags: component.type === "tags" ? currentPostTags : undefined,
+			currentPost:
+				component.type === "relatedPosts" ? currentPost : undefined,
 			configId: component.configId,
 			...component.customProps,
 		},

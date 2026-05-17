@@ -7,10 +7,10 @@ import MusicPlayer from "@components/widget/MusicPlayer.astro";
 
 import { expressiveCodeConfig, profileConfig, siteConfig } from "@/config";
 import {
-	BANNER_HEIGHT,
-	BANNER_HEIGHT_EXTEND,
-	BANNER_HEIGHT_HOME,
-	PAGE_WIDTH,
+  BANNER_HEIGHT,
+  BANNER_HEIGHT_EXTEND,
+  BANNER_HEIGHT_HOME,
+  PAGE_WIDTH,
 } from "@/constants/constants";
 import { defaultFavicons } from "@/constants/icon";
 import type { Favicon } from "@/types/config";
@@ -24,16 +24,16 @@ import "@/styles/layout-styles.css";
 import "@/styles/waves.css";
 
 interface Props {
-	title?: string;
-	banner?: string;
-	description?: string;
-	lang?: string;
-	setOGTypeArticle?: boolean;
-	postSlug?: string;
+  title?: string;
+  banner?: string;
+  description?: string;
+  lang?: string;
+  setOGTypeArticle?: boolean;
+  postSlug?: string;
 }
 
 let { title, banner, description, lang, setOGTypeArticle, postSlug } =
-	Astro.props;
+  Astro.props;
 
 // apply a class to the body element to decide the height of the banner, only used for initial page load
 // Swup can update the body for each page visit, but it's after the page transition, causing a delay for banner height change
@@ -46,13 +46,13 @@ const configHue = siteConfig.themeColor.hue;
 
 // 获取导航栏透明模式配置
 const navbarTransparentMode =
-	siteConfig.backgroundWallpaper?.banner?.navbar?.transparentMode || "semi";
+  siteConfig.backgroundWallpaper?.banner?.navbar?.transparentMode || "semi";
 // 判断是否应该显示顶部高光效果（只在full和semifull模式下显示）
 const shouldShowTopHighlight =
-	navbarTransparentMode === "full" || navbarTransparentMode === "semifull";
+  navbarTransparentMode === "full" || navbarTransparentMode === "semifull";
 
 if (!banner || typeof banner !== "string" || banner.trim() === "") {
-	banner = getDefaultBackground();
+  banner = getDefaultBackground();
 }
 
 // TODO don't use post cover as banner for now
@@ -62,24 +62,24 @@ const enableBanner = siteConfig.backgroundWallpaper.mode === "banner";
 
 let pageTitle: string;
 if (title) {
-	pageTitle = `${title} - ${siteConfig.title}`;
+  pageTitle = `${title} - ${siteConfig.title}`;
 } else {
-	pageTitle = siteConfig.subtitle
-		? `${siteConfig.title} - ${siteConfig.subtitle}`
-		: siteConfig.title;
+  pageTitle = siteConfig.subtitle
+    ? `${siteConfig.title} - ${siteConfig.subtitle}`
+    : siteConfig.title;
 }
 
 let ogImageUrl: string | undefined;
 if (siteConfig.generateOgImages && postSlug) {
-	ogImageUrl = new URL(`/og/${postSlug}.png`, Astro.site).toString();
+  ogImageUrl = new URL(`/og/${postSlug}.png`, Astro.site).toString();
 }
 
 const favicons: Favicon[] =
-	siteConfig.favicon.length > 0 ? siteConfig.favicon : defaultFavicons;
+  siteConfig.favicon.length > 0 ? siteConfig.favicon : defaultFavicons;
 
 // const siteLang = siteConfig.lang.replace('_', '-')
 if (!lang) {
-	lang = `${siteConfig.lang}`;
+  lang = `${siteConfig.lang}`;
 }
 const siteLang = lang.replace("_", "-");
 
@@ -93,7 +93,7 @@ const bannerOffset = `${BANNER_HEIGHT_EXTEND / 2}vh`;
     <!-- 文件级注释：将第三方分析脚本推迟到 window.load，避免首屏期间占用网络与主线程 -->
     <!-- Google Tag Manager -->
     <script is:inline data-swup-ignore-script>
-      window.addEventListener('load', function() {
+      window.addEventListener("load", function () {
         (function (w, d, s, l, i) {
           w[l] = w[l] || [];
           w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
@@ -107,25 +107,6 @@ const bannerOffset = `${BANNER_HEIGHT_EXTEND / 2}vh`;
       });
     </script>
     <!-- End Google Tag Manager -->
-    <!-- Microsoft Clarity -->
-    <script is:inline data-swup-ignore-script type="text/javascript">
-      window.addEventListener('load', function() {
-        (function (c, l, a, r, i, t, y) {
-          c[a] =
-            c[a] ||
-            function () {
-              (c[a].q = c[a].q || []).push(arguments);
-            };
-          t = l.createElement(r);
-          t.async = 1;
-          t.src = "https://www.clarity.ms/tag/" + i;
-          y = l.getElementsByTagName(r)[0];
-          y.parentNode.insertBefore(t, y);
-        })(window, document, "clarity", "script", "tx9equrgr6");
-      });
-    </script>
-    <!-- End Microsoft Clarity -->
-
     <title>{pageTitle}</title>
 
     <meta charset="UTF-8" />
@@ -228,7 +209,7 @@ const bannerOffset = `${BANNER_HEIGHT_EXTEND / 2}vh`;
       // Set the theme for Expressive Code
       document.documentElement.setAttribute(
         "data-theme",
-        isDark ? darkTheme : lightTheme
+        isDark ? darkTheme : lightTheme,
       );
 
       // Load the hue from local storage
@@ -239,12 +220,12 @@ const bannerOffset = `${BANNER_HEIGHT_EXTEND / 2}vh`;
       // 使用更准确的窗口高度计算
       function calculateBannerHeightExtend() {
         let offset = Math.floor(
-          window.innerHeight * (BANNER_HEIGHT_EXTEND / 100)
+          window.innerHeight * (BANNER_HEIGHT_EXTEND / 100),
         );
         offset = offset - (offset % 4);
         document.documentElement.style.setProperty(
           "--banner-height-extend",
-          `${offset}px`
+          `${offset}px`,
         );
       }
 
@@ -255,14 +236,14 @@ const bannerOffset = `${BANNER_HEIGHT_EXTEND / 2}vh`;
       requestAnimationFrame(() => {
         const oldValue = parseInt(
           document.documentElement.style.getPropertyValue(
-            "--banner-height-extend"
-          )
+            "--banner-height-extend",
+          ),
         );
         calculateBannerHeightExtend();
         const newValue = parseInt(
           document.documentElement.style.getPropertyValue(
-            "--banner-height-extend"
-          )
+            "--banner-height-extend",
+          ),
         );
         // 如果值变化了，再更新一次确保准确
         if (Math.abs(oldValue - newValue) > 4) {
@@ -282,7 +263,7 @@ const bannerOffset = `${BANNER_HEIGHT_EXTEND / 2}vh`;
       // 设置data-wallpaper-mode属性
       document.documentElement.setAttribute(
         "data-wallpaper-mode",
-        wallpaperMode
+        wallpaperMode,
       );
 
       // 立即执行函数来处理DOM
@@ -320,7 +301,7 @@ const bannerOffset = `${BANNER_HEIGHT_EXTEND / 2}vh`;
           // 处理banner和fullscreen wallpaper的显示
           const bannerWrapper = document.getElementById("banner-wrapper");
           const fullscreenWallpaper = document.querySelector(
-            "[data-fullscreen-wallpaper]"
+            "[data-fullscreen-wallpaper]",
           );
 
           // 检查当前是否为首页
@@ -368,7 +349,7 @@ const bannerOffset = `${BANNER_HEIGHT_EXTEND / 2}vh`;
 
           // 处理主内容区域位置
           const mainContentWrapper = document.querySelector(
-            ".absolute.w-full.z-30"
+            ".absolute.w-full.z-30",
           );
           if (mainContentWrapper) {
             const isMobile = window.innerWidth < 1024;
@@ -382,7 +363,7 @@ const bannerOffset = `${BANNER_HEIGHT_EXTEND / 2}vh`;
 
           // 处理credit元素
           const creditDesktop = document.getElementById(
-            "banner-credit-desktop"
+            "banner-credit-desktop",
           );
           const creditMobile = document.getElementById("banner-credit-mobile");
           if (
@@ -398,7 +379,7 @@ const bannerOffset = `${BANNER_HEIGHT_EXTEND / 2}vh`;
 
           // 处理banner homeText元素
           const bannerTextOverlay = document.querySelector(
-            ".banner-text-overlay"
+            ".banner-text-overlay",
           );
           if (bannerTextOverlay) {
             const isHomePage =
@@ -611,7 +592,7 @@ function disableAnimation() {
   function initCustomScrollbar() {
     // 只处理katex元素的滚动条，使用浏览器原生滚动条
     const katexElements = document.querySelectorAll(
-      ".katex-display:not([data-scrollbar-initialized])"
+      ".katex-display:not([data-scrollbar-initialized])",
     ) as NodeListOf<HTMLElement>;
     katexElements.forEach((element) => {
       if (!element.parentNode) return;
@@ -644,7 +625,7 @@ function disableAnimation() {
 
       // Handle mobile single image banner - 使用与电脑端相同的逻辑
       const mobileBanner = document.querySelector(
-        '.block.lg\\:hidden[alt="Mobile banner image of the blog"]'
+        '.block.lg\\:hidden[alt="Mobile banner image of the blog"]',
       );
       if (mobileBanner) {
         // 移动端使用与电脑端相同的初始化逻辑
@@ -688,7 +669,7 @@ function disableAnimation() {
     window.swup.hooks.on("content:replace", () => {
       // 只处理katex元素的容器，使用浏览器原生滚动条
       initCustomScrollbar();
-      
+
       // 重新初始化图标加载器
       import("@/utils/icon-loader").then(({ initIconLoader }) => {
         initIconLoader();
@@ -729,7 +710,7 @@ function disableAnimation() {
         if (savedLayout) {
           const rightSidebar = document.getElementById("right-sidebar");
           const mainGrid = document.getElementById("main-grid");
-          
+
           // 根据保存的布局状态调整侧边栏显示
           if (savedLayout === "grid") {
             if (rightSidebar) {
@@ -790,10 +771,12 @@ function disableAnimation() {
       // Control mobile banner visibility based on page with improved staging animation
       // 只在移动端（1024px以下）处理banner隐藏
       const isMobile = window.innerWidth < 1024;
-      
+
       // 在移动端禁用文章列表容器的过渡动画，防止与主内容区位置变化冲突
       if (isMobile) {
-        const postListContainer = document.getElementById("post-list-container");
+        const postListContainer = document.getElementById(
+          "post-list-container",
+        );
         if (postListContainer) {
           postListContainer.style.transition = "none";
         }
@@ -801,14 +784,14 @@ function disableAnimation() {
 
       const bannerWrapper = document.getElementById("banner-wrapper");
       const mainContentWrapper = document.querySelector(
-        ".absolute.w-full.z-30"
+        ".absolute.w-full.z-30",
       ) as HTMLElement | null;
 
       if (isMobile && bannerWrapper && mainContentWrapper) {
         if (isHomePage) {
           // 首页：禁用主内容区域的过渡动画，防止文章列表下移
           mainContentWrapper.style.transition = "none";
-          
+
           // 先显示banner，然后移除隐藏类让其优雅出现
           bannerWrapper.style.display = "";
           setTimeout(() => {
@@ -867,7 +850,9 @@ function disableAnimation() {
       const isMobile = window.innerWidth < 1024;
       if (isMobile) {
         setTimeout(() => {
-          const postListContainer = document.getElementById("post-list-container");
+          const postListContainer = document.getElementById(
+            "post-list-container",
+          );
           if (postListContainer) {
             postListContainer.style.transition = "";
           }
@@ -877,14 +862,14 @@ function disableAnimation() {
       // 同步主题状态 - 解决从首页进入文章页面时代码块渲染问题
       const storedTheme = localStorage.getItem("theme") || "light";
       let isDark = false;
-      
+
       // 处理 system 模式
       if (storedTheme === "system") {
-        isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       } else {
         isDark = storedTheme === "dark";
       }
-      
+
       const expectedTheme = isDark
         ? expressiveCodeConfig.darkTheme
         : expressiveCodeConfig.lightTheme;
@@ -908,7 +893,7 @@ function disableAnimation() {
           document.dispatchEvent(pageLoadedEvent);
           console.log(
             "Layout: 触发 firefly:page:loaded 事件，路径:",
-            window.location.pathname
+            window.location.pathname,
           );
         }
       }, 300);
@@ -937,8 +922,10 @@ function disableAnimation() {
       const rightSidebar = document.getElementById("right-sidebar");
       const mainGrid = document.getElementById("main-grid");
       const postContainer = document.getElementById("post-container");
-      const swupContainer = document.getElementById("swup-container");
-      
+      const swupContainer =
+        document.getElementById("main-grid") ||
+        document.getElementById("swup-container");
+
       // 为文章详情页容器添加切换动画
       if (postContainer) {
         postContainer.classList.add("layout-switching");
@@ -946,7 +933,7 @@ function disableAnimation() {
           postContainer.classList.remove("layout-switching");
         }, 400);
       }
-      
+
       // 为主内容区添加切换动画
       if (swupContainer) {
         swupContainer.classList.add("layout-transitioning");
@@ -954,12 +941,13 @@ function disableAnimation() {
           swupContainer.classList.remove("layout-transitioning");
         }, 500);
       }
-      
+
       // 根据新布局状态调整侧边栏显示
       if (newLayout === "grid") {
         if (rightSidebar) {
           // 简洁的淡出动画
-          rightSidebar.style.transition = "opacity 0.35s ease-in-out, transform 0.35s ease-in-out";
+          rightSidebar.style.transition =
+            "opacity 0.35s ease-in-out, transform 0.35s ease-in-out";
           rightSidebar.style.opacity = "0";
           rightSidebar.style.transform = "translateX(15px)";
           setTimeout(() => {
@@ -975,7 +963,8 @@ function disableAnimation() {
         if (rightSidebar) {
           // 简洁的淡入动画
           rightSidebar.style.display = "";
-          rightSidebar.style.transition = "opacity 0.35s ease-in-out, transform 0.35s ease-in-out";
+          rightSidebar.style.transition =
+            "opacity 0.35s ease-in-out, transform 0.35s ease-in-out";
           rightSidebar.style.opacity = "0";
           rightSidebar.style.transform = "translateX(15px)";
           setTimeout(() => {
@@ -1064,7 +1053,7 @@ function disableAnimation() {
       }
       scrollTimeout = requestAnimationFrame(scrollFunction);
     },
-    { passive: true }
+    { passive: true },
   );
 
   window.onresize = () => {
@@ -1073,7 +1062,7 @@ function disableAnimation() {
     offset = offset - (offset % 4);
     document.documentElement.style.setProperty(
       "--banner-height-extend",
-      `${offset}px`
+      `${offset}px`,
     );
   };
 
