@@ -2,17 +2,15 @@
 title: Cloudflare 免费 VPN 部署教程：基于 edgetunnel 零成本搭建个人代理面板
 published: 2026-05-22
 description: 参考零度博客教程，使用 Cloudflare Pages、Workers KV 和开源项目 cmliu/edgetunnel，零成本部署一个可视化管理的个人代理面板，并导入订阅到常见客户端使用。
-tags: [Cloudflare, VPN, Pages, Workers KV, edgetunnel, 部署教程]
+tags: [Cloudflare, VPN, 部署教程]
 category: 部署运维
 draft: false
 language: zh-CN
 ---
 
-# Cloudflare 免费 VPN 部署教程：基于 edgetunnel 零成本搭建个人代理面板
-
 很多人找“免费 VPN”，第一反应是去网上搜公共节点。但这类方案通常有三个问题：不稳定、速度波动大、随时可能失效。相比之下，更适合长期使用的思路，其实是借助 Cloudflare 的免费能力，自己部署一个轻量的代理面板，再把订阅链接导入客户端使用。
 
-这篇文章参考了零度博客的教程，并重新整理成适合直接照着操作的版本。整套方案的核心是 Cloudflare Pages + Workers KV，再配合一个已经成熟的开源项目完成面板和订阅管理。
+这篇文章参考了[零度博客](https://www.freedidi.com/23618.html)的教程，并重新整理成适合直接照着操作的版本。整套方案的核心是 Cloudflare Pages + Workers KV，再配合一个已经成熟的开源项目完成面板和订阅管理。
 
 ## 本文使用的开源项目
 
@@ -21,8 +19,6 @@ language: zh-CN
 - GitHub 仓库：<https://github.com/cmliu/edgetunnel>
 - 项目名称：`cmliu/edgetunnel`
 - 项目说明：一个基于 Cloudflare Workers / Pages 的多功能面板，支持 VLESS、Trojan、Shadowsocks 等协议，带后台管理、订阅生成和 KV 配置能力。
-
-如果你去看这个仓库的 README，会发现它的 Pages 上传部署步骤、`ADMIN` 环境变量、`KV` 命名空间绑定、以及 `edgetunnel.pages.dev` 相关配置，和参考教程中的操作流程是一致的。因此可以确认，这篇教程部署所依赖的核心开源项目就是它。
 
 ## 先说结论：这套方案在做什么？
 
@@ -55,21 +51,47 @@ language: zh-CN
 
 ## 第一步：注册免费域名
 
-先准备一个免费域名。参考教程中使用的是免费二级域名方案，注册完成后可以获得类似下面这样的域名：
+先准备一个免费域名。登录下面网站：
+
+- `dnshe.com`
+
+注册并登录后，可以申请免费的二级域名。可选的免费根域后缀包括：
+
+- `ccwu.cc`
+- `us.ci`
+
+注册完成后，你会拿到一个类似下面这样的可管理域名，后面用于接入 Cloudflare：
 
 - `yourname.ccwu.cc`
 - `yourname.us.ci`
 
-建议域名尽量短一些，后续绑定 Pages 时更方便。比如你后面可以拿它来创建这样的子域名：
-
-- `vpn.yourname.ccwu.cc`
-- `node.yourname.us.ci`
 
 ## 第二步：把域名托管到 Cloudflare
 
 登录 Cloudflare 后，把刚注册的域名接入进去。这里的目标很明确：让这个域名能在 Cloudflare 后台完成 DNS 管理，并能给 Pages 项目绑定自定义域名。
 
-如果你的免费域名平台支持修改 NS 或 DNS 记录，就按 Cloudflare 后台提示完成托管。接入完成后，就可以在 Cloudflare 控制台里管理它。
+具体操作可以按下面步骤来：
+
+1. 打开 `Cloudflare Dashboard`，登录你的账号。
+2. 在首页点击 `Add a domain / 添加站点`。
+3. 在输入框里填入你刚注册到的免费域名，例如 `yourname.ccwu.cc`，然后点击 `Continue`。
+4. 方案选择里选免费套餐，也就是 `Free`，然后继续下一步。
+5. Cloudflare 会自动扫描一次现有 DNS 记录。免费二级域名刚注册时通常没有太多记录，这里直接继续即可。
+6. 到下一步后，Cloudflare 会给你分配两条新的 `Nameserver`，一般长这样：
+
+```text
+xxx.ns.cloudflare.com
+yyy.ns.cloudflare.com
+```
+
+7. 先不要关闭这个页面，复制好这两条 `Nameserver`。
+8. 回到你注册免费域名的平台后台，比如 `dnshe.com`，找到这个域名的管理页面。
+9. 在域名管理里找到DNS服务器，把原来的默认DNS服务器列表，替换成 Cloudflare 给你的两条 `Nameserver`，然后保存。
+11. 改完以后，回到 Cloudflare 刚才那个页面，点击 `Continue` 或 `Done, check nameservers` 等待校验。
+
+正常情况下，Cloudflare 会在几分钟到几十分钟内识别到新的 `Nameserver`。有些免费域名平台生效会慢一点，如果暂时还是 `Pending`，先等一会再刷新。
+
+当 Cloudflare 状态变成已激活后，说明这个域名已经成功托管进来了。接下来你就可以在 Cloudflare 控制台里继续做 `Pages`、`KV` 和自定义域名绑定。
 
 ## 第三步：创建 Workers KV 命名空间
 
@@ -125,7 +147,7 @@ language: zh-CN
 比如：
 
 ```text
-ADMIN=MyStrongPass123
+ADMIN=123456
 ```
 
 保存以后，重新部署一次项目，让这个变量真正生效。
@@ -159,10 +181,7 @@ ADMIN=MyStrongPass123
 
 `Pages Project -> Custom domains`
 
-建议不要直接绑定根域名，而是绑定一个子域名，例如：
-
-- `vpn.example.ccwu.cc`
-- `node.example.us.ci`
+绑定刚刚申请的免费域名，例如 `yourname.ccwu.cc`。   
 
 按照 Cloudflare 后台提示配置即可。参考教程和 `edgetunnel` 项目 README 中提到，如果域名 DNS 不在 Cloudflare，需要按提示手动添加一条 CNAME 记录，指向：
 
