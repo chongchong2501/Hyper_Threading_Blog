@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Hyper Threading - Blog</title><description>超线程的个人博客网站</description><link>https://hyperthreading.cn/</link><language>zh_CN</language><item><title>Cloudflare 免费 VPN 部署教程：基于 edgetunnel 零成本搭建个人代理面板</title><link>https://hyperthreading.cn/posts/cloudflare%E5%85%8D%E8%B4%B9vpn%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B_edgetunnel/</link><guid isPermaLink="true">https://hyperthreading.cn/posts/cloudflare%E5%85%8D%E8%B4%B9vpn%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B_edgetunnel/</guid><description>参考零度博客教程，使用 Cloudflare Pages、Workers KV 和开源项目 cmliu/edgetunnel，零成本部署一个可视化管理的个人代理面板，并导入订阅到常见客户端使用。</description><pubDate>Fri, 22 May 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Cloudflare 免费 VPN 部署教程：基于 edgetunnel 零成本搭建个人代理面板&lt;/h1&gt;
-&lt;p&gt;很多人找“免费 VPN”，第一反应是去网上搜公共节点。但这类方案通常有三个问题：不稳定、速度波动大、随时可能失效。相比之下，更适合长期使用的思路，其实是借助 Cloudflare 的免费能力，自己部署一个轻量的代理面板，再把订阅链接导入客户端使用。&lt;/p&gt;
-&lt;p&gt;这篇文章参考了零度博客的教程，并重新整理成适合直接照着操作的版本。整套方案的核心是 Cloudflare Pages + Workers KV，再配合一个已经成熟的开源项目完成面板和订阅管理。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Hyper Threading - Blog</title><description>超线程的个人博客网站</description><link>https://hyperthreading.cn/</link><language>zh_CN</language><item><title>Cloudflare 免费 VPN 部署教程：基于 edgetunnel 零成本搭建个人代理面板</title><link>https://hyperthreading.cn/posts/cloudflare%E5%85%8D%E8%B4%B9vpn%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B_edgetunnel/</link><guid isPermaLink="true">https://hyperthreading.cn/posts/cloudflare%E5%85%8D%E8%B4%B9vpn%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B_edgetunnel/</guid><description>参考零度博客教程，使用 Cloudflare Pages、Workers KV 和开源项目 cmliu/edgetunnel，零成本部署一个可视化管理的个人代理面板，并导入订阅到常见客户端使用。</description><pubDate>Fri, 22 May 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;很多人找“免费 VPN”，第一反应是去网上搜公共节点。但这类方案通常有三个问题：不稳定、速度波动大、随时可能失效。相比之下，更适合长期使用的思路，其实是借助 Cloudflare 的免费能力，自己部署一个轻量的代理面板，再把订阅链接导入客户端使用。&lt;/p&gt;
+&lt;p&gt;这篇文章参考了&lt;a href=&quot;https://www.freedidi.com/23618.html&quot;&gt;零度博客&lt;/a&gt;的教程，并重新整理成适合直接照着操作的版本。整套方案的核心是 Cloudflare Pages + Workers KV，再配合一个已经成熟的开源项目完成面板和订阅管理。&lt;/p&gt;
 &lt;h2&gt;本文使用的开源项目&lt;/h2&gt;
 &lt;p&gt;参考教程里实际使用的项目是：&lt;/p&gt;
 &lt;ul&gt;
@@ -8,7 +7,6 @@
 &lt;li&gt;项目名称：&lt;code&gt;cmliu/edgetunnel&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;项目说明：一个基于 Cloudflare Workers / Pages 的多功能面板，支持 VLESS、Trojan、Shadowsocks 等协议，带后台管理、订阅生成和 KV 配置能力。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;如果你去看这个仓库的 README，会发现它的 Pages 上传部署步骤、&lt;code&gt;ADMIN&lt;/code&gt; 环境变量、&lt;code&gt;KV&lt;/code&gt; 命名空间绑定、以及 &lt;code&gt;edgetunnel.pages.dev&lt;/code&gt; 相关配置，和参考教程中的操作流程是一致的。因此可以确认，这篇教程部署所依赖的核心开源项目就是它。&lt;/p&gt;
 &lt;h2&gt;先说结论：这套方案在做什么？&lt;/h2&gt;
 &lt;p&gt;这套方案并不是“白嫖现成 VPN 服务”，而是把 Cloudflare 当作免费托管平台，部署一个属于你自己的轻量代理面板。你后续使用时，主要流程是：&lt;/p&gt;
 &lt;ol&gt;
@@ -36,19 +34,42 @@
 &lt;/ul&gt;
 &lt;p&gt;如果你完全没有域名，参考教程里使用的是免费域名平台。注册成功后，拿到一个可管理的子域名即可继续。&lt;/p&gt;
 &lt;h2&gt;第一步：注册免费域名&lt;/h2&gt;
-&lt;p&gt;先准备一个免费域名。参考教程中使用的是免费二级域名方案，注册完成后可以获得类似下面这样的域名：&lt;/p&gt;
+&lt;p&gt;先准备一个免费域名。登录下面网站：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dnshe.com&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;注册并登录后，可以申请免费的二级域名。可选的免费根域后缀包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ccwu.cc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;us.ci&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;注册完成后，你会拿到一个类似下面这样的可管理域名，后面用于接入 Cloudflare：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;yourname.ccwu.cc&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;yourname.us.ci&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;建议域名尽量短一些，后续绑定 Pages 时更方便。比如你后面可以拿它来创建这样的子域名：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;vpn.yourname.ccwu.cc&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;node.yourname.us.ci&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
 &lt;h2&gt;第二步：把域名托管到 Cloudflare&lt;/h2&gt;
 &lt;p&gt;登录 Cloudflare 后，把刚注册的域名接入进去。这里的目标很明确：让这个域名能在 Cloudflare 后台完成 DNS 管理，并能给 Pages 项目绑定自定义域名。&lt;/p&gt;
-&lt;p&gt;如果你的免费域名平台支持修改 NS 或 DNS 记录，就按 Cloudflare 后台提示完成托管。接入完成后，就可以在 Cloudflare 控制台里管理它。&lt;/p&gt;
+&lt;p&gt;具体操作可以按下面步骤来：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;打开 &lt;code&gt;Cloudflare Dashboard&lt;/code&gt;，登录你的账号。&lt;/li&gt;
+&lt;li&gt;在首页点击 &lt;code&gt;Add a domain / 添加站点&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;在输入框里填入你刚注册到的免费域名，例如 &lt;code&gt;yourname.ccwu.cc&lt;/code&gt;，然后点击 &lt;code&gt;Continue&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;方案选择里选免费套餐，也就是 &lt;code&gt;Free&lt;/code&gt;，然后继续下一步。&lt;/li&gt;
+&lt;li&gt;Cloudflare 会自动扫描一次现有 DNS 记录。免费二级域名刚注册时通常没有太多记录，这里直接继续即可。&lt;/li&gt;
+&lt;li&gt;到下一步后，Cloudflare 会给你分配两条新的 &lt;code&gt;Nameserver&lt;/code&gt;，一般长这样：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;xxx.ns.cloudflare.com
+yyy.ns.cloudflare.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;先不要关闭这个页面，复制好这两条 &lt;code&gt;Nameserver&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;回到你注册免费域名的平台后台，比如 &lt;code&gt;dnshe.com&lt;/code&gt;，找到这个域名的管理页面。&lt;/li&gt;
+&lt;li&gt;在域名管理里找到DNS服务器，把原来的默认DNS服务器列表，替换成 Cloudflare 给你的两条 &lt;code&gt;Nameserver&lt;/code&gt;，然后保存。&lt;/li&gt;
+&lt;li&gt;改完以后，回到 Cloudflare 刚才那个页面，点击 &lt;code&gt;Continue&lt;/code&gt; 或 &lt;code&gt;Done, check nameservers&lt;/code&gt; 等待校验。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;正常情况下，Cloudflare 会在几分钟到几十分钟内识别到新的 &lt;code&gt;Nameserver&lt;/code&gt;。有些免费域名平台生效会慢一点，如果暂时还是 &lt;code&gt;Pending&lt;/code&gt;，先等一会再刷新。&lt;/p&gt;
+&lt;p&gt;当 Cloudflare 状态变成已激活后，说明这个域名已经成功托管进来了。接下来你就可以在 Cloudflare 控制台里继续做 &lt;code&gt;Pages&lt;/code&gt;、&lt;code&gt;KV&lt;/code&gt; 和自定义域名绑定。&lt;/p&gt;
 &lt;h2&gt;第三步：创建 Workers KV 命名空间&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;edgetunnel&lt;/code&gt; 的后台配置依赖 Cloudflare KV 存储，所以这一步不能省。&lt;/p&gt;
 &lt;p&gt;操作路径大致如下：&lt;/p&gt;
@@ -85,7 +106,7 @@
 &lt;li&gt;变量值：你自己设置的后台登录密码&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;比如：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;ADMIN=MyStrongPass123
+&lt;pre&gt;&lt;code&gt;ADMIN=123456
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;保存以后，重新部署一次项目，让这个变量真正生效。&lt;/p&gt;
 &lt;p&gt;这一项很关键，因为你后面访问 &lt;code&gt;/admin&lt;/code&gt; 后台时，就是靠这个密码登录。如果不设置，后台通常无法正常进入。&lt;/p&gt;
@@ -108,11 +129,7 @@
 &lt;p&gt;现在可以给 Pages 项目绑定你自己的域名了。&lt;/p&gt;
 &lt;p&gt;进入：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Pages Project -&amp;gt; Custom domains&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;建议不要直接绑定根域名，而是绑定一个子域名，例如：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;vpn.example.ccwu.cc&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;node.example.us.ci&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;绑定刚刚申请的免费域名，例如 &lt;code&gt;yourname.ccwu.cc&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;按照 Cloudflare 后台提示配置即可。参考教程和 &lt;code&gt;edgetunnel&lt;/code&gt; 项目 README 中提到，如果域名 DNS 不在 Cloudflare，需要按提示手动添加一条 CNAME 记录，指向：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;edgetunnel.pages.dev
 &lt;/code&gt;&lt;/pre&gt;
