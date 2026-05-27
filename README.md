@@ -19,7 +19,7 @@
 
 ## 🔗 链接
 
-- 在线站点：<https://hyperthreading.cn/>
+- 在线站点：[https://blog.hyperthreading.cn/](https://hyperthreading.cn/)
 - 主题来源（上游）：<https://github.com/CuteLeaf/Firefly>
 - Astro 部署指南：<https://docs.astro.build/zh-cn/guides/deploy/>
 
@@ -39,7 +39,7 @@
 
 说明：本项目在安装依赖前会执行 `npx only-allow pnpm`，如果你用 npm/yarn 安装会被拦截，见 [package.json](file:///e:/program/Hyper_Threading_Blog/package.json#L5-L18)。
 
-## 🚀 快速开始（本地开发）
+## 🚀 快速开始
 
 ```bash
 pnpm install
@@ -57,7 +57,7 @@ pnpm preview
 
 构建产物默认输出到 `dist/`。
 
-## ✅ 检查与代码规范（重点）
+## ✅ 检查与代码规范
 
 本仓库在 CI 中会跑三类检查：格式/风格（Biome）、类型与 Astro 校验（Astro Check/TypeScript）、构建（Astro Build）。为了避免“本地通过但 CI 挂掉”，`Biome` 版本在本地依赖与 CI 中已固定为同一版本。
 
@@ -112,7 +112,7 @@ pnpm run lint
 - Check/Build： [.github/workflows/build.yml](file:///e:/program/Hyper_Threading_Blog/.github/workflows/build.yml)
 - Pages 部署： [.github/workflows/deploy.yml](file:///e:/program/Hyper_Threading_Blog/.github/workflows/deploy.yml)
 
-## 🧭 目录结构（更详细）
+## 🧭 目录结构
 
 ```text
 astro.config.mjs                 Astro 配置（集成、Markdown/rehype/remark、Swup 容器等）
@@ -144,7 +144,7 @@ public/
     images/              静态图片资源（例如壁纸、logo）
 ```
 
-## ⚙️ 关键入口（配置/布局/逻辑）
+## ⚙️ 关键入口
 
 ### 配置入口（最常改）
 
@@ -194,7 +194,7 @@ pnpm new-post my-post
 - 本仓库默认使用 Actions 构建后推送到 `pages` 分支： [.github/workflows/deploy.yml](file:///e:/program/Hyper_Threading_Blog/.github/workflows/deploy.yml)
 - 如果你修改了默认分支名（如 `main/master`），需要同步调整 workflows 里的触发分支。
 
-## ⚡ 性能建议（与本仓库配置匹配）
+## ⚡ 性能建议
 
 - 首屏横幅/壁纸优先使用 `.webp`（放在 `public/assets/images/`）
 - 若不需要前台切换壁纸模式，可在 `siteConfig.ts` 中将 `backgroundWallpaper.switchable` 设为 `false`（减少渲染与脚本分支）
