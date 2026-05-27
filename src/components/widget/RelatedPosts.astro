@@ -3,8 +3,8 @@
  * 文件级注释：文章页左侧推荐文章组件，根据当前文章的标签、分类与发布时间展示相关推荐。
  */
 import type { CollectionEntry } from "astro:content";
-import { formatDateToYYYYMMDD } from "@/utils/date-utils";
 import { getRelatedPosts } from "@/utils/content-utils";
+import { formatDateToYYYYMMDD } from "@/utils/date-utils";
 import { getPostUrlBySlug } from "@/utils/url-utils";
 import WidgetLayout from "./WidgetLayout.astro";
 

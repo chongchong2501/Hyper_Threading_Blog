@@ -78,8 +78,7 @@ function renderComponent(
 			style: componentStyle,
 			headings: undefined,
 			tags: component.type === "tags" ? currentPostTags : undefined,
-			currentPost:
-				component.type === "relatedPosts" ? currentPost : undefined,
+			currentPost: component.type === "relatedPosts" ? currentPost : undefined,
 			configId: component.configId,
 			...component.customProps,
 		},

@@ -47,7 +47,10 @@ type RelatedPostCandidate = {
 /**
  * 函数级注释：统计两篇文章之间的共同标签数量，作为相关推荐的第一优先级信号。
  */
-function getSharedTagCount(currentTags: string[], candidateTags: string[]): number {
+function getSharedTagCount(
+	currentTags: string[],
+	candidateTags: string[],
+): number {
 	if (currentTags.length === 0 || candidateTags.length === 0) {
 		return 0;
 	}

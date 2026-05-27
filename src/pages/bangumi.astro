@@ -248,17 +248,15 @@ async function fetchBilibiliData(mid: string, type: number) {
 									typeof v === "number" ? v : Number(v ?? 0);
 								const getStr = (v: unknown) =>
 									typeof v === "string" ? v : String(v ?? "");
-								const stat = it["stat"] as Record<string, unknown> | undefined;
+								const stat = it.stat as Record<string, unknown> | undefined;
 								return {
-									season_id: getNum(it["season_id"] ?? it["seasonId"]),
-									title: getStr(it["title"]),
-									cover: getStr(it["cover"] ?? it["square_cover"]),
-									total_count: getNum(it["total_count"] ?? it["total"]),
-									is_finish: getNum(it["is_finish"]),
-									season_type_name: getStr(
-										it["season_type_name"] ?? it["type_name"],
-									),
-									stat: { follow: getNum(stat?.["follow"] ?? it["favorites"]) },
+									season_id: getNum(it.season_id ?? it.seasonId),
+									title: getStr(it.title),
+									cover: getStr(it.cover ?? it.square_cover),
+									total_count: getNum(it.total_count ?? it.total),
+									is_finish: getNum(it.is_finish),
+									season_type_name: getStr(it.season_type_name ?? it.type_name),
+									stat: { follow: getNum(stat?.follow ?? it.favorites) },
 								};
 							});
 							console.log(`[Bilibili] 回退接口获取到 ${mapped.length} 条数据`);

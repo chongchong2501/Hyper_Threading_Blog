@@ -125,8 +125,7 @@ function renderComponent(
 			style: componentStyle,
 			headings: headings ?? [],
 			tags: component.type === "tags" ? currentPostTags : undefined,
-			currentPost:
-				component.type === "relatedPosts" ? currentPost : undefined,
+			currentPost: component.type === "relatedPosts" ? currentPost : undefined,
 			configId: component.configId, // 传递configId给Advertisement组件
 			...component.customProps,
 		},
