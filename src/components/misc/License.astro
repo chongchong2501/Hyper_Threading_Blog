@@ -26,15 +26,15 @@ const postUrl = sourceLink || decodeURIComponent(Astro.url.toString());
 ---
 
 <div
-  class={`relative transition overflow-hidden bg-[var(--license-block-bg)] py-5 px-6 ${className}`}
+  class={`relative transition overflow-hidden bg-(--license-block-bg) py-5 px-6 ${className}`}
 >
   <div class="transition font-bold text-black/75 dark:text-white/75">
     {title}
   </div>
-  <a href={postUrl} class="link text-[var(--primary)]">
+  <a href={postUrl} class="link text-(--primary) break-all">
     {postUrl}
   </a>
-  <div class="flex gap-6 mt-2">
+  <div class="flex flex-col sm:flex-row gap-3 sm:gap-6 mt-2">
     <div>
       <div class="transition text-black/30 dark:text-white/30 text-sm">
         {i18n(I18nKey.author)}
@@ -58,13 +58,13 @@ const postUrl = sourceLink || decodeURIComponent(Astro.url.toString());
       <a
         href={licenseName ? licenseUrl || undefined : licenseConf.url}
         target="_blank"
-        class="link text-[var(--primary)] line-clamp-2"
+        class="link text-(--primary) line-clamp-2"
         >{licenseName || licenseConf.name}</a
       >
     </div>
   </div>
   <Icon
-    name="fa6-brands:creative-commons"
+    name="fa7-brands:creative-commons"
     class="transition text-[15rem] absolute pointer-events-none right-6 top-1/2 -translate-y-1/2 text-black/5 dark:text-white/5"
   />
 </div>

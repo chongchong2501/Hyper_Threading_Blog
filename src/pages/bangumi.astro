@@ -1,7 +1,6 @@
 ---
-import Icon from "@/components/misc/Icon.astro";
+import { Icon } from "astro-icon/components";
 import BangumiSection from "@/components/pages/bangumi/BangumiSection.astro";
-import BilibiliSection from "@/components/pages/bangumi/BilibiliSection.astro";
 import TabNav from "@/components/pages/bangumi/TabNav.astro";
 import { siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
@@ -11,10 +10,7 @@ import type {
 	UserSubjectCollection,
 	UserSubjectCollectionResponse,
 } from "@/types/bangumi";
-import type {
-	BilibiliFollowListResponse,
-	BiliSeasonItem,
-} from "@/types/bilibili";
+import { formatDateI18nWithTime } from "@/utils/date-utils";
 
 //参考：霞葉 https://kasuha.com/posts/fuwari-enhance-ep2/
 
@@ -23,14 +19,17 @@ if (!siteConfig.pages.bangumi) {
 	return Astro.redirect("/404/");
 }
 
-//////////////// Bangumi 配置 ////////////////////////
+// 获取构建时间
+const buildTime = formatDateI18nWithTime(new Date());
+
+////////////// Bangumi 配置 ////////////////////////
 const bangumiConfig = {
 	username: siteConfig.bangumi?.userId, // 在这里配置你的Bangumi用户名
 	apiUrl: "https://api.bgm.tv",
 	categories: {
-		book: false,
+		book: true,
 		anime: true,
-		music: false,
+		music: true,
 		game: true,
 		real: false,
 	},
@@ -41,10 +40,7 @@ const bangumiConfig = {
 		maxTotal: 1000, // 最大获取总数，防止无限循环（0=无限制）
 	},
 };
-////////////////////////////////////////////////////
-
-// 数据源：Bangumi 或 Bilibili
-const dataSource = siteConfig.bangumiSource ?? "bangumi";
+//////////////////////////////////////////////////
 
 // 分类映射
 const categoryMap = {
@@ -65,354 +61,152 @@ const categoryMap = {
 
 // 获取Bangumi数据的函数 - 支持分页获取所有数据
 async function fetchBangumiData(username: string, subjectType: number) {
-	try {
-		const { limit, delay, maxTotal } = bangumiConfig.pagination;
-		let offset = 0;
-		let allData: UserSubjectCollection[] = [];
-		let hasMore = true;
+	const { limit, delay, maxTotal } = bangumiConfig.pagination;
+	let offset = 0;
+	let allData: UserSubjectCollection[] = [];
+	let hasMore = true;
 
-		// 开发模式下只获取一页数据，加快调试速度
-		const isDev = import.meta.env.DEV;
-		const maxPages = isDev ? 1 : 0; // 0 表示不限制
+	// 开发模式下只获取一页数据，加快调试速度
+	const isDev = import.meta.env.DEV;
+	const maxPages = isDev ? 1 : 0; // 0 表示不限制
 
-		console.log(
-			`[Bangumi] ${isDev ? "🔧 开发模式" : "🌐 生产模式"} - 开始获取用户 ${username} 的 subjectType ${subjectType} 数据...`,
-		);
+	console.log(
+		`[Bangumi] ${isDev ? "🔧 开发模式" : "🌐 生产模式"} - 开始获取用户 ${username} 的 subjectType ${subjectType} 数据...`,
+	);
 
-		while (hasMore) {
-			// 开发模式限制：只获取一页
-			if (isDev && maxPages > 0 && allData.length >= limit * maxPages) {
-				console.log(`[Bangumi] 开发模式：已获取 ${maxPages} 页数据，停止获取`);
-				break;
-			}
-
-			// 检查是否超过最大获取限制
-			if (maxTotal > 0 && allData.length >= maxTotal) {
-				console.log(`[Bangumi] 已达到最大获取限制 ${maxTotal}，停止获取`);
-				break;
-			}
-
-			const url = `${bangumiConfig.apiUrl}/v0/users/${username}/collections?subject_type=${subjectType}&limit=${limit}&offset=${offset}`;
-
-			console.log(`[Bangumi] 正在获取数据: ${url} (已获取: ${allData.length})`);
-
-			const response = await fetch(url, {
-				headers: {
-					"User-Agent": "YuuOuRou Blog",
-					Accept: "application/json",
-				},
-			});
-
-			if (!response.ok) {
-				console.warn(
-					`[Bangumi] 无法获取数据 (状态码: ${response.status}):`,
-					url,
-				);
-				break;
-			}
-
-			const data = (await response.json()) as UserSubjectCollectionResponse;
-			const currentBatch = data.data || [];
-
-			if (currentBatch.length > 0) {
-				allData = allData.concat(currentBatch);
-				offset += limit;
-
-				// 如果本次获取的数据少于limit，说明已经是最后一页
-				if (currentBatch.length < limit) {
-					hasMore = false;
-				}
-			} else {
-				hasMore = false;
-			}
-
-			// 添加延迟避免请求过于频繁
-			if (hasMore) {
-				await new Promise((resolve) => setTimeout(resolve, delay));
-			}
+	while (hasMore) {
+		// 开发模式限制：只获取一页
+		if (isDev && maxPages > 0 && allData.length >= limit * maxPages) {
+			console.log(`[Bangumi] 开发模式：已获取 ${maxPages} 页数据，停止获取`);
+			break;
 		}
 
-		console.log(`[Bangumi] 总共获取到 ${allData.length} 条数据`);
-		return allData;
-	} catch (error) {
-		console.error("[Bangumi] 获取数据时出错:", error);
-		return [];
-	}
-}
+		// 检查是否超过最大获取限制
+		if (maxTotal > 0 && allData.length >= maxTotal) {
+			console.log(`[Bangumi] 已达到最大获取限制 ${maxTotal}，停止获取`);
+			break;
+		}
 
-/**
- * 获取 Bilibili 追番/追剧数据（分页）
- * @param mid Bilibili 用户MID
- * @param type 1=番剧，2=剧集
- */
-async function fetchBilibiliData(mid: string, type: number) {
-	try {
-		const { limit, delay, maxTotal } = bangumiConfig.pagination;
-		let pn = 1;
-		const ps = Math.min(15, limit); // B站接口常用每页数量为15
-		let allData: BiliSeasonItem[] = [];
-		let hasMore = true;
-		const isDev = import.meta.env.DEV;
-		const maxPages = isDev ? 1 : 0; // 开发模式仅拉取一页
-		const envRecord = import.meta.env as unknown as Record<
-			string,
-			string | undefined
-		>;
-		const envCookie = envRecord?.BILI_COOKIE;
+		const url = `${bangumiConfig.apiUrl}/v0/users/${username}/collections?subject_type=${subjectType}&limit=${limit}&offset=${offset}`;
 
-		console.log(
-			`[Bilibili] ${isDev ? "🔧 开发模式" : "🌐 生产模式"} - 开始获取用户 ${mid} 的 type ${type} 数据...`,
-		);
+		console.log(`[Bangumi] 正在获取数据: ${url} (已获取: ${allData.length})`);
 
-		while (hasMore) {
-			if (isDev && maxPages > 0 && pn > maxPages) {
-				console.log(`[Bilibili] 开发模式：已获取 ${maxPages} 页数据，停止获取`);
-				break;
-			}
-
-			if (maxTotal > 0 && allData.length >= maxTotal) {
-				console.log(`[Bilibili] 已达到最大获取限制 ${maxTotal}，停止获取`);
-				break;
-			}
-
-			const url = `https://api.bilibili.com/x/space/bangumi/follow/list?vmid=${mid}&type=${type}&pn=${pn}&ps=${ps}&follow_status=0`;
-			console.log(
-				`[Bilibili] 正在获取数据: ${url} (已获取: ${allData.length})`,
-			);
-
-			const headers: Record<string, string> = {
-				"User-Agent":
-					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
+		const response = await fetch(url, {
+			headers: {
+				"User-Agent": "YuuOuRou Blog",
 				Accept: "application/json",
-				"Accept-Language": "zh-CN,zh;q=0.9",
-				Origin: "https://space.bilibili.com",
-				Referer: `https://space.bilibili.com/${mid}/bangumi`,
-			};
-			// 可选：携带用户配置的Cookie
-			if (siteConfig.bilibili?.cookie) {
-				headers.Cookie = siteConfig.bilibili.cookie;
-			} else if (envCookie) {
-				headers.Cookie = envCookie;
-			}
+			},
+		});
 
-			const response = await fetch(url, {
-				headers: {
-					...headers,
-				},
-			});
-
-			if (!response.ok) {
-				console.warn(
-					`[Bilibili] 无法获取数据 (状态码: ${response.status}):`,
-					url,
-				);
-				break;
-			}
-
-			const raw = (await response.json()) as BilibiliFollowListResponse;
-			console.log(
-				`[Bilibili] 响应代码: ${String(raw.code)}, 信息: ${String(raw.message)}`,
+		if (!response.ok) {
+			throw new Error(
+				`[Bangumi] 无法获取数据 (状态码: ${response.status}): ${url}`,
 			);
-			console.log(
-				`[Bilibili] 响应data键: ${Object.keys(raw.data ?? {}).join(",")}`,
-			);
-			const currentBatch =
-				raw?.data?.list ||
-				(raw?.data as { result?: BiliSeasonItem[] } | undefined)?.result ||
-				(raw as { result?: BiliSeasonItem[] } | undefined)?.result ||
-				[];
-			console.log(
-				`[Bilibili] 本页返回条目: ${Array.isArray(currentBatch) ? currentBatch.length : 0}`,
-			);
-
-			// 首页为空时尝试旧接口作为回退
-			if (
-				pn === 1 &&
-				(!Array.isArray(currentBatch) || currentBatch.length === 0)
-			) {
-				try {
-					const fallbackUrl = `https://space.bilibili.com/ajax/Bangumi/getList?mid=${mid}`;
-					console.log(`[Bilibili] 尝试回退接口: ${fallbackUrl}`);
-					const fbResp = await fetch(fallbackUrl, { headers });
-					if (fbResp.ok) {
-						const fbJson = (await fbResp.json()) as {
-							data?: { result?: unknown[] };
-							result?: unknown[];
-						};
-						const fbList = fbJson?.data?.result ?? fbJson?.result ?? [];
-						if (Array.isArray(fbList) && fbList.length > 0) {
-							const mapped: BiliSeasonItem[] = (
-								fbList as Array<Record<string, unknown>>
-							).map((it) => {
-								const getNum = (v: unknown) =>
-									typeof v === "number" ? v : Number(v ?? 0);
-								const getStr = (v: unknown) =>
-									typeof v === "string" ? v : String(v ?? "");
-								const stat = it.stat as Record<string, unknown> | undefined;
-								return {
-									season_id: getNum(it.season_id ?? it.seasonId),
-									title: getStr(it.title),
-									cover: getStr(it.cover ?? it.square_cover),
-									total_count: getNum(it.total_count ?? it.total),
-									is_finish: getNum(it.is_finish),
-									season_type_name: getStr(it.season_type_name ?? it.type_name),
-									stat: { follow: getNum(stat?.follow ?? it.favorites) },
-								};
-							});
-							console.log(`[Bilibili] 回退接口获取到 ${mapped.length} 条数据`);
-							allData = allData.concat(mapped);
-							hasMore = false;
-							break;
-						}
-					} else {
-						console.warn(
-							`[Bilibili] 回退接口失败 (状态码: ${fbResp.status}):`,
-							fallbackUrl,
-						);
-					}
-				} catch (fbErr) {
-					console.warn("[Bilibili] 回退接口异常:", fbErr);
-				}
-			}
-
-			if (currentBatch.length > 0) {
-				allData = allData.concat(currentBatch);
-				pn += 1;
-				// 如果返回数量少于请求的limit，视为最后一页
-				if (currentBatch.length < ps) {
-					hasMore = false;
-				}
-			} else {
-				hasMore = false;
-			}
-
-			if (hasMore) {
-				await new Promise((resolve) => setTimeout(resolve, delay));
-			}
 		}
 
-		console.log(`[Bilibili] 总共获取到 ${allData.length} 条数据`);
-		return allData;
-	} catch (error) {
-		console.error("[Bilibili] 获取数据时出错:", error);
-		return [];
+		const data = (await response.json()) as UserSubjectCollectionResponse;
+		const currentBatch = data.data || [];
+
+		if (currentBatch.length > 0) {
+			allData = allData.concat(currentBatch);
+			offset += limit;
+
+			// 如果本次获取的数据少于limit，说明已经是最后一页
+			if (currentBatch.length < limit) {
+				hasMore = false;
+			}
+		} else {
+			hasMore = false;
+		}
+
+		// 添加延迟避免请求过于频繁
+		if (hasMore) {
+			await new Promise((resolve) => setTimeout(resolve, delay));
+		}
 	}
+
+	console.log(`[Bangumi] 总共获取到 ${allData.length} 条数据`);
+	return allData;
 }
 
 // 获取所有启用分类的数据
 const bangumiData: Record<string, UserSubjectCollection[]> = {};
-const biliData: Record<string, BiliSeasonItem[]> = {};
 const tabs: Array<{ id: string; name: string; count: number }> = [];
+let fetchFailed = false;
 
-// 根据数据源检查配置状态
-const isBangumiUserIdConfigured =
+// 检查是否已配置 Bangumi 用户ID
+const isUserIdConfigured =
 	bangumiConfig.username &&
 	bangumiConfig.username !== "you-user-id" &&
 	bangumiConfig.username.trim() !== "";
-const biliUserId = siteConfig.bilibili?.userId;
-const isBiliUserIdConfigured =
-	biliUserId && biliUserId !== "your-bilibili-mid" && biliUserId.trim() !== "";
 
-if (dataSource === "bangumi") {
-	if (!isBangumiUserIdConfigured) {
-		console.log("[Bangumi] ⚠️ 未配置 Bangumi 用户ID，跳过数据获取");
-	} else {
-		console.log("[Bangumi] 🌐 从 API 获取数据");
-	}
+if (!isUserIdConfigured) {
+	console.log("[Bangumi] ⚠️ 未配置 Bangumi 用户ID，跳过数据获取");
 } else {
-	if (!isBiliUserIdConfigured) {
-		console.log("[Bilibili] ⚠️ 未配置 Bilibili 用户MID，跳过数据获取");
-	} else {
-		console.log("[Bilibili] 🌐 从 API 获取数据");
+	console.log("[Bangumi] 🌐 从 API 获取数据");
+}
+
+for (const [categoryKey, enabled] of Object.entries(bangumiConfig.categories)) {
+	// 如果未配置用户ID，跳过数据获取
+	if (!isUserIdConfigured) {
+		break;
+	}
+	if (enabled && categoryMap[categoryKey as keyof typeof categoryMap]) {
+		const categoryInfo = categoryMap[categoryKey as keyof typeof categoryMap];
+		try {
+			const data = await fetchBangumiData(
+				// biome-ignore lint/style/noNonNullAssertion: Checked by isUserIdConfigured
+				bangumiConfig.username!,
+				categoryInfo.subjectType,
+			);
+			bangumiData[categoryKey] = data;
+			tabs.push({
+				id: categoryKey,
+				name: categoryInfo.name,
+				count: data.length,
+			});
+		} catch (error) {
+			console.error(`[Bangumi] 获取 ${categoryInfo.name} 数据失败:`, error);
+			fetchFailed = true;
+			break;
+		}
 	}
 }
 
-if (dataSource === "bangumi") {
-	for (const [categoryKey, enabled] of Object.entries(
-		bangumiConfig.categories,
-	)) {
-		// 如果未配置用户ID，跳过数据获取
-		if (!isBangumiUserIdConfigured) {
-			break;
-		}
-		if (enabled && categoryMap[categoryKey as keyof typeof categoryMap]) {
-			const categoryInfo = categoryMap[categoryKey as keyof typeof categoryMap];
-			try {
-				const data = await fetchBangumiData(
-					// biome-ignore lint/style/noNonNullAssertion: Checked by isBangumiUserIdConfigured
-					bangumiConfig.username!,
-					categoryInfo.subjectType,
-				);
-				bangumiData[categoryKey] = data;
-				tabs.push({
-					id: categoryKey,
-					name: categoryInfo.name,
-					count: data.length,
-				});
-			} catch (error) {
-				console.error(`[Bangumi] 获取 ${categoryInfo.name} 数据失败:`, error);
-				bangumiData[categoryKey] = [];
-				tabs.push({
-					id: categoryKey,
-					name: categoryInfo.name,
-					count: 0,
-				});
-			}
-		}
-	}
-} else {
-	// Bilibili 分类：番剧/剧集
-	const biliCategories = {
-		anime: { id: "anime", name: "番剧", type: 1 },
-		drama: { id: "drama", name: "剧集", type: 2 },
-	} as const;
-	// 如果未配置用户MID，跳过数据获取
-	if (isBiliUserIdConfigured) {
-		for (const [, categoryInfo] of Object.entries(biliCategories)) {
-			try {
-				const data = await fetchBilibiliData(
-					// biome-ignore lint/style/noNonNullAssertion: Checked by isBiliUserIdConfigured
-					biliUserId!,
-					categoryInfo.type,
-				);
-				biliData[categoryInfo.id] = data;
-				tabs.push({
-					id: categoryInfo.id,
-					name: categoryInfo.name,
-					count: data.length,
-				});
-			} catch (error) {
-				console.error(`[Bilibili] 获取 ${categoryInfo.name} 数据失败:`, error);
-				biliData[categoryInfo.id] = [];
-				tabs.push({
-					id: categoryInfo.id,
-					name: categoryInfo.name,
-					count: 0,
-				});
-			}
-		}
-	}
+// 根据 categoryOrder 配置对 tabs 进行排序
+const categoryOrder = siteConfig.bangumi?.categoryOrder || [];
+if (categoryOrder.length > 0) {
+	tabs.sort((a, b) => {
+		const aIndex = categoryOrder.indexOf(
+			a.id as (typeof categoryOrder)[number],
+		);
+		const bIndex = categoryOrder.indexOf(
+			b.id as (typeof categoryOrder)[number],
+		);
+		// 如果类型在配置中，按配置顺序排序；否则排在后面
+		if (aIndex === -1 && bIndex === -1) return 0;
+		if (aIndex === -1) return 1;
+		if (bIndex === -1) return -1;
+		return aIndex - bIndex;
+	});
 }
 
 const activeTab = tabs[0]?.id || "anime";
-
-// 获取构建时间
-const buildTime = new Date().toLocaleString();
 ---
 
 <MainGridLayout title={i18n(I18nKey.bangumi)} description={i18n(I18nKey.bangumiSubtitle)}>
-  <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
+  <div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32">
     <div class="card-base z-10 px-9 py-6 relative w-full">
         <!-- 页面标题 -->
         <div class="relative w-full mb-8">
             <div class="mb-6">
                 <div class="flex items-center gap-3 mb-3">
-                    <div class="h-8 w-8 rounded-lg bg-[var(--primary)] flex items-center justify-center text-white dark:text-black/70">
-                        <Icon icon="material-symbols:movie" class="text-[1.5rem]"></Icon>
+                    <div class="h-8 w-8 rounded-lg bg-(--primary) flex items-center justify-center text-white dark:text-black/70">
+                        <Icon name="material-symbols:movie" class="text-[1.5rem]"></Icon>
                     </div>
-                    <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                    <div class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
                         {i18n(I18nKey.bangumi)}
-                    </h1>
+                    </div>
                 </div>
                 <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
                     {i18n(I18nKey.bangumiSubtitle)}
@@ -423,48 +217,46 @@ const buildTime = new Date().toLocaleString();
             </div>
 
       <!-- Tab 导航和内容 -->
-      {tabs.length > 0 ? (
+      {fetchFailed ? (
+        <div class="text-center py-16">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-(--btn-regular-bg) rounded-full mb-6 border border-(--line-divider)">
+            <Icon name="material-symbols:error-outline" class="text-[2rem] text-red-500" />
+          </div>
+          <h2 class="text-xl font-semibold text-black/80 dark:text-white/80 mb-3">
+            {i18n(I18nKey.bangumiFetchError)}
+          </h2>
+          <p class="text-black/60 dark:text-white/60 mb-4 max-w-md mx-auto">
+            {i18n(I18nKey.bangumiFetchErrorDesc)}
+          </p>
+        </div>
+      ) : tabs.length > 0 ? (
         <>
           <TabNav tabs={tabs} activeTab={activeTab} />
 
           <!-- 内容区域 -->
           {tabs.map((tab) => (
-            <>
-              {dataSource === "bangumi" ? (
-                <BangumiSection
-                  sectionId={tab.id}
-                  items={bangumiData[tab.id] || []}
-                  isActive={tab.id === activeTab}
-                  itemsPerPage={16}
-                />
-              ) : (
-                <BilibiliSection
-                  sectionId={tab.id}
-                  items={biliData[tab.id] || []}
-                  isActive={tab.id === activeTab}
-                  itemsPerPage={16}
-                />
-              )}
-            </>
+                      <BangumiSection
+            sectionId={tab.id}
+            items={bangumiData[tab.id] || []}
+            isActive={tab.id === activeTab}
+            itemsPerPage={12}
+          />
           ))}
         </>
       ) : (
         <div class="text-center py-16">
-          <div class="inline-flex items-center justify-center w-16 h-16 bg-[var(--btn-regular-bg)] rounded-full mb-6 border border-[var(--line-divider)]">
-            <Icon icon="material-symbols:settings" class="text-[2rem] text-[var(--btn-content)]" />
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-(--btn-regular-bg) rounded-full mb-6 border border-(--line-divider)">
+            <Icon name="material-symbols:settings" class="text-[2rem] text-(--btn-content)" />
           </div>
           <h2 class="text-xl font-semibold text-black/80 dark:text-white/80 mb-3">
-            {dataSource === "bangumi"
-              ? (isBangumiUserIdConfigured ? i18n(I18nKey.bangumiEmpty) : "未配置 Bangumi 用户ID")
-              : (isBiliUserIdConfigured ? "暂无数据" : "未配置 Bilibili 用户MID")}
+            {isUserIdConfigured ? i18n(I18nKey.bangumiEmpty) : "未配置 Bangumi 用户ID"}
           </h2>
           <p class="text-black/60 dark:text-white/60 mb-4 max-w-md mx-auto">
-            {dataSource === "bangumi"
-              ? (isBangumiUserIdConfigured ? i18n(I18nKey.bangumiEmptyReason) : "请在 src/config/siteConfig.ts 中配置你的 Bangumi 用户ID")
-              : (isBiliUserIdConfigured ? "拉取失败或暂无条目" : "请在 src/config/siteConfig.ts 中配置你的 Bilibili 用户MID")}
+            {isUserIdConfigured ? i18n(I18nKey.bangumiEmptyReason) : "请在 src/config/siteConfig.ts 中配置你的 Bangumi 用户ID"}
           </p>
         </div>
       )}
+		</div>
     </div>
   </div>
 </MainGridLayout>

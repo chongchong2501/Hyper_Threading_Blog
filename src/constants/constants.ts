@@ -7,6 +7,7 @@ export const DEFAULT_THEME = LIGHT_MODE; // 仅作为向后兼容的默认值，
 
 // Wallpaper modes
 export const WALLPAPER_BANNER = "banner",
+	WALLPAPER_FULLSCREEN = "fullscreen",
 	WALLPAPER_OVERLAY = "overlay",
 	WALLPAPER_NONE = "none";
 
@@ -19,7 +20,7 @@ export const BANNER_HEIGHT_HOME = BANNER_HEIGHT + BANNER_HEIGHT_EXTEND;
 export const MAIN_PANEL_OVERLAPS_BANNER_HEIGHT = 3.5;
 
 // Page width: rem
-export const PAGE_WIDTH = 90;
+export const PAGE_WIDTH = 100;
 
 // Category constants
 export const UNCATEGORIZED = "uncategorized";

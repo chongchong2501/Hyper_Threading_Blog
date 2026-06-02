@@ -23,17 +23,13 @@ declare global {
 		};
 		toggleFloatingTOC: () => void;
 		tocInternalNavigation: boolean;
-		iconifyLoaded: boolean;
 		// swup is defined in global.d.ts
 		// biome-ignore lint/suspicious/noExplicitAny: External library without types
 		spine: any;
 		closeAnnouncement: () => void;
-		// biome-ignore lint/suspicious/noExplicitAny: External library without types
-		__iconifyLoader: any;
-		__iconifyLoaderInitialized: boolean;
-		loadIconify: () => Promise<void>;
-		preloadIcons: (icons: string | string[]) => void;
-		onIconifyReady: (callback: () => void) => void;
+		// __fireflyMusic type is defined in global.d.ts
+		semifullScrollHandler?: (() => void) | undefined;
+		initSemifullScrollDetection?: () => void;
 	}
 }
 

@@ -6,13 +6,40 @@ export const zh_CN: Translation = {
 	[Key.about]: "关于我",
 	[Key.archive]: "归档",
 	[Key.search]: "搜索",
+	[Key.searchNoResults]: "找不到相关结果。",
+	[Key.searchTypeSomething]: "请输入搜索关键词。",
+	[Key.searchLoading]: "正在搜索...",
+	[Key.searchSummary]: "摘要",
+	[Key.searchContent]: "内容",
+	[Key.searchViewMore]: "查看更多结果 ({count} 个更多)",
 	[Key.other]: "其他",
+	[Key.all]: "全部",
 
 	[Key.tags]: "标签",
 	[Key.categories]: "分类",
 	[Key.recentPosts]: "最新文章",
 	[Key.postList]: "文章列表",
-	[Key.tableOfContents]: "目录",
+	[Key.tableOfContents]: "文章目录",
+	[Key.tocEmpty]: "当前页面没有目录",
+	[Key.music]: "音乐",
+	[Key.musicNoPlaying]: "暂未播放",
+	[Key.musicLyrics]: "歌词",
+	[Key.musicVolume]: "音量",
+	[Key.musicPlayMode]: "切换播放模式",
+	[Key.musicPrev]: "上一首",
+	[Key.musicNext]: "下一首",
+	[Key.musicPlaylist]: "列表",
+	[Key.musicNoLyrics]: "暂无歌词",
+	[Key.musicLoadingLyrics]: "正在加载歌词...",
+	[Key.musicFailedLyrics]: "歌词加载失败",
+	[Key.musicNoSongs]: "暂无歌曲",
+	[Key.musicError]: "播放器错误",
+	[Key.musicPlay]: "播放",
+	[Key.musicPause]: "暂停",
+	[Key.musicProgress]: "播放进度",
+	[Key.musicCover]: "封面",
+	[Key.musicNoCover]: "暂无封面",
+	[Key.musicAudioPlayer]: "音频播放器",
 
 	// 公告栏
 	[Key.announcement]: "公告",
@@ -26,6 +53,8 @@ export const zh_CN: Translation = {
 		"您还未在配置文件中启用评论系统，启用后访客才可在此留言",
 	[Key.friends]: "友链",
 	[Key.friendsDescription]: "这里是我的朋友们，欢迎互相访问交流",
+	[Key.searchFriends]: "搜索友链...",
+	[Key.friendsEmpty]: "暂无友情链接",
 	[Key.guestbook]: "留言",
 	[Key.guestbookDescription]: "欢迎在这里留下你的足迹，分享你的想法和建议",
 	[Key.untitled]: "无标题",
@@ -39,16 +68,19 @@ export const zh_CN: Translation = {
 	[Key.postCount]: "篇文章",
 	[Key.postsCount]: "篇文章",
 
-	[Key.themeColor]: "主题色",
+	[Key.themeColor]: "主题色相",
 
 	[Key.lightMode]: "亮色",
 	[Key.darkMode]: "暗色",
 	[Key.systemMode]: "跟随系统",
 
 	[Key.more]: "更多",
+	[Key.collapse]: "收起",
 
 	[Key.author]: "作者",
 	[Key.publishedAt]: "发布于",
+	[Key.updatedAt]: "更新于",
+	[Key.readTime]: "阅读时长",
 	[Key.license]: "许可协议",
 	[Key.bangumi]: "番组计划",
 
@@ -61,16 +93,37 @@ export const zh_CN: Translation = {
 	[Key.bangumiFilterWish]: "想看",
 	[Key.bangumiFilterOnHold]: "搁置",
 	[Key.bangumiFilterDropped]: "抛弃",
+	[Key.bangumiFilterGamePlayed]: "玩过",
+	[Key.bangumiFilterGamePlaying]: "在玩",
+	[Key.bangumiFilterGameWish]: "想玩",
+	[Key.bangumiFilterBookRead]: "读过",
+	[Key.bangumiFilterBookReading]: "在读",
+	[Key.bangumiFilterBookWish]: "想读",
+	[Key.bangumiFilterMusicListened]: "听过",
+	[Key.bangumiFilterMusicListening]: "在听",
+	[Key.bangumiFilterMusicWish]: "想听",
 	[Key.bangumiStatusWish]: "想看",
 	[Key.bangumiStatusWatched]: "看过",
 	[Key.bangumiStatusWatching]: "在看",
 	[Key.bangumiStatusOnHold]: "搁置",
 	[Key.bangumiStatusDropped]: "抛弃",
+	[Key.bangumiStatusGameWish]: "想玩",
+	[Key.bangumiStatusGamePlayed]: "玩过",
+	[Key.bangumiStatusGamePlaying]: "在玩",
+	[Key.bangumiStatusBookWish]: "想读",
+	[Key.bangumiStatusBookRead]: "读过",
+	[Key.bangumiStatusBookReading]: "在读",
+	[Key.bangumiStatusMusicWish]: "想听",
+	[Key.bangumiStatusMusicListened]: "听过",
+	[Key.bangumiStatusMusicListening]: "在听",
 	[Key.bangumiStatusUnknown]: "未知",
 	[Key.bangumiNoData]: "暂无数据",
 	[Key.bangumiNoDataDescription]: "该分类下还没有任何条目",
 	[Key.bangumiEmpty]: "暂无数据",
 	[Key.bangumiEmptyReason]: "可能的原因：用户名不存在、网络连接问题或API限制",
+	[Key.bangumiFetchError]: "Bangumi 数据拉取失败",
+	[Key.bangumiFetchErrorDesc]:
+		"构建时从 Bangumi API 获取数据失败，该页面内容暂不可用。",
 	[Key.bangumiUsername]: "用户名",
 	[Key.bangumiApi]: "API",
 	[Key.bangumiConfigTip]: "提示：请在页面配置中设置正确的Bangumi用户名",
@@ -146,11 +199,41 @@ export const zh_CN: Translation = {
 	// 置顶
 	[Key.pinned]: "置顶",
 
+	// 相关文章推荐
+	[Key.relatedPosts]: "相关文章",
+	[Key.randomPosts]: "随机文章",
+	[Key.smartRecommend]: "智能推荐",
+	[Key.randomRecommend]: "随机推荐",
+	[Key.noRelatedPosts]: "暂无相关文章",
+	[Key.noRandomPosts]: "暂无随机文章",
+
+	// 加密
+	[Key.postEncrypted]: "本文已加密",
+
 	// 壁纸模式
 	[Key.wallpaperMode]: "壁纸模式",
 	[Key.wallpaperBannerMode]: "横幅壁纸",
-	[Key.wallpaperOverlayMode]: "全屏壁纸",
+	[Key.wallpaperFullscreenMode]: "全屏壁纸",
+	[Key.wallpaperOverlayMode]: "全屏透明",
 	[Key.wallpaperNoneMode]: "纯色背景",
+
+	// 壁纸设置
+	[Key.wallpaperSettings]: "壁纸设置",
+	[Key.wallpaperTitle]: "首页壁纸标题",
+	[Key.wallpaperCarousel]: "壁纸轮播",
+	[Key.wavesAnimation]: "水波纹动画",
+	[Key.gradientTransition]: "渐变过渡",
+	[Key.sakuraEffect]: "樱花特效",
+	[Key.effectsSettings]: "特效设置",
+	[Key.overlaySettings]: "透明设置",
+	[Key.overlayOpacity]: "壁纸透明度",
+	[Key.overlayBlur]: "背景模糊度",
+	[Key.overlayCardOpacity]: "卡片透明度",
+
+	// 文章布局
+	[Key.postListLayout]: "文章布局",
+	[Key.postListLayoutList]: "列表",
+	[Key.postListLayoutGrid]: "网格",
 
 	// 赞助页面
 	[Key.sponsor]: "赞助",
@@ -166,8 +249,12 @@ export const zh_CN: Translation = {
 	[Key.sponsorAnonymous]: "匿名",
 	[Key.scanToSponsor]: "扫码赞助",
 	[Key.sponsorGoTo]: "前往赞助",
-	[Key.sponsorButton]: "赞助支持",
-	[Key.sponsorButtonText]: "如果这篇文章对你有帮助，欢迎赞助支持！",
+	[Key.sponsorButton]: "支持与分享",
+	[Key.sponsorButtonText]:
+		"如果这篇文章对你有帮助，欢迎分享给更多人或赞助支持！",
+
+	[Key.shareOnSocial]: "文章分享",
+	[Key.shareOnSocialDescription]: "如果这篇文章对你有帮助，欢迎分享给更多人！",
 
 	// 站点统计
 	[Key.siteStats]: "站点统计",
@@ -179,6 +266,7 @@ export const zh_CN: Translation = {
 	[Key.siteStatsLastUpdate]: "最后活动",
 	[Key.siteStatsDaysAgo]: "{days} 天前",
 	[Key.siteStatsDays]: "{days} 天",
+	[Key.today]: "今天",
 
 	// 日历组件
 	[Key.calendarSunday]: "日",
@@ -200,4 +288,35 @@ export const zh_CN: Translation = {
 	[Key.calendarOctober]: "10月",
 	[Key.calendarNovember]: "11月",
 	[Key.calendarDecember]: "12月",
+
+	[Key.shareArticle]: "分享",
+	[Key.generatingPoster]: "海报生成中...",
+	[Key.copied]: "已复制",
+	[Key.copyLink]: "复制链接",
+	[Key.savePoster]: "保存海报",
+	[Key.scanToRead]: "扫码阅读文章",
+
+	// 代码块折叠配置
+	[Key.codeCollapsibleShowMore]: "展开",
+	[Key.codeCollapsibleShowLess]: "收起",
+	[Key.codeCollapsibleExpanded]: "代码块已展开",
+	[Key.codeCollapsibleCollapsed]: "代码块已折叠",
+
+	// 相册页面
+	[Key.gallery]: "相册",
+	[Key.galleryDescription]: "记录生活中的美好瞬间",
+	[Key.galleryPhotos]: "张照片",
+	[Key.galleryAlbums]: "本相册",
+	[Key.galleryNoAlbums]: "暂无相册",
+	[Key.galleryBackToAlbums]: "返回相册列表",
+	[Key.searchAlbums]: "搜索相簿...",
+
+	// 密码保护
+	[Key.passwordProtected]: "密码保护",
+	[Key.passwordProtectedDesc]: "此内容已被密码保护，请输入密码查看。",
+	[Key.passwordHint]: "提示",
+	[Key.passwordPlaceholder]: "请输入密码",
+	[Key.passwordSubmit]: "解锁",
+	[Key.passwordError]: "密码错误，请重试。",
+	[Key.passwordProtectedRss]: "本文已加密保护，请访问网站查看。",
 };

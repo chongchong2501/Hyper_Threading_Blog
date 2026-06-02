@@ -6,13 +6,40 @@ export const en: Translation = {
 	[Key.about]: "About",
 	[Key.archive]: "Archive",
 	[Key.search]: "Search",
+	[Key.searchNoResults]: "No results found.",
+	[Key.searchTypeSomething]: "Type something to search...",
+	[Key.searchLoading]: "Searching...",
+	[Key.searchSummary]: "Summary",
+	[Key.searchContent]: "Content",
+	[Key.searchViewMore]: "View more results ({count} more)",
 	[Key.other]: "Other",
+	[Key.all]: "All",
 
 	[Key.tags]: "Tags",
 	[Key.categories]: "Categories",
 	[Key.recentPosts]: "Recent Posts",
 	[Key.postList]: "Post List",
 	[Key.tableOfContents]: "Table of Contents",
+	[Key.tocEmpty]: "No table of contents on this page",
+	[Key.music]: "Music",
+	[Key.musicNoPlaying]: "No playing",
+	[Key.musicLyrics]: "Lyrics",
+	[Key.musicVolume]: "Volume",
+	[Key.musicPlayMode]: "Switch Play Mode",
+	[Key.musicPrev]: "Previous",
+	[Key.musicNext]: "Next",
+	[Key.musicPlaylist]: "Playlist",
+	[Key.musicNoLyrics]: "No lyrics available",
+	[Key.musicLoadingLyrics]: "Loading lyrics...",
+	[Key.musicFailedLyrics]: "Failed to load lyrics",
+	[Key.musicNoSongs]: "No songs",
+	[Key.musicError]: "Player Error",
+	[Key.musicPlay]: "Play",
+	[Key.musicPause]: "Pause",
+	[Key.musicProgress]: "Playback Progress",
+	[Key.musicCover]: "Cover",
+	[Key.musicNoCover]: "No cover available",
+	[Key.musicAudioPlayer]: "Audio Player",
 
 	// Announcement
 	[Key.announcement]: "Announcement",
@@ -27,6 +54,8 @@ export const en: Translation = {
 	[Key.friends]: "Friends",
 	[Key.friendsDescription]:
 		"Here are my friends, welcome to visit and communicate with each other",
+	[Key.searchFriends]: "Search friends...",
+	[Key.friendsEmpty]: "No friends yet.",
 	[Key.guestbook]: "Guestbook",
 	[Key.guestbookDescription]:
 		"Welcome to leave your mark here, share your thoughts and suggestions",
@@ -48,9 +77,12 @@ export const en: Translation = {
 	[Key.systemMode]: "System",
 
 	[Key.more]: "More",
+	[Key.collapse]: "Collapse",
 
 	[Key.author]: "Author",
 	[Key.publishedAt]: "Published at",
+	[Key.updatedAt]: "Updated at",
+	[Key.readTime]: "Read time",
 	[Key.license]: "License",
 	[Key.bangumi]: "Bangumi",
 
@@ -63,17 +95,38 @@ export const en: Translation = {
 	[Key.bangumiFilterWish]: "Wish",
 	[Key.bangumiFilterOnHold]: "On Hold",
 	[Key.bangumiFilterDropped]: "Dropped",
+	[Key.bangumiFilterGamePlayed]: "Played",
+	[Key.bangumiFilterGamePlaying]: "Playing",
+	[Key.bangumiFilterGameWish]: "Wish to Play",
+	[Key.bangumiFilterBookRead]: "Read",
+	[Key.bangumiFilterBookReading]: "Reading",
+	[Key.bangumiFilterBookWish]: "Wish to Read",
+	[Key.bangumiFilterMusicListened]: "Listened",
+	[Key.bangumiFilterMusicListening]: "Listening",
+	[Key.bangumiFilterMusicWish]: "Wish to Listen",
 	[Key.bangumiStatusWish]: "Wish",
 	[Key.bangumiStatusWatched]: "Watched",
 	[Key.bangumiStatusWatching]: "Watching",
 	[Key.bangumiStatusOnHold]: "On Hold",
 	[Key.bangumiStatusDropped]: "Dropped",
+	[Key.bangumiStatusGameWish]: "Wish to Play",
+	[Key.bangumiStatusGamePlayed]: "Played",
+	[Key.bangumiStatusGamePlaying]: "Playing",
+	[Key.bangumiStatusBookWish]: "Wish to Read",
+	[Key.bangumiStatusBookRead]: "Read",
+	[Key.bangumiStatusBookReading]: "Reading",
+	[Key.bangumiStatusMusicWish]: "Wish to Listen",
+	[Key.bangumiStatusMusicListened]: "Listened",
+	[Key.bangumiStatusMusicListening]: "Listening",
 	[Key.bangumiStatusUnknown]: "Unknown",
 	[Key.bangumiNoData]: "No Data",
 	[Key.bangumiNoDataDescription]: "No items in this category",
 	[Key.bangumiEmpty]: "No Data",
 	[Key.bangumiEmptyReason]:
 		"Possible reasons: username does not exist, network connection issue, or API limit",
+	[Key.bangumiFetchError]: "Bangumi Data Fetch Failed",
+	[Key.bangumiFetchErrorDesc]:
+		"Failed to fetch data from Bangumi API during build. This page is temporarily unavailable.",
 	[Key.bangumiUsername]: "Username",
 	[Key.bangumiApi]: "API",
 	[Key.bangumiConfigTip]:
@@ -154,11 +207,41 @@ export const en: Translation = {
 	// Pinned
 	[Key.pinned]: "Pinned",
 
+	// Related Posts
+	[Key.relatedPosts]: "Related Posts",
+	[Key.randomPosts]: "Random Posts",
+	[Key.smartRecommend]: "Smart",
+	[Key.randomRecommend]: "Random",
+	[Key.noRelatedPosts]: "No related posts",
+	[Key.noRandomPosts]: "No random posts",
+
+	// Encrypted
+	[Key.postEncrypted]: "This post is encrypted",
+
 	// Wallpaper Mode
 	[Key.wallpaperMode]: "Wallpaper Mode",
 	[Key.wallpaperBannerMode]: "Banner Wallpaper",
-	[Key.wallpaperOverlayMode]: "Full Screen Wallpaper",
-	[Key.wallpaperNoneMode]: "Solid Color Background",
+	[Key.wallpaperFullscreenMode]: "Fullscreen Wallpaper",
+	[Key.wallpaperOverlayMode]: "Overlay Wallpaper",
+	[Key.wallpaperNoneMode]: "None Wallpaper",
+
+	// Wallpaper Settings
+	[Key.wallpaperSettings]: "Wallpaper Settings",
+	[Key.wallpaperTitle]: "Home Wallpaper Title",
+	[Key.wallpaperCarousel]: "Wallpaper Carousel",
+	[Key.wavesAnimation]: "Waves Animation",
+	[Key.gradientTransition]: "Gradient Transition",
+	[Key.sakuraEffect]: "Sakura Effect",
+	[Key.effectsSettings]: "Effects Settings",
+	[Key.overlaySettings]: "Transparency Settings",
+	[Key.overlayOpacity]: "Wallpaper Opacity",
+	[Key.overlayBlur]: "Background Blur",
+	[Key.overlayCardOpacity]: "Card Opacity",
+
+	// Post List Layout
+	[Key.postListLayout]: "Post List Layout",
+	[Key.postListLayoutList]: "List",
+	[Key.postListLayoutGrid]: "Grid",
 
 	// Sponsor Page
 	[Key.sponsor]: "Sponsor",
@@ -174,8 +257,13 @@ export const en: Translation = {
 	[Key.sponsorAnonymous]: "Anonymous",
 	[Key.scanToSponsor]: "Scan to Sponsor",
 	[Key.sponsorGoTo]: "Go to Sponsor",
-	[Key.sponsorButton]: "Support",
-	[Key.sponsorButtonText]: "If this article helped you, welcome to support!",
+	[Key.sponsorButton]: "Support & Share",
+	[Key.sponsorButtonText]:
+		"If this article helped you, please share or support!",
+
+	[Key.shareOnSocial]: "Share Article",
+	[Key.shareOnSocialDescription]:
+		"If this article helped you, please share it with others!",
 
 	// Site Statistics
 	[Key.siteStats]: "Site Statistics",
@@ -187,6 +275,7 @@ export const en: Translation = {
 	[Key.siteStatsLastUpdate]: "Last Activity",
 	[Key.siteStatsDaysAgo]: "{days} days ago",
 	[Key.siteStatsDays]: "{days} days",
+	[Key.today]: "Today",
 
 	// Calendar Component
 	[Key.calendarSunday]: "Sun",
@@ -208,4 +297,37 @@ export const en: Translation = {
 	[Key.calendarOctober]: "Oct",
 	[Key.calendarNovember]: "Nov",
 	[Key.calendarDecember]: "Dec",
+
+	[Key.shareArticle]: "Share",
+	[Key.generatingPoster]: "Generating Poster...",
+	[Key.copied]: "Copied",
+	[Key.copyLink]: "Copy Link",
+	[Key.savePoster]: "Save Poster",
+	[Key.scanToRead]: "Scan to Read",
+
+	// Code Block Collapsible Configuration
+	[Key.codeCollapsibleShowMore]: "Show more",
+	[Key.codeCollapsibleShowLess]: "Show less",
+	[Key.codeCollapsibleExpanded]: "Code block expanded",
+	[Key.codeCollapsibleCollapsed]: "Code block collapsed",
+
+	// Gallery Page
+	[Key.gallery]: "Gallery",
+	[Key.galleryDescription]: "Capturing beautiful moments in life",
+	[Key.galleryPhotos]: "photos",
+	[Key.galleryAlbums]: "albums",
+	[Key.galleryNoAlbums]: "No albums yet",
+	[Key.galleryBackToAlbums]: "Back to albums",
+	[Key.searchAlbums]: "Search albums...",
+
+	// Password Protection
+	[Key.passwordProtected]: "Password Protected",
+	[Key.passwordProtectedDesc]:
+		"This content is password protected. Please enter the password to view.",
+	[Key.passwordHint]: "Hint",
+	[Key.passwordPlaceholder]: "Enter password",
+	[Key.passwordSubmit]: "Unlock",
+	[Key.passwordError]: "Incorrect password, please try again.",
+	[Key.passwordProtectedRss]:
+		"This article is encrypted. Please visit the website to view it.",
 };
