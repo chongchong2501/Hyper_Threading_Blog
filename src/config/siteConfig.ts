@@ -13,7 +13,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "超线程的个人博客网站",
 
 	// 站点 URL
-	site_url: "https://hyperthreading.cn",
+	site_url: "https://blog.hyperthreading.cn",
 
 	// 站点描述
 	description:
