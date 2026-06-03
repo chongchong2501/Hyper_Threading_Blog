@@ -71,7 +71,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 主页横幅主标题字体大小
 			titleSize: "3.8rem",
 			// 主页横幅副标题
-									subtitle: [
+			subtitle: [
 				"桂花欲买同载酒，终不似，少年游。",
 				"花开花落花无悔，缘来缘去缘如水。",
 				"仰天大笑出门去，我辈岂是蓬蒿人。",
