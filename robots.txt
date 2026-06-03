@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /_astro/
 
-Sitemap: https://hyperthreading.cn/sitemap-index.xml
+Sitemap: https://blog.hyperthreading.cn/sitemap-index.xml
