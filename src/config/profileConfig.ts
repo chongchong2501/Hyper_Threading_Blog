@@ -1,4 +1,5 @@
 import type { ProfileConfig } from "../types/config";
+import hyperAvatar from "../assets/images/hyper.jpg";
 
 export const profileConfig: ProfileConfig = {
 	// 头像
@@ -6,7 +7,7 @@ export const profileConfig: ProfileConfig = {
 	// 1. public 目录（以 "/" 开头，不优化）："/assets/images/avatar.webp"
 	// 2. src 目录（不以 "/" 开头，自动优化但会增加构建时间，推荐）："assets/images/avatar.webp"
 	// 3. 远程 URL："https://example.com/avatar.jpg"
-	avatar: "/assets/images/avatar.webp",
+	avatar: hyperAvatar.src,
 
 	// 名字
 	name: "超线程",
@@ -21,12 +22,6 @@ export const profileConfig: ProfileConfig = {
 	// `pnpm add @iconify-json/<icon-set-name>`
 	// showName: true 时显示图标和名称，false 时只显示图标
 	links: [
-		{
-			name: "qq",
-			icon: "fa7-brands:qq",
-			url: "https://qm.qq.com/q/ZGsFa8qX2G",
-			showName: false,
-		},
 		{
 			name: "GitHub",
 			icon: "fa7-brands:github",
