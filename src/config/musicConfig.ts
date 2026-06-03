@@ -56,6 +56,13 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				cover: "/assets/music/cover/日落大道.jpeg",
 				lrc: "",
 			},
+			{
+				name: "出现又离开",
+				artist: "梁博",
+				url: "/assets/music/music/梁博-出现又离开.mp3",
+				cover: "/assets/music/cover/出现又离开.jpeg",
+				lrc: "/assets/music/cover/出现又离开.lrc",
+			}
 		],
 	},
 };
