@@ -1,5 +1,5 @@
-import type { ProfileConfig } from "../types/config";
 import hyperAvatar from "../assets/images/hyper.jpg";
+import type { ProfileConfig } from "../types/config";
 
 export const profileConfig: ProfileConfig = {
 	// 头像

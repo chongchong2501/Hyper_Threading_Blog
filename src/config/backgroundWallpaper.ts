@@ -75,8 +75,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 				"桂花欲买同载酒，终不似，少年游。",
 				"花开花落花无悔，缘来缘去缘如水。",
 				"仰天大笑出门去，我辈岂是蓬蒿人。",
-				"长风破浪会有时，直挂云帆济沧海。",
-				"天生我材必有用，千金散尽还复来。",
+				"岂不闻，光阴如骏马加鞭 日月如落花流水。",
 			],
 			// 主页横幅副标题字体大小
 			subtitleSize: "1.5rem",
