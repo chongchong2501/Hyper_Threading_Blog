@@ -48,12 +48,8 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 移动背景图片（支持单张或多张随机）
 		// mobile: "assets/images/MobileWallpaper/m1.avif",
 		mobile: [
-			"assets/images/MobileWallpaper/m1.avif",
-			"assets/images/MobileWallpaper/m2.avif",
-			"assets/images/MobileWallpaper/m3.avif",
-			"assets/images/MobileWallpaper/m4.avif",
-			"assets/images/MobileWallpaper/m5.avif",
-			"assets/images/MobileWallpaper/m6.avif",
+			"assets/images/DesktopWallpaper/b.png",
+			"assets/images/DesktopWallpaper/F1_Mercedes-Benz.png",
 		],
 	},
 	// 横幅壁纸和全屏壁纸共享配置
@@ -75,7 +71,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 				"桂花欲买同载酒，终不似，少年游。",
 				"花开花落花无悔，缘来缘去缘如水。",
 				"仰天大笑出门去，我辈岂是蓬蒿人。",
-				"岂不闻，光阴如骏马加鞭 日月如落花流水。",
+				"岂不闻，光阴如骏马加鞭，日月如落花流水。",
 			],
 			// 主页横幅副标题字体大小
 			subtitleSize: "1.5rem",
@@ -89,7 +85,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 				// 删除速度（毫秒）
 				deleteSpeed: 50,
 				// 完全显示后的暂停时间（毫秒）
-				pauseTime: 2000,
+				pauseTime: 5000,
 			},
 		},
 		// 导航栏配置

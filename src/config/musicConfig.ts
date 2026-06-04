@@ -14,7 +14,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	mode: "local",
 
 	// 默认音量 (0-1)
-	volume: 0.7,
+	volume: 0.5,
 
 	// 播放模式：'list'=列表循环, 'one'=单曲循环, 'random'=随机播放
 	playMode: "list",
@@ -49,13 +49,13 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	// lrc: "[00:00.00]歌词内容...",
 	local: {
 		playlist: [
-			{
-				name: "日落大道",
-				artist: "梁博",
-				url: "/assets/music/music/梁博 - 日落大道.mp3",
-				cover: "/assets/music/cover/日落大道.jpeg",
-				lrc: "",
-			},
+			// {
+			// 	name: "日落大道",
+			// 	artist: "梁博",
+			// 	url: "/assets/music/music/梁博 - 日落大道.mp3",
+			// 	cover: "/assets/music/cover/日落大道.jpeg",
+			// 	lrc: "",
+			// },
 			{
 				name: "出现又离开",
 				artist: "梁博",
